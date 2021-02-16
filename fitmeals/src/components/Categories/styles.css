@@ -1,0 +1,23 @@
+.categoryContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background-color: #032D23;
+    height: 500px;
+   
+}
+.categoryList{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+}
+
+.categoryTitle{
+    font-size: xx-large;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-family: "Playfair Display";
+}
+
