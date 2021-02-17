@@ -3,13 +3,25 @@ import React from 'react';
 import './styles.css';
 
 import CategoryCard from '../CategoryCard/CategoryCard';
-// export type category = {
-//     name: string,
-// }
+import {ReactComponent as SaladSvg} from '../../assets/green-salad.svg';
+import {ReactComponent as GrassSvg} from '../../assets/baseline-grass.svg';
+import {ReactComponent as FishSvg }from '../../assets/ion_fish.svg';
+import {ReactComponent as PastaSvg }from '../../assets/mdi_pasta.svg';
+import {ReactComponent as PizzaSvg }from '../../assets/pizza-1.svg';
+
+export type category = {
+    name: string,
+    icon: any,
+}
 function Categories() {
  const categories = [
-   'Pizza', 'Burger', 'Vegan', 'Healthy', 'Fish'
+   {name: 'Salads', icon: SaladSvg} as category,
+   {name: 'Vegan', icon: GrassSvg} as category,
+   {name: 'Fish', icon: FishSvg} as category,
+   {name: 'Pasta', icon: PastaSvg} as category,
+   {name: 'Pizza', icon: PizzaSvg} as category
  ]
+
   return (
     <div className='categoryContainer'>
         <Space style={{marginTop: 10}} size={25} direction="vertical">
@@ -20,7 +32,7 @@ function Categories() {
         dataSource={categories}
         renderItem={category => (
         <List.Item>
-            <CategoryCard name={category}/>
+            <CategoryCard name={category.name} icon={category.icon}/>
         </List.Item>
         )}
          />

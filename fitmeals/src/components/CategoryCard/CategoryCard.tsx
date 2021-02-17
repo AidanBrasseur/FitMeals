@@ -1,15 +1,13 @@
 import { Badge, Space } from 'antd';
 import React from 'react';
 import './styles.css';
-import {
-    CoffeeOutlined
-} from '@ant-design/icons';
+import Icon from '@ant-design/icons';
 
 type CardProps = {
     name: string,
-    icon?: string,
+    icon: any,
 }
-function CategoryCard({ name }: CardProps) {
+function CategoryCard({ name, icon}: CardProps) {
 
     return (
         <div
@@ -19,8 +17,7 @@ function CategoryCard({ name }: CardProps) {
                 <Badge style={{ backgroundColor: '#AFD3AA' }} count={50} offset={[-10, 20]}>
 
                     <div className='categoryIconContainer'>
-
-                        <CoffeeOutlined style={{ fontSize: 60 }} />
+                        <Icon component={icon} style={{fontSize: 60}}/>
                     </div>
                 </Badge>
                 <div style={{ fontFamily: 'Playfair-Display', fontSize: 'large', fontWeight: 'bold' }}>{name}</div>
