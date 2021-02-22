@@ -1,8 +1,67 @@
 .previewContainer .ant-card{
     width: 500px;
-    height: 250px;
+    height: 200px;
     background-color:  #F7F7F7;
     display: flex;
+    padding: 0px 0px 0px 0px;
     justify-content: center;
+    border: none;
     border-radius: 7%;
 }
+.previewContainer .ant-card-body{
+    
+    padding: 0px;
+   
+   
+}
+
+.imageDiv {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    float: left;
+}
+ .previewImage {
+    border-radius: 7% 0 0 7%;
+    object-fit: cover;
+ }
+ 
+ .infoCol {
+     width: 50%;
+     height: 100%;
+     float: right;
+     padding-left: 20px;
+     padding-right: 20px;
+     padding-top: 30px;
+     padding-bottom: 30px;
+    
+ }
+ .previewRow{
+     height: 100%;
+ }
+
+ .category{
+    color: grey;
+    font-size: 15px;
+ }
+
+ .title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 2px;
+ }
+
+ .subtitle {
+    color: grey
+ }
+
+ .rating {
+     position: absolute;
+     width: 60px;
+     border-radius: 15%;
+     margin-top: 10px;
+     margin-left: 10px;
+     background-color: #109D7C;
+ }
+ 
+ 

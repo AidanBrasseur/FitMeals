@@ -1,26 +1,45 @@
-import { Badge, Card, Space } from 'antd';
+import { Badge, Card, Space, Image, Row, Col, Tag } from 'antd';
 import React from 'react';
 import './styles.css';
-import Icon from '@ant-design/icons';
+import Icon, { StarOutlined} from '@ant-design/icons';
+import Title from 'antd/lib/typography/Title';
 
 
 function RecipePreview() {
 
     return (
         <div className="previewContainer">
-        <Card
-            hoverable 
-        >
-            {/* <Space size={20} direction='vertical' align='center' >
-                <Badge style={{ backgroundColor: '#AFD3AA' }} count={50} offset={[-10, 20]}>
+            <Card
+                hoverable
+            >
+                <Row className='previewRow'>
+                    <div className='imageDiv'>
+                        <Image
 
-                    <div className='categoryIconContainer'>
-                        <Icon component={icon} style={{fontSize: 60}}/>
+                            src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
+                            height="100%"
+                            width="100%"
+                            preview={false}
+                            className='previewImage'
+                        ></Image>
+                       <div className='rating'>
+                           <Row  style={{paddingTop: 5, paddingBottom: 5, paddingLeft: 3, paddingRight: 3}}justify='space-around' align='middle'>
+                               <StarOutlined style={{color: 'white', fontSize: 15}}/>
+                               <text style={{color: 'white'}}>9.8</text>
+                           </Row>
+                       </div>
                     </div>
-                </Badge>
-                <div style={{ fontFamily: 'Playfair-Display', fontSize: 'large', fontWeight: 'bold' }}>{name}</div>
-            </Space> */}
-        </Card>
+                    <Col className='infoCol'>
+                        <p className='category'>Fish</p>
+                        <p className='title'>Grilled Salmon</p>
+                        <p className='subtitle'>Super duper healthy fish</p>
+                        <Row style={{ justifyContent: 'space-between' }}>
+                            <p>10-20min</p>
+                            <p>500 cal.</p>
+                        </Row>
+                    </Col>
+                </Row>
+            </Card>
         </div>
     );
 
