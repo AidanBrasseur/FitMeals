@@ -1,0 +1,22 @@
+.feedContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.feedGrid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.feedTitle{
+    font-size: 45px;
+    margin-left: 40px;
+    color: black;
+    font-weight: bold;
+    font-family: "Playfair Display";
+}
+
+

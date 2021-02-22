@@ -1,4 +1,4 @@
-.categoryCardContainer{
+.categoryCardContainer .ant-card{
     width: 175px;
     height: 240px;
     background-color:  #F7F7F7;

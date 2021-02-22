@@ -3,18 +3,15 @@ import React from 'react';
 import './styles.css';
 import Icon from '@ant-design/icons';
 
-type CardProps = {
-    name: string,
-    icon: any,
-}
-function CategoryCard({ name, icon}: CardProps) {
+
+function RecipePreview() {
 
     return (
-        <div className="categoryCardContainer">
+        <div className="previewContainer">
         <Card
             hoverable 
         >
-            <Space size={20} direction='vertical' align='center' >
+            {/* <Space size={20} direction='vertical' align='center' >
                 <Badge style={{ backgroundColor: '#AFD3AA' }} count={50} offset={[-10, 20]}>
 
                     <div className='categoryIconContainer'>
@@ -22,10 +19,10 @@ function CategoryCard({ name, icon}: CardProps) {
                     </div>
                 </Badge>
                 <div style={{ fontFamily: 'Playfair-Display', fontSize: 'large', fontWeight: 'bold' }}>{name}</div>
-            </Space>
+            </Space> */}
         </Card>
         </div>
     );
 
 }
-export default CategoryCard;
+export default RecipePreview;
