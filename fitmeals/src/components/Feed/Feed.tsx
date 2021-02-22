@@ -13,7 +13,6 @@ function Feed() {
                 <div className='feedTitle'>Featured Recipes</div>
 
                 <List
-
                     className='feedGrid'
                     grid={{
                         gutter: 10,
@@ -29,11 +28,13 @@ function Feed() {
                     dataSource={recipes}
 
                     renderItem={recipe => (
-                        <List.Item>
+
+                        <List.Item style={{ display: 'flex', justifyContent: 'center' }} >
 
                             <RecipePreview></RecipePreview>
 
                         </List.Item>
+
                     )}
                 />
 
