@@ -20,12 +20,16 @@
     height: 100%;
     display: flex;
     float: left;
+    overflow: hidden;
 }
  .previewImage {
     border-radius: 7% 0 0 7%;
     object-fit: cover;
+    transition: transform 1s;
  }
- 
+ .previewImage:hover {
+    transform: scale(1.05); 
+  }
  .infoCol {
      width: 50%;
      height: 100%;
