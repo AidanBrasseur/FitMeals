@@ -1,5 +1,6 @@
 import { Button, Layout, Input, Image, Typography, Checkbox } from 'antd';
 import React from 'react';
+import { Link } from 'react-router-dom'
 import './styles.css';
 
 function register (){
@@ -13,7 +14,7 @@ function RegisterPage () {
             <Layout.Content style={{ height: "100vh" }}>
                 <div className="registerDiv"> 
                     <div className="backButton">
-                        <Button type="link" style={{ color: "black", fontSize: 15 }}>&lt; Back</Button>
+                        <Link to="/login" style={{ color: "black", fontSize: 17 }}>&lt; Back</Link>
                     </div>
                     <div className="registerForm">
                         <Typography.Title style={{ fontSize: 30, marginBottom: 50 }}>Register your FitMeals Account!</Typography.Title>
@@ -25,11 +26,11 @@ function RegisterPage () {
                             <div className="inputTitle">Email</div>
                             <Input size="large" style={{ marginBottom: 10, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Email"></Input>
                             <div className="inputTitle">Password</div>
-                            <Input size="large" style={{ marginBottom: 10, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Password"></Input>
+                            <Input size="large" style={{ marginBottom: 20, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Password"></Input>
                             <Checkbox>I agree to the Terms and Conditions</Checkbox>
                             <Button 
                                 type="primary" 
-                                style={{ marginTop: 50, marginBottom: 20, width: "100%", fontSize: 18, height: 50, borderRadius: 8, backgroundColor: "#AAA713", border: 0 }}
+                                style={{ marginTop: 50, marginBottom: 20, width: "100%", fontSize: 18, height: 50, borderRadius: 8, backgroundColor: "#032D23", border: 0 }}
                                 onClick={() => { register() }}
                             >Register</Button>
                         </div>

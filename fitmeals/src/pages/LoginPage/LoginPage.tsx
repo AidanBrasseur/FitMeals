@@ -1,10 +1,10 @@
 import { Button, Layout, Input, Image, Typography } from 'antd';
 import React from 'react';
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './styles.css';
 
 function goToHome (){
-    return <Redirect to="/login"/>
+    
 }
 
 function LoginPage () {
@@ -34,7 +34,7 @@ function LoginPage () {
                                 onClick={() => { goToHome() }}
                             >Login</Button>
                             <div className="registerButton">
-                                Don't have an account?<Button type="link" style={{ color: "#AAA713", fontWeight: "bold", marginLeft: 3, padding: 0 }}>Get Started</Button>
+                                Don't have an account?<Link to="/register" style={{ color: "#AAA713", marginLeft: 3, padding: 0 }}>Get Started</Link>
                             </div>
                         </div>
                     </div>
