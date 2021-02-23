@@ -1,0 +1,40 @@
+.registerDiv{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    background-color: white;
+    font-family: "helvetica";
+}
+
+.backButton{
+    position: fixed;
+    top: 3%;
+}
+
+.registerForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainRegisterForm{
+    margin: auto;
+    font-family: "helvetica";
+    width: 90%;
+}
+
+.TaCDiv{
+    position: fixed;
+    bottom: 3%;
+}
+
+.imageDiv{
+    width: 50%;
+    height: 100%;
+    float: right;
+}

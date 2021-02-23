@@ -1,6 +1,11 @@
 import { Button, Layout, Input, Image, Typography } from 'antd';
 import React from 'react';
+import { Redirect } from 'react-router-dom'
 import './styles.css';
+
+function goToHome (){
+    return <Redirect to="/login"/>
+}
 
 function LoginPage () {
 
@@ -13,6 +18,7 @@ function LoginPage () {
                             src="https://cdn.iconscout.com/icon/free/png-256/fast-food-1851561-1569286.png"
                             width="75%"
                             height="75%"
+                            preview={ false }
                         ></Image>
                     </div>
                     <div className="loginForm">
@@ -20,8 +26,13 @@ function LoginPage () {
                         <Typography.Title style={{ fontSize: 60, color: "#032D23" }}>Login</Typography.Title>
                         <div className="mainLoginForm">
                             <Input size="large" style={{ marginTop: 20, marginBottom: 10, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Email"></Input>
-                            <Input size="large" style={{ marginBottom: 15, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Password"></Input>
-                            <Button type="primary" style={{ marginTop: 25, marginBottom: 20, width: "100%", height: 50, borderRadius: 8, backgroundColor: "#032D23", border: 0 }}>Login</Button>
+                            <Input size="large" style={{ marginBottom: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Password"></Input>
+                            <Button type="link" style={{ color: "#032D23", fontSize: 15, padding: 0, float: "right" }}>Forget Password?</Button>
+                            <Button 
+                                type="primary" 
+                                style={{ marginTop: 25, marginBottom: 20, width: "100%", fontSize: 18, height: 50, borderRadius: 8, backgroundColor: "#032D23", border: 0 }}
+                                onClick={() => { goToHome() }}
+                            >Login</Button>
                             <div className="registerButton">
                                 Don't have an account?<Button type="link" style={{ color: "#AAA713", fontWeight: "bold", marginLeft: 3, padding: 0 }}>Get Started</Button>
                             </div>
