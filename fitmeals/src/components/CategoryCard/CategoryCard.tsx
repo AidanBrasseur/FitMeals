@@ -21,7 +21,7 @@ function CategoryCard({ name, icon}: CardProps) {
                         <Icon component={icon} style={{fontSize: 60}}/>
                     </div>
                 </Badge>
-                <div style={{ fontFamily: 'Playfair-Display', fontSize: 'large', fontWeight: 'bold' }}>{name}</div>
+                <div style={{ color: "#032D23", fontSize: 'large', fontWeight: "bold" }}>{name}</div>
             </Space>
         </Card>
         </div>
