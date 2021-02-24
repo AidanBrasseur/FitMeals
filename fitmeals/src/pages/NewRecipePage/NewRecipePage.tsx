@@ -29,17 +29,22 @@ function NewRecipePage() {
       </Layout.Header>
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "white" }}>
         <div className="newRecipe">
-          <Input placeholder="Your Recipe's Title" bordered={false} style={{ fontSize: 48, fontWeight: "bold" }}></Input>
-          <div className="imagePicker">
-            <Dragger style={{ minWidth: "75vw" }}>
-              <div className="imagePickerIcon">
-                <UploadOutlined />
-              </div>
-              <p className="uploadTitle">Upload a picture of your recipe!</p>
-              <p>Click or drag an image to this area to upload</p>
-            </Dragger>
-          </div>
           <Form onFinish={onFinish}>
+            <Form.Item name="title">
+              <Input placeholder="Your Recipe's Title" bordered={false} style={{ fontSize: 48, fontWeight: "bold" }}></Input>
+            </Form.Item> 
+            <Form.Item name="description">
+              <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
+            </Form.Item>            
+            <div className="imagePicker">
+              <Dragger style={{ minWidth: "75vw" }}>
+                <div className="imagePickerIcon">
+                  <UploadOutlined />
+                </div>
+                <p className="uploadTitle">Upload a picture of your recipe!</p>
+                <p>Click or drag an image to this area to upload</p>
+              </Dragger>
+            </div>
             <h1 className="subtitle">Ingredients</h1>
             <Form.List name="ingredients">
               {(fields, { add, remove }) => (
