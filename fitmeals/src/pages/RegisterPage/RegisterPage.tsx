@@ -26,7 +26,7 @@ function RegisterPage () {
                             <div className="inputTitle">Email</div>
                             <Input size="large" style={{ marginBottom: 10, marginTop: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Email"></Input>
                             <div className="inputTitle">Password</div>
-                            <Input size="large" style={{ marginBottom: 20, marginTop: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Password"></Input>
+                            <Input.Password size="large" style={{ marginBottom: 20, marginTop: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Password"></Input.Password>
                             <Checkbox>I agree to the Terms and Conditions</Checkbox>
                             <Button 
                                 type="primary" 

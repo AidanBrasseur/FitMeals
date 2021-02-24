@@ -1,4 +1,4 @@
-import { Button, Layout, Input, Image, Typography } from 'antd';
+import { Button, Layout, Input, Image, Typography, Carousel } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom'
 import './styles.css';
@@ -26,7 +26,7 @@ function LoginPage () {
                         <Typography.Title style={{ fontSize: 60, color: "#032D23" }}>Login</Typography.Title>
                         <div className="mainLoginForm">
                             <Input size="large" style={{ marginTop: 20, marginBottom: 10, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Email"></Input>
-                            <Input size="large" style={{ marginBottom: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Password"></Input>
+                            <Input.Password size="large" style={{ marginBottom: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Password"></Input.Password>
                             <Button type="link" style={{ color: "#032D23", fontSize: 15, padding: 0, float: "right" }}>Forget Password?</Button>
                             <Button 
                                 type="primary" 
@@ -42,13 +42,20 @@ function LoginPage () {
                         <Button type="link" style={{ color: "#032D23", fontSize: 15 }}>Terms and Conditions</Button>
                     </div>
                 </div> 
-                <div className="imageDiv">
-                    <Image 
-                        src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
-                        height="100%"
-                        width="100%"
-                    ></Image>
-                </div>              
+                <Carousel className="imageDiv">
+                    <div>
+                        <Image 
+                            src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
+                            preview={false}
+                        ></Image>
+                    </div>
+                    <div>
+                        <Image 
+                            src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
+                            preview={false}
+                        ></Image>
+                    </div>
+                </Carousel>             
             </Layout.Content>         
         </Layout>       
     );
