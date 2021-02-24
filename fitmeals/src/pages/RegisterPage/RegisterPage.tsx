@@ -20,13 +20,13 @@ function RegisterPage () {
                         <Typography.Title style={{ fontSize: 30, marginBottom: 50 }}>Register your FitMeals Account!</Typography.Title>
                         <div className="mainRegisterForm">
                             <div className="inputTitle">Your Full Name</div>
-                            <Input size="large" style={{ marginBottom: 10, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Name"></Input>
+                            <Input size="large" style={{ marginBottom: 10, marginTop: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Name"></Input>
                             <div className="inputTitle">Username</div>
-                            <Input size="large" style={{ marginBottom: 10, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Username"></Input>
+                            <Input size="large" style={{ marginBottom: 10, marginTop: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Username"></Input>
                             <div className="inputTitle">Email</div>
-                            <Input size="large" style={{ marginBottom: 10, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Email"></Input>
+                            <Input size="large" style={{ marginBottom: 10, marginTop: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Email"></Input>
                             <div className="inputTitle">Password</div>
-                            <Input size="large" style={{ marginBottom: 20, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Password"></Input>
+                            <Input size="large" style={{ marginBottom: 20, marginTop: 5, padding: 10, borderRadius: 8, borderColor: "#032D23" }} placeholder="Enter Password"></Input>
                             <Checkbox>I agree to the Terms and Conditions</Checkbox>
                             <Button 
                                 type="primary" 

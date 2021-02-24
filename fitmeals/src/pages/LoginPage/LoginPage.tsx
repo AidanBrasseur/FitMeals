@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import './styles.css';
 
-function goToHome (){
+function login (){
     
 }
 
@@ -31,7 +31,7 @@ function LoginPage () {
                             <Button 
                                 type="primary" 
                                 style={{ marginTop: 25, marginBottom: 20, width: "100%", fontSize: 18, height: 50, borderRadius: 8, backgroundColor: "#032D23", border: 0 }}
-                                onClick={() => { goToHome() }}
+                                onClick={() => { login() }}
                             >Login</Button>
                             <div className="registerButton">
                                 Don't have an account?<Link to="/register" style={{ color: "#AAA713", marginLeft: 3, padding: 0 }}>Get Started</Link>
