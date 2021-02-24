@@ -7,6 +7,7 @@ import {
 import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
+import NewRecipePage from './pages/NewRecipePage/NewRecipePage';
 import './App.css';
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
         </Route>
         <Route path="/register">
           <RegisterPage />
+        </Route>
+        <Route path="/new-recipe">
+          <NewRecipePage />
         </Route>
       </Switch>
     </Router>

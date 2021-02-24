@@ -1,0 +1,31 @@
+.menu {
+    float: right;
+   
+}
+
+.logo {
+    float: left;
+    font-size: xx-large;
+    color: black;
+    font-weight: bold;
+    font-family: "Playfair Display";
+  }
+  
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.newRecipe{
+    margin-top: 2%;
+    margin-left: 3%;
+    margin-right: 3%;
+    font-family: "Playfair Display";
+}
+
+.subtitle{
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+}

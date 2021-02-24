@@ -37,7 +37,7 @@ function Categories() {
           )}
         />
         <div className="categoryTitle">
-          <Link to="/login" style={{ color: "white", fontSize: 26 }}>Or <span className="underlineLink">Add a New Recipe</span></Link>
+          <Link to="/new-recipe" style={{ color: "white", fontSize: 26 }}>Or <span className="underlineLink">Add a New Recipe</span></Link>
         </div>
       </Space>
     </div>
