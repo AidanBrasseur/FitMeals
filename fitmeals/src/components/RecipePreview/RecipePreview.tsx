@@ -32,7 +32,7 @@ function RecipePreview() {
                     <Col className='infoCol'>
                         <p className='category'>Fish</p>
                         <p className='title'>Grilled Salmon</p>
-                        <p className='subtitle'>Super duper healthy fish</p>
+                        <p className='previewSubtitle'>Super duper healthy fish</p>
                         <Row style={{ justifyContent: 'space-between' }}>
                             <p>10-20min</p>
                             <p>500 cal.</p>

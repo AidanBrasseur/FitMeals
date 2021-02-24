@@ -1,6 +1,5 @@
 .menu {
     float: right;
-   
 }
 
 .logo {
@@ -28,4 +27,22 @@
     font-size: 28px;
     font-weight: bold;
     color: black;
+}
+
+.imagePicker{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family:'Segoe UI';
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.uploadTitle{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.imagePickerIcon{
+    font-size: 32px;
 }
