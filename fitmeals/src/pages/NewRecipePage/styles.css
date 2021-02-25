@@ -34,8 +34,7 @@
     align-items: center;
     justify-content: center;
     font-family:'Segoe UI';
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .uploadTitle{
@@ -45,4 +44,11 @@
 
 .imagePickerIcon{
     font-size: 32px;
+}
+
+.submitDiv{
+    margin-top: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

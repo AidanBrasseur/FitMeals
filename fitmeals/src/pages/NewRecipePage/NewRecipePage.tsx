@@ -136,9 +136,15 @@ function NewRecipePage() {
               )}
             </Form.List>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
+              <div className="submitDiv">
+                <Button 
+                  type="primary" 
+                  htmlType="submit" 
+                  size="large" 
+                  style={{ backgroundColor: "#032D23", borderWidth: 0, width: "30%", height: "100%", borderRadius: 20, fontWeight: "bold", fontSize: 26 }}>
+                  Submit Recipe
+                </Button>
+              </div>
             </Form.Item>
           </Form>
         </div>
