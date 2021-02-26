@@ -1,4 +1,4 @@
-import { Input, Layout, Space, Row, Col, Avatar, Upload, Form, Button, Select } from 'antd';
+import { Input, Layout, Space, Row, Col, Avatar, Upload, Form, Button, Select, Typography } from 'antd';
 import React from 'react';
 import './styles.css';
 import { UserOutlined, UploadOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
@@ -17,7 +17,7 @@ function NewRecipePage() {
   };
 
   return (
-    <Layout >
+    <Layout>
       <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%', justifyContent: 'center', background: 'white' }}>
         <div className="logo">FitMeals</div>
         <Space size={50} className="menu" direction="horizontal">
@@ -27,7 +27,7 @@ function NewRecipePage() {
           <UserOutlined style={{ color: 'black' }}></UserOutlined>
         </Space>
       </Layout.Header>
-      <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "white" }}>
+      <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
         <div className="newRecipe">
           <Form onFinish={onFinish}>
             <Form.Item name="title">
