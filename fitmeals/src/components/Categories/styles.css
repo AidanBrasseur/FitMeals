@@ -1,20 +1,27 @@
 .categoryContainer {
     display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: space-around;
     background-color: #032D23;
-    height: 450px;
+    height: fit-content;
    
 }
 .categoryList{
-    display: flex;
-    align-items: center;
-    justify-content: center;
- 
+    width: 100%;
+    max-width: 1000px;
 }
 
 .categoryTitle{
     font-size: xx-large;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-family: "Playfair Display";
+    margin-bottom: 10px;
+}
+
+.viewCategoriesTitle{
+    font-size: large;
     text-align: center;
     color: white;
     font-weight: bold;
@@ -24,4 +31,7 @@
 .underlineLink{
     box-shadow: inset 0 0px 0 white, inset 0 -1px 0 white
 }
+
+
+
 

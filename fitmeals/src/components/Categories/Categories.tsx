@@ -1,5 +1,5 @@
-import { List, Space } from 'antd';
-import React from 'react';
+import { Button, List, Space } from 'antd';
+import React, { useState } from 'react';
 import './styles.css';
 import { Link } from 'react-router-dom'
 import CategoryCard from '../CategoryCard/CategoryCard';
@@ -14,28 +14,60 @@ export type category = {
   icon: any,
 }
 function Categories() {
-  const categories = [
+  const featuredCategories = [
     { name: 'Salads', icon: SaladSvg } as category,
     { name: 'Vegan', icon: GrassSvg } as category,
     { name: 'Fish', icon: FishSvg } as category,
     { name: 'Pasta', icon: PastaSvg } as category,
-    { name: 'Pizza', icon: PizzaSvg } as category
+    {name: 'Pizza', icon: PizzaSvg} as category]
+  
+  const remainingCategories = [
+    
+    { name: 'Vegan', icon: GrassSvg } as category,
+    { name: 'Fish', icon: FishSvg } as category,
+    {name: 'Pizza', icon: PizzaSvg} as category,
+    { name: 'Salads', icon: SaladSvg } as category,
+    { name: 'Pasta', icon: PastaSvg } as category,
+   
   ]
+  const [categories, setCategories] = useState<category[]>(featuredCategories)
+  const [viewAllCat, setViewAllCat] = useState(false)
 
+  const loadMoreCategories = () => {
+    setViewAllCat(true)
+    setCategories(categories.concat(remainingCategories))
+  }
+  const hideCategories = () =>{
+    setViewAllCat(false)
+    setCategories(featuredCategories)
+  }
+ 
   return (
     <div className='categoryContainer'>
       <Space style={{ marginTop: 10 }} size={25} direction="vertical">
         <div className='categoryTitle'>Choose the category for you</div>
         <List className='categoryList'
-          grid={{ gutter: 50, column: 5 }}
+          grid={{
+            gutter: 50,
+            xs: 2,
+            sm: 2,
+            md: 4,
+            lg: 5,
+            xl: 5,
+            xxl: 5,
+          }}
           itemLayout='horizontal'
           dataSource={categories}
           renderItem={category => (
-            <List.Item>
+            <List.Item style={{display: 'flex', justifyContent: 'center'}}>
               <CategoryCard name={category.name} icon={category.icon} />
             </List.Item>
           )}
         />
+       
+        { !viewAllCat ? <div className='viewCategoriesTitle'>
+          <Button type="text" onClick={loadMoreCategories} style={{color:'white'}}>View All Categories</Button>
+          </div> : <div className='viewCategoriesTitle'><Button  style={{color:'white'}} type="text" onClick={hideCategories}>Hide Categories</Button> </div>}
         <div className="categoryTitle">
           <Link to="/new-recipe" style={{ color: "white", fontSize: 26 }}>Or <span className="underlineLink">Add a New Recipe</span></Link>
         </div>
