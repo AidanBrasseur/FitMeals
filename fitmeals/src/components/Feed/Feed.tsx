@@ -1,4 +1,4 @@
-import { List, Space } from 'antd';
+import { Checkbox, List, Space } from 'antd';
 import React, { useState } from 'react';
 import RecipePreview from '../RecipePreview/RecipePreview';
 import './styles.css';

@@ -5,10 +5,9 @@
     justify-content: center;
 }
 .feedGrid{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
+    width: 100%;
+    max-width: 1750px;
+   
 }
 
 .feedTitle{

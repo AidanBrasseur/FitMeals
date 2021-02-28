@@ -8,7 +8,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import NewRecipePage from './pages/NewRecipePage/NewRecipePage';
-import './App.css';
+import './App.less';
 
 function App() {
   return (
