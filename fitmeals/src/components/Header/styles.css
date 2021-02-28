@@ -5,11 +5,12 @@
 
 .logo {
     float: left;
-    font-size: xx-large;
+    font-size: 40px;
     color: black;
     font-weight: bold;
     font-family: "Playfair Display";
- 
+    margin: auto;
+   
   }
   
 .search {

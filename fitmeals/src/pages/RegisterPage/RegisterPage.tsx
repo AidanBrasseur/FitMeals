@@ -1,4 +1,4 @@
-import { Button, Layout, Input, Image, Typography, Checkbox } from 'antd';
+import { Button, Layout, Input, Image, Typography, Checkbox, Carousel } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom'
 import './styles.css';
@@ -30,7 +30,7 @@ function RegisterPage () {
                             <Checkbox>I agree to the Terms and Conditions</Checkbox>
                             <Button 
                                 type="primary" 
-                                style={{ marginTop: 50, marginBottom: 20, width: "100%", fontSize: 18, height: 50, borderRadius: 8, backgroundColor: "#032D23", border: 0 }}
+                                style={{ marginTop: 50, marginBottom: 20, width: "100%", fontSize: 18, height: 50 }}
                                 onClick={() => { register() }}
                             >Register</Button>
                         </div>
@@ -39,13 +39,25 @@ function RegisterPage () {
                         <Button type="link" style={{ color: "#032D23", fontSize: 15 }}>Terms and Conditions</Button>
                     </div>
                 </div> 
-                <div className="imageDiv">
-                    <Image 
-                        src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
-                        height="100%"
-                        width="100%"
-                    ></Image>
-                </div>              
+                <div className='imageDiv'>
+                    <Carousel swipeToSlide draggable adaptiveHeight={false} variableWidth={false} >
+
+                        <Image
+                            src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
+                            preview={false}
+                            style={{ objectFit: 'cover' }}
+
+                        ></Image>
+
+
+                        <Image
+                            src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
+                            preview={false}
+                            style={{ objectFit: 'cover' }}
+                        ></Image>
+
+                    </Carousel>
+                </div>            
             </Layout.Content>         
         </Layout>       
     );

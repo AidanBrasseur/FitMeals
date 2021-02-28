@@ -41,6 +41,7 @@ function LoginPage() {
                                     prefix={<LockOutlined className="site-form-item-icon" />}
                                     type="password"
                                     placeholder="Password"
+                                   
                                 />
                             </Form.Item>
                             <Form.Item>
@@ -52,7 +53,7 @@ function LoginPage() {
                                     Forgot password?</a>
                             </Form.Item>
                             <Form.Item >
-                                <Button type="primary" style={{ backgroundColor: '#032D23', borderRadius: 8 }} onClick={login}>Login</Button>
+                                <Button type="primary" onClick={login}>Login</Button>
                                 <div className="registerButton">
                                     Don't have an account?<Link to="/register" style={{ marginLeft: 3, padding: 0 }}>Get Started</Link>
                                 </div>
