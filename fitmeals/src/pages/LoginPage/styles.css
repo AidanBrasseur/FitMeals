@@ -1,19 +1,17 @@
 .loginDiv{
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    float: left;
     background-color: white;
     font-family: "Playfair Display";
+    height: 100%;
+
+ 
 }
 
 .logo{
     position: fixed;
     display: flex;
     top: 0;
+    margin-left: 20px;
+    margin-top: 20px;
     align-items: center;
     justify-content: center;
 }
@@ -31,6 +29,7 @@
 
 .registerButton{
     font-size: 16px;
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -41,5 +40,71 @@
 }
 
 .imageDiv{
-    float: right;
+   
+    height: 100%;
 }
+
+.login-form {
+    max-width: 500px;
+    width: 100%;
+    font-family: "helvetica";
+    
+  }
+ .login-form-forgot {
+    float: right;
+  }
+   .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+.login-form .ant-btn {
+    width: 100%;
+    height: 100px;
+    height: 50px;
+    font-size: 18px;
+   
+}
+
+
+  .centerDiv {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .site-form-item-icon {
+      margin-right: 3px;
+  }
+  .ant-carousel {
+      width: 100%;
+      height: 100vh;
+  }
+
+  .slick-slider {
+	
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+    height: 100vh;
+}
+ .slick-slide img {
+	margin-left: auto;
+	cursor: pointer;
+	max-width: 100%;
+    height: 100vh;
+}
+
+ .slick-active img {
+	margin-right: auto;
+}
+
+ .slick-active ~ .slick-slide img {
+	margin-left: 0;
+}
+
+ 
+
+ 
