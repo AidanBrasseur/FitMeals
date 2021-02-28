@@ -1,0 +1,19 @@
+.menu {
+    float: right;
+   
+}
+
+.logo {
+    float: left;
+    font-size: xx-large;
+    color: black;
+    font-weight: bold;
+    font-family: "Playfair Display";
+ 
+  }
+  
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

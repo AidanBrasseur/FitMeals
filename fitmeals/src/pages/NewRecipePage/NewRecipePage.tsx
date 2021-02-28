@@ -1,7 +1,8 @@
-import { Input, Layout, Space, Row, Col, Avatar, Upload, Form, Button, Select, Typography } from 'antd';
+import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload } from 'antd';
 import React from 'react';
+import Header from '../../components/Header/Header';
 import './styles.css';
-import { UserOutlined, UploadOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 function NewRecipePage() {
   const { TextArea } = Input;
@@ -18,15 +19,7 @@ function NewRecipePage() {
 
   return (
     <Layout>
-      <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%', justifyContent: 'center', background: 'white' }}>
-        <div className="logo">FitMeals</div>
-        <Space size={50} className="menu" direction="horizontal">
-          <div className='search'>
-            <Input.Search allowClear placeholder="Search Recipes" onSearch={onSearch} />
-          </div>
-          <UserOutlined style={{ color: 'black' }}></UserOutlined>
-        </Space>
-      </Layout.Header>
+     <Header/>
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
         <div className="newRecipe">
           <Form onFinish={onFinish}>
