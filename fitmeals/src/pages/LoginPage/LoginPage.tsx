@@ -18,7 +18,7 @@ function LoginPage() {
                     <Icon component={logoSVG} style={{ fontSize: 125 }} />
                 </div>
                 <div className='loginDiv'>
-                    <Space direction='vertical' style={{ width: '50%', marginRight: 'auto', marginLeft: 'auto' }}>
+                    <div className='loginInputsDiv'>
                         <Typography.Title style={{ fontSize: 36 }}>Welcome to <span className="name">FitMeals</span></Typography.Title>
                         <Typography.Title style={{ fontSize: 60, color: "#032D23" }}>Login</Typography.Title>
                         <Form
@@ -26,8 +26,7 @@ function LoginPage() {
                             className="login-form"
 
                             initialValues={{ remember: true }}
-                            onFinish={() => console.log('finished')}
-                        >
+                            onFinish={() => console.log('finished')}>
                             <Form.Item
                                 name="email"
                                 rules={[{ required: true, message: 'Please input your email!' }]}
@@ -59,7 +58,7 @@ function LoginPage() {
                                 </div>
                             </Form.Item>
                         </Form>
-                    </Space>
+                    </div>
                 </div>
                
                 <div className='imageDiv'>

@@ -1,5 +1,5 @@
 .loginDiv{
-    width: 50%;
+    min-width: 50%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -8,6 +8,9 @@
     float: left;
     background-color: white;
     font-family: "Playfair Display";
+}
+.loginInputsDiv {
+    width: 65%;
 }
 
 .logo{
@@ -45,6 +48,7 @@
 
 .imageDiv{
     width: 50%;
+    min-width: 100px;
     height: 100%;
     float: right
 }
