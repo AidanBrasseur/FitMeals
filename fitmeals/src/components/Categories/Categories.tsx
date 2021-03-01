@@ -1,14 +1,14 @@
 import { Button, List, Space } from 'antd';
 import React, { useState } from 'react';
 import './styles.css';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import CategoryCard from '../CategoryCard/CategoryCard';
 import { ReactComponent as SaladSvg } from '../../assets/green-salad.svg';
 import { ReactComponent as GrassSvg } from '../../assets/baseline-grass.svg';
 import { ReactComponent as FishSvg } from '../../assets/ion_fish.svg';
 import { ReactComponent as PastaSvg } from '../../assets/mdi_pasta.svg';
 import { ReactComponent as PizzaSvg } from '../../assets/pizza-1.svg';
-
+import { useSessionContext } from '../../contexts/SessionContext';
 export type category = {
   name: string,
   icon: any,
@@ -32,7 +32,8 @@ function Categories() {
   ]
   const [categories, setCategories] = useState<category[]>(featuredCategories)
   const [viewAllCat, setViewAllCat] = useState(false)
-
+  const [sessionContext, updateSessionContext] = useSessionContext();
+  const currentHistory = useHistory();
   const loadMoreCategories = () => {
     setViewAllCat(true)
     setCategories(categories.concat(remainingCategories))
@@ -41,7 +42,9 @@ function Categories() {
     setViewAllCat(false)
     setCategories(featuredCategories)
   }
- 
+ const goToNewRecipe= () => {
+  currentHistory.push('/new-recipe');
+ }
   return (
     <div className='categoryContainer'>
       <Space style={{ marginTop: 10 }} size={25} direction="vertical">
@@ -69,7 +72,7 @@ function Categories() {
           <Button type="text" onClick={loadMoreCategories} style={{color:'white'}}>View All Categories</Button>
           </div> : <div className='viewCategoriesTitle'><Button  style={{color:'white'}} type="text" onClick={hideCategories}>Hide Categories</Button> </div>}
         <div className="categoryTitle">
-          <Link to="/new-recipe" style={{ color: "white", fontSize: 26 }}>Or <span className="underlineLink">Add a New Recipe</span></Link>
+          <div onClick={goToNewRecipe} style={{ color: "white", fontSize: 26 }}>Or <span className="underlineLink">Add a New Recipe</span></div>
         </div>
       </Space>
     </div>

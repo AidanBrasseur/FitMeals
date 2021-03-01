@@ -3,13 +3,17 @@ import { Button, Carousel, Checkbox, Col, Form, Image, Input, Layout, Row, Space
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { ReactComponent as logoSVG } from '../../assets/logo.svg';
+import { useSessionContext } from '../../contexts/SessionContext'
 import './styles.css';
 
 
 function LoginPage() {
     const history = useHistory();
+    const [sessionContext, updateSessionContext] = useSessionContext();
     function login() {
-        history.push("/");
+        updateSessionContext({...sessionContext, isAuthenticated: true}); 
+        let path = sessionContext.redirectPathOnAuthentication
+        history.replace( path != null && path != undefined ? path : '/' );
     }
     return (
         <Layout>
