@@ -1,0 +1,79 @@
+.adminPreviewContainer .ant-card{
+    width: 500px;
+    height: 250px;
+    background-color:  #F7F7F7;
+    display: flex;
+    padding: 0px 0px 0px 0px;
+    justify-content: center;
+    border: none;
+    border-radius: 7%;
+}
+.adminPreviewContainer .ant-card-body{
+    
+    padding: 0px;
+   
+   
+}
+
+.adminImageDiv {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    float: left;
+    overflow: hidden;
+}
+ .adminPreviewImage {
+    border-radius: 7% 0 0 0;
+    object-fit: cover;
+    transition: transform 1s;
+ }
+ .adminPreviewImage:hover {
+    transform: scale(1.05); 
+  }
+ .adminInfoCol {
+     width: 50%;
+     height: 100%;
+     float: right;
+     padding-left: 20px;
+     padding-right: 20px;
+     padding-top: 30px;
+     padding-bottom: 30px;
+    
+ }
+ .adminPreviewRow{
+     height: 80%;
+ }
+ .adminControls{
+    border-top: 1px solid grey;
+    height: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.adminControls .adminApproval .ant-btn {
+   background-color: #3BB54A;
+   border-color: #3BB54A;
+}
+.adminControls .adminReject .ant-btn {
+    background-color: #E04F5F;
+    border-color: #E04F5F;
+ }
+
+ .adminCategory{
+    color: grey;
+    font-size: 15px;
+ }
+
+ .adminTitle {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 2px;
+ }
+
+ .adminPreviewSubtitle {
+    color: grey;
+ }
+
+
+ 
+ 

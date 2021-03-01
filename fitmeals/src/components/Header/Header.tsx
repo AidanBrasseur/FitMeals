@@ -1,4 +1,4 @@
-import { UserOutlined } from '@ant-design/icons';
+import { BookOutlined, SecurityScanOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Input, Layout, Menu, Space } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -16,16 +16,16 @@ function Header() {
     const menu = sessionContext.isAuthenticated ? (
       <Menu>
         <Menu.Item>
-          <Link to="/new-recipe">Profile Page</Link>
+          <Link to="/new-recipe"><UserOutlined />Profile Page</Link>
         </Menu.Item>
         <Menu.Item>
-          <Link to="/new-recipe" >Saved Recipes</Link>
+          <Link to="/new-recipe" ><BookOutlined />Saved Recipes</Link>
         </Menu.Item>
         {sessionContext.isAdmin ? <Menu.Item>
-          <Link to="/admin-panel" >Admin Page</Link>
+          <Link to="/admin-panel" ><SecurityScanOutlined />Admin Page</Link>
         </Menu.Item> : null}
         <Menu.Item>
-          <Link to="/login" ><Button>Logout</Button></Link>
+          <Link to="/login" ><Button> Logout</Button></Link>
         </Menu.Item>
       </Menu>
     ) : (

@@ -1,16 +1,15 @@
-.feedContainer {
+.adminFeedContainer {
     display: flex;
     width: 100%;
-    align-items: center;
+    height: 100vh;
     justify-content: center;
 }
-.feedGrid{
+.adminFeedGrid{
     max-width: 1750px;
     width: 100vw;
-   
 }
 
-.feedTitle{
+.adminFeedTitle{
     font-size: 45px;
     margin-left: 40px;
     color: black;

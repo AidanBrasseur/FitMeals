@@ -2,18 +2,9 @@ import { StarOutlined } from '@ant-design/icons';
 import { Card, Col, Image, Row } from 'antd';
 import React from 'react';
 import './styles.css';
+import {RecipePreviewType} from '../../types';
 
-type previewProps =  {
-    category: string,
-    title: string,
-    subtitle: string,
-    time: string,
-    calories: number,
-    image: string,
-    rating: number,
-}
-
-function RecipePreview({category, title, subtitle, time, calories, image, rating} : previewProps) {
+function RecipePreview({category, title, subtitle, time, calories, image, rating, id} : RecipePreviewType) {
 
     return (
         <div className="previewContainer">
