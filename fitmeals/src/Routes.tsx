@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
-import ProtectedRoute, { ProtectedRouteProps } from './components/ProtectedRoute';
-import { useSessionContext } from './contexts/SessionContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminPage from './pages/AdminPage/AdminPage';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import NewRecipePage from './pages/NewRecipePage/NewRecipePage';
@@ -9,18 +9,7 @@ import RegisterPage from './pages/RegisterPage/RegisterPage';
 
 
 function Routes() {
-  const [sessionContext, updateSessionContext] = useSessionContext();
-
-  const setRedirectPathOnAuthentication = (path: string) => {
-    updateSessionContext({...sessionContext, redirectPathOnAuthentication: path});
-  }
-
-  const defaultProtectedRouteProps: ProtectedRouteProps = {
-    isAuthenticated: !!sessionContext.isAuthenticated,
-    authenticationPath: '/login',
-    redirectPathOnAuthentication: sessionContext.redirectPathOnAuthentication || '',
-    setRedirectPathOnAuthentication
-  };
+  
 
   return (
     <div>
@@ -35,7 +24,8 @@ function Routes() {
         <Route path="/register">
           <RegisterPage />
         </Route>
-        <ProtectedRoute {...defaultProtectedRouteProps} path='/new-recipe' component={NewRecipePage} />
+        <ProtectedRoute path='/new-recipe' component={NewRecipePage} />
+        <ProtectedRoute path='/admin-panel' component={AdminPage} />
       </Switch>
       </Switch>
     </div>

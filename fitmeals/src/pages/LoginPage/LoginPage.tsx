@@ -1,19 +1,24 @@
 import Icon, { LockOutlined, MailOutlined } from '@ant-design/icons';
-import { Button, Carousel, Checkbox, Col, Form, Image, Input, Layout, Row, Space, Typography } from 'antd';
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Button, Carousel, Checkbox, Form, Image, Input, Layout, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { ReactComponent as logoSVG } from '../../assets/logo.svg';
-import { useSessionContext } from '../../contexts/SessionContext'
+import { useSessionContext } from '../../contexts/SessionContext';
 import './styles.css';
 
 
 function LoginPage() {
-    const history = useHistory();
     const [sessionContext, updateSessionContext] = useSessionContext();
+    const { state }: any = useLocation();
+    const { from } = state || { from: { pathname: "/" } };
+    const [redirectToReferrer, setRedirectToReferrer] = useState(false);
+
     function login() {
-        updateSessionContext({...sessionContext, isAuthenticated: true}); 
-        let path = sessionContext.redirectPathOnAuthentication
-        history.replace( path != null && path != undefined ? path : '/' );
+        setRedirectToReferrer(true);
+        updateSessionContext({ ...sessionContext, isAuthenticated: true, isAdmin: true });
+    }
+    if (redirectToReferrer) {
+        return <Redirect to={from} />;
     }
     return (
         <Layout>
@@ -45,7 +50,7 @@ function LoginPage() {
                                     prefix={<LockOutlined className="site-form-item-icon" />}
                                     type="password"
                                     placeholder="Password"
-                                   
+
                                 />
                             </Form.Item>
                             <Form.Item>
@@ -65,7 +70,7 @@ function LoginPage() {
                         </Form>
                     </div>
                 </div>
-               
+
                 <div className='imageDiv'>
                     <Carousel swipeToSlide draggable adaptiveHeight={false} variableWidth={false} >
 

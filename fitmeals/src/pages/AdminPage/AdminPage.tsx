@@ -11,7 +11,7 @@ function AdminPage() {
     <Layout >
      <Header/>
       <Layout.Content className="site-layout" >
-        <Categories></Categories>
+       
         <Feed></Feed>
       </Layout.Content>
     </Layout>

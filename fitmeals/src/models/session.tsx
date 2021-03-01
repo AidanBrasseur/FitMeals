@@ -1,6 +1,6 @@
 export interface Session {
     isAuthenticated?: boolean;
-    redirectPathOnAuthentication?: string;
+    isAdmin? : boolean;
   }
   
   export const initialSession: Session = {}
