@@ -14,10 +14,13 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
     const [ approve, setApprove ] = useState(false);
     const [ reject, setReject ] = useState(false);
     const delay = (ms : number) => new Promise(res => setTimeout(res, ms));
+    
     const onApprove = () => {
-         setApprove(true)
+        console.log('approve')
+        setApprove(true)
     }
     const onReject = () => {
+        console.log('reject')
         setReject(true)
     }
     useEffect( () => {
@@ -73,11 +76,11 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
                 </Row>
                 </Link>
                 <Row className='adminControls'>
-                    <div className='adminApproval'>
-                    <Button type="primary" shape="circle" icon={<CheckOutlined  />} onClick={onApprove}/>
+                    <div className='adminApproval' onClick={onApprove}>
+                    <Button type="primary" shape="circle" icon={<CheckOutlined  />} />
                     </div>
-                    <div className='adminReject'>
-                    <Button type="primary" shape="circle" icon={<CloseOutlined  onClick={onReject}/>} />
+                    <div className='adminReject' onClick={onReject}>
+                    <Button type="primary" shape="circle" icon={<CloseOutlined  />} />
                     </div>
 
                 </Row>
