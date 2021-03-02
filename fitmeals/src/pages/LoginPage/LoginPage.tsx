@@ -64,7 +64,7 @@ function LoginPage() {
                             <Form.Item >
                                 <Button type="primary" onClick={login}>Login</Button>
                                 <div className="registerButton">
-                                    Don't have an account?<Link to="/register" style={{ marginLeft: 3, padding: 0 }}>Get Started</Link>
+                                    Don't have an account?<Link to="/register" className='login-form-get-started'>Get Started</Link>
                                 </div>
                             </Form.Item>
                         </Form>

@@ -1,8 +1,9 @@
-import { Checkbox, List, Space } from 'antd';
+import { List, Space } from 'antd';
+import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from 'react';
+import { RecipePreviewType } from '../../types';
 import RecipePreview from '../RecipePreview/RecipePreview';
 import './styles.css';
-import {RecipePreviewType} from '../../types';
 function Feed() {
     
 
@@ -19,7 +20,7 @@ function Feed() {
 
             <Space style={{ marginTop: 20 }} size={25} direction="vertical">
                 <div className='feedTitle'>Featured Recipes</div>
-
+                <AnimatePresence>
                 <List
                     className='feedGrid'
                     grid={{
@@ -34,17 +35,25 @@ function Feed() {
 
                     itemLayout='horizontal'
                     dataSource={recipes}
-
+                    rowKey={recipe => recipe.id.toString()}
                     renderItem={recipe => (
-
-                        <List.Item style={{ display: 'flex', justifyContent: 'center' }} >
+                      
+                        <motion.div initial={{ x: 300, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: -300, opacity: 0 }}
+                        transition={{ duration: 0.4}} >
+                        <List.Item style={{ display: 'flex', justifyContent: 'center' }}
+                         key={recipe.id.toString()} >
 
                             <RecipePreview id={recipe.id} rating={recipe.rating} category={recipe.category} title={recipe.title} time={recipe.time} calories={recipe.calories} subtitle={recipe.subtitle} image={recipe.image}></RecipePreview>
 
                         </List.Item>
+                        </motion.div>
+                        
 
                     )}
                 />
+                </AnimatePresence>
 
             </Space>
         </div>
