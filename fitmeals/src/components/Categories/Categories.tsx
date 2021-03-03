@@ -8,26 +8,32 @@ import { ReactComponent as GrassSvg } from '../../assets/baseline-grass.svg';
 import { ReactComponent as FishSvg } from '../../assets/ion_fish.svg';
 import { ReactComponent as PastaSvg } from '../../assets/mdi_pasta.svg';
 import { ReactComponent as PizzaSvg } from '../../assets/pizza-1.svg';
+import { ReactComponent as SushiSvg } from '../../assets/sushi.svg';
+import { ReactComponent as BurgerSvg } from '../../assets/burgers.svg';
+import { ReactComponent as SmoothieSvg } from '../../assets/smoothie.svg';
+import { ReactComponent as DessertSvg } from '../../assets/dessert.svg';
+import { ReactComponent as SoupSvg } from '../../assets/soup.svg';
 import { useSessionContext } from '../../contexts/SessionContext';
 export type category = {
   name: string,
   icon: any,
+  count?: number,
 }
 function Categories() {
   const featuredCategories = [
-    { name: 'Salads', icon: SaladSvg } as category,
-    { name: 'Vegan', icon: GrassSvg } as category,
-    { name: 'Fish', icon: FishSvg } as category,
-    { name: 'Pasta', icon: PastaSvg } as category,
-    {name: 'Pizza', icon: PizzaSvg} as category]
+    { name: 'Salads', icon: SaladSvg, count: 50 } as category,
+    { name: 'Vegan', icon: GrassSvg , count: 45} as category,
+    { name: 'Fish', icon: FishSvg, count: 34 } as category,
+    { name: 'Pasta', icon: PastaSvg, count: 56 } as category,
+    {name: 'Pizza', icon: PizzaSvg, count: 24} as category]
   
   const remainingCategories = [
     
-    { name: 'Vegan', icon: GrassSvg } as category,
-    { name: 'Fish', icon: FishSvg } as category,
-    {name: 'Pizza', icon: PizzaSvg} as category,
-    { name: 'Salads', icon: SaladSvg } as category,
-    { name: 'Pasta', icon: PastaSvg } as category,
+    { name: 'Burgers', icon: BurgerSvg, count: 76 } as category,
+    { name: 'Sushi', icon: SushiSvg, count: 25 } as category,
+    {name: 'Smoothies', icon: SmoothieSvg, count: 30} as category,
+    { name: 'Dessert', icon: DessertSvg, count: 10 } as category,
+    { name: 'Soup', icon: SoupSvg, count: 14 } as category,
    
   ]
   const [categories, setCategories] = useState<category[]>(featuredCategories)
@@ -63,7 +69,7 @@ function Categories() {
           dataSource={categories}
           renderItem={category => (
             <List.Item style={{display: 'flex', justifyContent: 'center'}}>
-              <CategoryCard name={category.name} icon={category.icon} />
+              <CategoryCard name={category.name} icon={category.icon} count={category.count} />
             </List.Item>
           )}
         />

@@ -6,8 +6,9 @@ import { motion } from 'framer-motion';
 type CardProps = {
     name: string,
     icon: any,
+    count?: number
 }
-function CategoryCard({ name, icon }: CardProps) {
+function CategoryCard({ name, icon, count }: CardProps) {
     const [selected, setSelected] = React.useState(false);
     return (
         <motion.div
@@ -24,7 +25,7 @@ function CategoryCard({ name, icon }: CardProps) {
                 >
                   
                     <Space size={20} direction='vertical' align='center' >
-                        <Badge style={{ backgroundColor: '#AFD3AA' }} count={50} offset={[-10, 20]}>
+                        <Badge style={{ backgroundColor: '#AFD3AA' }} count={count} offset={[-10, 20]}>
 
                             <motion.div className='categoryIconContainer'
                               animate={
