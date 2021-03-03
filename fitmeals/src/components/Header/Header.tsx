@@ -25,7 +25,7 @@ function Header() {
           <Link to="/admin-panel" ><SecurityScanOutlined />Admin Page</Link>
         </Menu.Item> : null}
         <Menu.Item>
-          <Link to="/login" ><Button> Logout</Button></Link>
+          <Link to="/login" ><Button>Logout</Button></Link>
         </Menu.Item>
       </Menu>
     ) : (
