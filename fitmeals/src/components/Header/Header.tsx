@@ -16,7 +16,7 @@ function Header() {
     const menu = sessionContext.isAuthenticated ? (
       <Menu>
         <Menu.Item>
-          <Link to="/new-recipe"><UserOutlined />Profile Page</Link>
+          <Link to="/profile"><UserOutlined />Profile Page</Link>
         </Menu.Item>
         <Menu.Item>
           <Link to="/new-recipe" ><BookOutlined />Saved Recipes</Link>

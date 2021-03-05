@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import NewRecipePage from './pages/NewRecipePage/NewRecipePage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
-
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 
 function Routes() {
@@ -27,6 +27,7 @@ function Routes() {
         </Route>
         <ProtectedRoute path='/new-recipe' component={NewRecipePage} />
         <ProtectedRoute path='/admin-panel' component={AdminPage} />
+        <ProtectedRoute path='/profile' component={ProfilePage} />
       </Switch>
      
     </div>

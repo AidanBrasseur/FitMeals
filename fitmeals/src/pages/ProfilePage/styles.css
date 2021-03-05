@@ -1,0 +1,47 @@
+.profile{
+    margin-top: 2%;
+    padding-top: 50px;
+    font-family: "Playfair Display";
+}
+
+.banner{
+    height: 25vh;
+    background-color: #032D23;
+    margin-bottom: 6%;
+}
+
+.profilePic{
+    position: absolute;
+    left: 5%;
+    top: 23%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-image: url(https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.profileInfo{
+    margin-left: 5%;
+}
+
+.name{
+    font-size: 54px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 0px;
+}
+
+.username{
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.rating {
+    border-radius: 10px;
+    background-color: #109D7C;
+    margin: 0;
+    width: 10vw;
+}
