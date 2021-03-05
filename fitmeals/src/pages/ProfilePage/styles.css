@@ -39,9 +39,20 @@
     font-weight: bold;
 }
 
-.rating {
+.userRating {
     border-radius: 10px;
     background-color: #109D7C;
-    margin: 0;
+    margin-top: 0;
+    margin-left: 0;
     width: 10vw;
+}
+
+.recipes{
+    margin-top: 8%;
+}
+
+.recipeTitle{
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
 }

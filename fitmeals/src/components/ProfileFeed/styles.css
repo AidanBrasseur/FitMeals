@@ -1,0 +1,13 @@
+.feedContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.feedGrid{
+    max-width: 1750px;
+    width: 100vw;
+   
+}
+
+
