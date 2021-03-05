@@ -2,18 +2,9 @@ import { StarOutlined } from '@ant-design/icons';
 import { Card, Col, Image, Row } from 'antd';
 import React from 'react';
 import './styles.css';
+import {RecipePreviewType} from '../../types';
 
-type previewProps =  {
-    category: string,
-    title: string,
-    subtitle: string,
-    time: string,
-    calories: number,
-    image: string,
-    rating: number,
-}
-
-function RecipePreview({category, title, subtitle, time, calories, image, rating} : previewProps) {
+function RecipePreview({category, title, subtitle, time, calories, image, rating, id} : RecipePreviewType) {
 
     return (
         <div className="previewContainer">
@@ -33,7 +24,7 @@ function RecipePreview({category, title, subtitle, time, calories, image, rating
                        <div className='rating'>
                            <Row  style={{paddingTop: 5, paddingBottom: 5, paddingLeft: 3, paddingRight: 3}}justify='space-around' align='middle'>
                                <StarOutlined style={{color: 'white', fontSize: 15}}/>
-                               <text style={{color: 'white'}}>{rating}</text>
+                               <div style={{color: 'white'}}>{rating}</div>
                            </Row>
                        </div>
                     </div>

@@ -2,6 +2,7 @@ import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/i
 import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload } from 'antd';
 import React from 'react';
 import Header from '../../components/Header/Header';
+
 import './styles.css';
 
 function NewRecipePage() {

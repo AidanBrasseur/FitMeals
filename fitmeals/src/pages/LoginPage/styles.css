@@ -66,8 +66,17 @@
 
 .ant-col-rtl .login-form-forgot {
     float: left;
-}
+  }
 
+  .login-form-get-started {
+     margin-left: 3px; 
+     padding: 0;
+     color: #AAA713 ;
+     
+  }
+  .login-form-get-started:hover {
+    color: #AAA713 ;
+  }
 .login-form .ant-btn {
     width: 100%;
     height: 100px;

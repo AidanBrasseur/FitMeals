@@ -1,33 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  BrowserRouter as Router, useLocation,
 } from "react-router-dom";
-import LoginPage from './pages/LoginPage/LoginPage';
-import HomePage from './pages/HomePage/HomePage';
-import RegisterPage from './pages/RegisterPage/RegisterPage';
-import NewRecipePage from './pages/NewRecipePage/NewRecipePage';
+import { SessionContextProvider } from './contexts/SessionContext';
+import  Routes  from './Routes';
 import './App.less';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 function App() {
+ 
   return (
 
     <Router>
-      <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-        <Route path="/register">
-          <RegisterPage />
-        </Route>
-        <Route path="/new-recipe">
-          <NewRecipePage />
-        </Route>
-      </Switch>
+      <ScrollToTop/>
+       <SessionContextProvider>
+        <Routes />
+      </SessionContextProvider>
+     
     </Router>
   );
 }

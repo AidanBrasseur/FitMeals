@@ -12,7 +12,6 @@ module.exports = {
              '@btn-border-radius-base': '10px',
             '@btn-border-radius-sm': '10px', 
             '@checkbox-color': '#AAA713',
-            '@link-color': '#AAA713',
         },
             javascriptEnabled: true,
           },
