@@ -8,9 +8,14 @@ import './styles.css';
 
 function LoginPage() {
     const history = useHistory();
-    function login() {
-        history.push("/");
+
+    const login = (values: any) =>{
+        // Check credentials of the user and login
+        if (values.email == "user@user.com" && values.password == "user"){
+            history.push("/");
+        }   
     }
+
     return (
         <Layout>
             <Layout.Content style={{ height: '100vh' }}>
@@ -24,9 +29,9 @@ function LoginPage() {
                         <Form
                             name="normal_login"
                             className="login-form"
-
                             initialValues={{ remember: true }}
-                            onFinish={() => console.log('finished')}>
+                            onFinish={login}
+                        >
                             <Form.Item
                                 name="email"
                                 rules={[{ required: true, message: 'Please input your email!' }]}
@@ -41,19 +46,17 @@ function LoginPage() {
                                     prefix={<LockOutlined className="site-form-item-icon" />}
                                     type="password"
                                     placeholder="Password"
-                                   
                                 />
                             </Form.Item>
                             <Form.Item>
                                 <Form.Item name="remember" valuePropName="checked" noStyle>
                                     <Checkbox>Remember me</Checkbox>
                                 </Form.Item>
-
                                 <a className="login-form-forgot" href="">
                                     Forgot password?</a>
                             </Form.Item>
                             <Form.Item >
-                                <Button type="primary" onClick={login}>Login</Button>
+                                <Button type="primary" htmlType="submit">Login</Button>
                                 <div className="registerButton">
                                     Don't have an account?<Link to="/register" style={{ marginLeft: 3, padding: 0 }}>Get Started</Link>
                                 </div>
@@ -61,18 +64,13 @@ function LoginPage() {
                         </Form>
                     </div>
                 </div>
-               
                 <div className='imageDiv'>
                     <Carousel swipeToSlide draggable adaptiveHeight={false} variableWidth={false} >
-
                         <Image
                             src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
                             preview={false}
                             style={{ objectFit: 'cover' }}
-
                         ></Image>
-
-
                         <Image
                             src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
                             preview={false}

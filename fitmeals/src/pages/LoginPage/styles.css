@@ -58,13 +58,16 @@
     width: 100%;
     font-family: "helvetica";
     
-  }
- .login-form-forgot {
+}
+
+.login-form-forgot {
     float: right;
-  }
-   .ant-col-rtl .login-form-forgot {
+}
+
+.ant-col-rtl .login-form-forgot {
     float: left;
-  }
+}
+
 .login-form .ant-btn {
     width: 100%;
     height: 100px;
@@ -73,25 +76,24 @@
    
 }
 
-
-  .centerDiv {
+.centerDiv {
     display: flex;
     width: 100%;
     height: 100%;
     justify-content: center;
     align-items: center;
-  }
+}
 
-  .site-form-item-icon {
-      margin-right: 3px;
-  }
-  .ant-carousel {
-      width: 100%;
-      height: 100vh;
-  }
+.site-form-item-icon {
+    margin-right: 3px;
+}
 
-  .slick-slider {
-	
+.ant-carousel {
+    width: 100%;
+    height: 100vh;
+}
+
+.slick-slider {	
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -99,18 +101,19 @@
 	left: 0;
     height: 100vh;
 }
- .slick-slide img {
+
+.slick-slide img {
 	margin-left: auto;
 	cursor: pointer;
 	max-width: 100%;
     height: 100vh;
 }
 
- .slick-active img {
+.slick-active img {
 	margin-right: auto;
 }
 
- .slick-active ~ .slick-slide img {
+.slick-active ~ .slick-slide img {
 	margin-left: 0;
 }
 
