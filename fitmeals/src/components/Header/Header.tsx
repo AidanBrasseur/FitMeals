@@ -13,7 +13,7 @@ function Header() {
     }
     const [sessionContext, updateSessionContext] = useSessionContext();
 
-    const menu = sessionContext.isAuthenticated ? (
+    const menu = sessionContext.user ? (
       <Menu>
         <Menu.Item>
           <Link to="/profile"><UserOutlined />Profile Page</Link>
@@ -21,7 +21,7 @@ function Header() {
         <Menu.Item>
           <Link to="/new-recipe" ><BookOutlined />Saved Recipes</Link>
         </Menu.Item>
-        {sessionContext.isAdmin ? <Menu.Item>
+        {sessionContext.user?.isAdmin ? <Menu.Item>
           <Link to="/admin-panel" ><SecurityScanOutlined />Admin Page</Link>
         </Menu.Item> : null}
         <Menu.Item>
@@ -40,7 +40,7 @@ function Header() {
         <Link to='/'><div className="textLogo">FitMeals</div></Link>
         <Space size={50} className="menu" direction="horizontal">
           <div className='search'>
-            <Input.Search allowClear placeholder="Search Recipes" onSearch={onSearch} />
+            <Input.Search allowClear placeholder="Search Recipes" onSearch={onSearch} size='large' />
           </div>
           <Dropdown overlay={menu} placement="bottomCenter">
             <UserOutlined style={{ color: 'grey', fontSize: 20 }} />

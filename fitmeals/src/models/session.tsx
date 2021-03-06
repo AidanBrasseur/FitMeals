@@ -1,6 +1,6 @@
+import { User } from '../types';
 export interface Session {
-    isAuthenticated?: boolean;
-    isAdmin? : boolean;
-  }
-  
-  export const initialSession: Session = {}
+  user?: User
+}
+
+export const initialSession: Session = {}

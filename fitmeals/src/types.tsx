@@ -8,3 +8,12 @@ export type RecipePreviewType =  {
     rating?: number,
     id: number,
 }
+
+export type User = {
+    name: string,
+    email: string,
+    authToken: string,
+    username: string,
+    isAdmin: boolean,
+    image?: string,
+}

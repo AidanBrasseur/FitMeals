@@ -1,29 +1,36 @@
 import Icon, { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Carousel, Checkbox, Form, Image, Input, Layout, Typography } from 'antd';
 import React, { useState } from 'react';
-import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import { ReactComponent as logoSVG } from '../../assets/logo.svg';
 import { useSessionContext } from '../../contexts/SessionContext';
+import { User } from '../../types';
 import './styles.css';
 
 
 function LoginPage() {
-    const history = useHistory();
     const [sessionContext, updateSessionContext] = useSessionContext();
     const { state }: any = useLocation();
     const { from } = state || { from: { pathname: "/" } };
     const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
     function login(values: any) {
-        if (values.email == "user@user.com" && values.password == "user"){
+        console.log(values)
+        if (values.email === "user@user.com" && values.password === "user"){
+            let user = {name: 'Joe', email: values.email, authToken: 'test_token', isAdmin: false, username: 'user'} as User
+            updateSessionContext({ ...sessionContext, user});
             setRedirectToReferrer(true);
-            updateSessionContext({ ...sessionContext, isAuthenticated: true, isAdmin: true });
         } 
+        else if (values.email === "admin@admin.com" && values.password === "admin"){
+            let user = {name: 'Bill', email: values.email, authToken: 'test_token', isAdmin: true, username: 'admin'} as User
+            updateSessionContext({ ...sessionContext, user});
+            setRedirectToReferrer(true);
+        }
+        
     }
     if (redirectToReferrer) {
         return <Redirect to={from} />;
     }
-
     return (
         <Layout>
             <Layout.Content style={{ height: '100vh' }}>
@@ -91,7 +98,7 @@ function LoginPage() {
                 </div>
             </Layout.Content>
         </Layout>
+    
     );
-
 }
 export default LoginPage;

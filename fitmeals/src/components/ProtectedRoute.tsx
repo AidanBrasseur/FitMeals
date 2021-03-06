@@ -8,7 +8,7 @@ function ProtectedRoute({ component: Component, ...rest } : any) {
   const [sessionState, setSessionState] = useSessionContext();
   return (
     <Route {...rest}>
-      { sessionState.isAuthenticated ?
+      { sessionState.user ?
         <Component />
       :
         <Redirect to={{ pathname: "/login", state: { from: location } }} />

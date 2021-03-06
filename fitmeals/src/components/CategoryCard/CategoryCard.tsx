@@ -27,21 +27,19 @@ function CategoryCard({ name, icon, count }: CardProps) {
                     <Space size={20} direction='vertical' align='center' >
                         <Badge style={{ backgroundColor: '#AFD3AA' }} count={count} offset={[-10, 20]}>
 
-                            <motion.div className='categoryIconContainer'
-                              animate={
+                            <div className='categoryIconContainer'
+                              style={
                                 !selected
                                   ? {
-                                      opacity: 1,
                                       backgroundColor: "white"
                                     }
                                   : {
-                                      opacity: 1,
                                       backgroundColor: "#AFD3AA"
                                     }
                               }
                              >
                                 <Icon component={icon} style={{ fontSize: 60 }} />
-                            </motion.div>
+                            </div>
                         </Badge>
                         <div style={{ color: "#032D23", fontSize: 'large', fontWeight: "bold" }}>{name}</div>
                     </Space>
