@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Header from '../../components/Header/Header';
 import ImgCrop from 'antd-img-crop';
 import './styles.css';
+import EditableTagGroup from '../../components/TagAdder/TagAdder';
 
 function NewRecipePage() {
   const { TextArea } = Input;
@@ -24,7 +25,15 @@ function NewRecipePage() {
         <div className="newRecipe">
           <Form onFinish={onFinish}>
             <Form.Item name="title">
+              <Row align='middle'>
+                <Col span={16}>
               <Input placeholder="Your Recipe's Title" bordered={false} style={{ fontSize: 48, fontWeight: "bold" }}></Input>
+              </Col>
+              <Col span={8}  push={2}>
+              <EditableTagGroup></EditableTagGroup>
+              </Col>
+              </Row>
+
             </Form.Item>
             <Form.Item name="description">
               <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
