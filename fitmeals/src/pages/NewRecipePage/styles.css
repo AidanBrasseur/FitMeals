@@ -37,3 +37,9 @@
     align-items: center;
     justify-content: center;
 }
+
+.uploadImagePreview {
+    width: 70vw;
+    height: 30vw;
+    object-fit: cover;
+}

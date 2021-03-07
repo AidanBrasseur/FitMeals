@@ -8,9 +8,9 @@ import './styles.css';
 function HomePage() {
  
   return (
-    <Layout >
+    <Layout>
      <Header/>
-      <Layout.Content className="site-layout" >
+      <Layout.Content className="home-layout" >
         <Categories></Categories>
         <Feed title={"Featured Recipes"}></Feed>
       </Layout.Content>

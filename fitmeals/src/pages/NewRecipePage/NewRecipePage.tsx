@@ -1,43 +1,53 @@
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../../components/Header/Header';
-
+import ImgCrop from 'antd-img-crop';
 import './styles.css';
 
 function NewRecipePage() {
   const { TextArea } = Input;
   const { Dragger } = Upload;
   const { Option } = Select;
+  const [image, setImage] = useState<string | null>(null);
 
-  const onSearch = () => {
 
-  }
-
-  const onFinish = (values : any) => {
+  const onFinish = (values: any) => {
     console.log('Received values of form:', values);
   };
+  
 
   return (
     <Layout>
-     <Header/>
+      <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
         <div className="newRecipe">
           <Form onFinish={onFinish}>
             <Form.Item name="title">
               <Input placeholder="Your Recipe's Title" bordered={false} style={{ fontSize: 48, fontWeight: "bold" }}></Input>
-            </Form.Item> 
+            </Form.Item>
             <Form.Item name="description">
               <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
-            </Form.Item>            
+            </Form.Item>
             <div className="imagePicker">
-              <Dragger style={{ minWidth: "75vw" }}>
-                <div className="imagePickerIcon">
-                  <UploadOutlined />
-                </div>
-                <p className="uploadTitle">Upload a picture of your recipe!</p>
-                <p>Click or drag an image to this area to upload</p>
+            <ImgCrop quality={1} aspect={70/30} rotate>
+              <Dragger beforeUpload={file => {
+                setImage(URL.createObjectURL(file))
+
+
+                // Prevent upload
+                return false;
+              }} style={{ minWidth: "75vw" }} multiple={false}  showUploadList={false}>
+                {image ? <img className='uploadImagePreview'src={image} /> :
+                  <div>
+                    <div className="imagePickerIcon">
+                      <UploadOutlined />
+                    </div>
+                    <p className="uploadTitle">Upload a picture of your recipe!</p>
+                    <p>Click or drag an image to this area to upload</p>
+                  </div>}
               </Dragger>
+              </ImgCrop>
             </div>
             <h1 className="subtitle">Ingredients</h1>
             <Form.List name="ingredients">
@@ -131,10 +141,10 @@ function NewRecipePage() {
             </Form.List>
             <Form.Item>
               <div className="submitDiv">
-                <Button 
-                  type="primary" 
-                  htmlType="submit" 
-                  size="large" 
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
                   style={{ width: "30%", height: "100%", fontWeight: "bold", fontSize: 26 }}>
                   Submit Recipe
                 </Button>
