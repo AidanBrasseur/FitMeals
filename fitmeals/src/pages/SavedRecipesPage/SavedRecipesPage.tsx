@@ -10,7 +10,7 @@ function SavedRecipesPage() {
   return (
     <Layout >
      <Header/>
-      <Layout.Content className="site-layout" >
+      <Layout.Content className="saved-layout" >
         <Feed title={"Your Saved Recipes"}></Feed>
       </Layout.Content>
     </Layout>

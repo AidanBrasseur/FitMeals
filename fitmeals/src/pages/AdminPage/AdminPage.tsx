@@ -9,7 +9,7 @@ function AdminPage() {
   return (
     <Layout >
      <Header/>
-      <Layout.Content className="site-layout" >
+      <Layout.Content className="admin-layout" >
         <AdminFeed></AdminFeed>
       </Layout.Content>
     </Layout>
