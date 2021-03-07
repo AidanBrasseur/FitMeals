@@ -1,41 +1,39 @@
 .profile{
-    margin-top: 2%;
-    padding-top: 50px;
     font-family: "Playfair Display";
+    
 }
-
 .banner{
-    height: 25vh;
+    width: 100%;
+    height: fit-content;
     background-color: #032D23;
-    margin-bottom: 6%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
 }
 
 .profilePic{
-    position: absolute;
-    left: 5%;
-    top: 23%;
-    width: 200px;
-    height: 200px;
     border-radius: 50%;
-    background-image: url(https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    object-fit: cover;
+    max-width: 500px;
+    max-height: 500px;
 }
 
 .profileInfo{
-    margin-left: 5%;
+    width: 100%;
 }
 
 .name{
-    font-size: 54px;
+    font-size: 60px;
+    font-size: min(5vw, 100px);
     font-weight: bold;
-    color: black;
+    color: white;
     margin-bottom: 0px;
 }
 
 .username{
-    font-size: 22px;
+    font-size: 30px;
+    font-size: min(2.5vw, 100px);
+    color: white;
     font-weight: bold;
 }
 
@@ -45,14 +43,18 @@
     margin-top: 0;
     margin-left: 0;
     width: 10vw;
+    min-width: 200px;
 }
 
 .recipes{
     margin-top: 8%;
 }
 
-.recipeTitle{
-    font-size: 40px;
-    font-weight: bold;
-    color: black;
+.userInfoRow {
+    max-width: 1750px;
+    width: 100vw;
+    margin-left: 50px;
+     padding-top: 100px;
+      padding-bottom: 70px;
 }
+

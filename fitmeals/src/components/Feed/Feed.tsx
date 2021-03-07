@@ -4,7 +4,11 @@ import React, { useState } from 'react';
 import { RecipePreviewType } from '../../types';
 import RecipePreview from '../RecipePreview/RecipePreview';
 import './styles.css';
-function Feed() {
+
+type FeedProps = {
+    title: string;
+}
+function Feed({title} : FeedProps) {
     
 
     const [recipes, setRecipes] = useState([
@@ -19,7 +23,7 @@ function Feed() {
         <div className="feedContainer">
 
             <Space style={{ marginTop: 20 }} size={25} direction="vertical">
-                <div className='feedTitle'>Featured Recipes</div>
+                <div className='feedTitle'>{title}</div>
                 <AnimatePresence>
                 <List
                     className='feedGrid'
