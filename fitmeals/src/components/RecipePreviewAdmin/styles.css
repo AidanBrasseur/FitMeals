@@ -21,6 +21,7 @@
     height: 100%;
     display: flex;
     float: left;
+    border-radius: 7% 0 0 0;
     overflow: hidden;
 }
  .adminPreviewImage {

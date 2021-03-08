@@ -53,7 +53,7 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
         <div className="adminPreviewContainer">
             <Card
             >
-                <Link to={'/new-recipe'}>
+                <Link to={'/edit-recipe'}>
                 <Row className='adminPreviewRow'>
                     <div className='adminImageDiv'>
                         <Image

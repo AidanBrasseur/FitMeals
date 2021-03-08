@@ -1,5 +1,5 @@
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Modal, Row, Select, Spin, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, Layout, Modal, Result, Row, Select, Spin, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
@@ -7,14 +7,14 @@ import Header from '../../components/Header/Header';
 import './styles.css';
 
 
-function NewRecipePage() {
+function EditRecipePage() {
   const { TextArea } = Input;
+  const history = useHistory();
   const { Dragger } = Upload;
   const { Option } = Select;
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>("https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg");
   const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert"])
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
   const children: any = [];
   const delay = (ms : number) => new Promise(res => setTimeout(res, ms));
   categories.forEach(category => {
@@ -32,18 +32,25 @@ function NewRecipePage() {
 
   function success() {
     Modal.success({
-      content: 'Your recipe was sent to the admins for review',
+      content: 'Successfully updated recipe',
       onOk() {history.goBack()}
     });
   }
-
   return (
     <Layout>
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
+      
       <Spin style={{height: '100%', position: 'fixed', top: '25%'}} size="large" spinning={loading}>
         <div className="newRecipe">
-          <Form onFinish={onFinish}>
+          <Form onFinish={onFinish}
+            initialValues={{
+              "title": "World's Best Pizza",
+              "description": "Priy Fill these out with whatever values you want",
+              "categories": ['Pizza', 'Italian'],
+              "ingredients": [{ 'name': 'aidan', 'amount': 5, 'unit': 'kg' }],
+              "instructions": [{ 'instruction': 'do thing with thing' }, { 'instruction': 'do thing 2 with thing 2' }],
+            }}>
            
               <Row align='middle'>
                 <Col span={16}>
@@ -68,7 +75,7 @@ function NewRecipePage() {
                 </Col>
               </Row>
 
-         
+            
             <Form.Item name="description">
               <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
             </Form.Item>
@@ -202,16 +209,17 @@ function NewRecipePage() {
                   htmlType="submit"
                   size="large"
                   style={{ width: "30%", height: "100%", fontWeight: "bold", fontSize: 26 }}>
-                  Submit Recipe
+                  Update Recipe
                 </Button>
               </div>
             </Form.Item>
           </Form>
         </div>
-       </Spin>
+        </Spin>
       </Layout.Content>
     </Layout>
+
   );
 
 }
-export default NewRecipePage;
+export default EditRecipePage;
