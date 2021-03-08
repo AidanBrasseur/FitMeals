@@ -1,5 +1,5 @@
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Spin, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, Layout, Modal, Row, Select, Spin, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
@@ -27,8 +27,15 @@ function NewRecipePage() {
     setLoading(true)
     await delay(1000);
     setLoading(false);
-    history.goBack();
+    success();
   };
+
+  function success() {
+    Modal.success({
+      content: 'Your recipe was sent to the admins for review',
+      onOk() {history.goBack()}
+    });
+  }
 
   return (
     <Layout>
