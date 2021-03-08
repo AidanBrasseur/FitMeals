@@ -196,7 +196,7 @@ function EditRecipePage() {
                   htmlType="submit"
                   size="large"
                   style={{ width: "30%", height: "100%", fontWeight: "bold", fontSize: 26 }}>
-                  Submit Recipe
+                  Update Recipe
                 </Button>
               </div>
             </Form.Item>
