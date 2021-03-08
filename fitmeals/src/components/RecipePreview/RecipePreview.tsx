@@ -3,11 +3,13 @@ import { Card, Col, Image, Row } from 'antd';
 import React from 'react';
 import './styles.css';
 import {RecipePreviewType} from '../../types';
+import { Link } from 'react-router-dom';
 
 function RecipePreview({category, title, subtitle, time, calories, image, rating, id} : RecipePreviewType) {
 
     return (
         <div className="previewContainer">
+            <Link to="/recipe">
             <Card
                 hoverable
             >
@@ -39,6 +41,7 @@ function RecipePreview({category, title, subtitle, time, calories, image, rating
                     </Col>
                 </Row>
             </Card>
+            </Link>
         </div>
     );
 
