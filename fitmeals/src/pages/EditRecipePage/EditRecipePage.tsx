@@ -1,34 +1,41 @@
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, Layout, Result, Row, Select, Spin, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import Header from '../../components/Header/Header';
 import './styles.css';
 
 
 function EditRecipePage() {
   const { TextArea } = Input;
+  const history = useHistory();
   const { Dragger } = Upload;
   const { Option } = Select;
   const [image, setImage] = useState<string | null>("https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg");
   const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert"])
-
+  const [loading, setLoading] = useState(false);
   const children: any = [];
+  const delay = (ms : number) => new Promise(res => setTimeout(res, ms));
   categories.forEach(category => {
     children.push(<Option value={category} key={category}>{category}</Option>);
   });
 
 
-  const onFinish = (values: any) => {
+  const onFinish = async(values: any) => {
     console.log('Received values of form:', values);
+    setLoading(true)
+    await delay(1000);
+    setLoading(false);
+    history.goBack();
   };
-
-
 
   return (
     <Layout>
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
+      
+      <Spin style={{height: '100%', position: 'fixed', top: '25%'}} size="large" spinning={loading}>
         <div className="newRecipe">
           <Form onFinish={onFinish}
             initialValues={{
@@ -202,8 +209,10 @@ function EditRecipePage() {
             </Form.Item>
           </Form>
         </div>
+        </Spin>
       </Layout.Content>
     </Layout>
+
   );
 
 }

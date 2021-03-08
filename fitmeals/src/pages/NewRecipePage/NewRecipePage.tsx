@@ -1,7 +1,8 @@
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Spin, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import Header from '../../components/Header/Header';
 import './styles.css';
 
@@ -12,21 +13,28 @@ function NewRecipePage() {
   const { Option } = Select;
   const [image, setImage] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert"])
-
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
   const children: any = [];
+  const delay = (ms : number) => new Promise(res => setTimeout(res, ms));
   categories.forEach(category => {
     children.push(<Option value={category} key={category}>{category}</Option>);
   });
 
 
-  const onFinish = (values: any) => {
+  const onFinish = async(values: any) => {
     console.log('Received values of form:', values);
+    setLoading(true)
+    await delay(1000);
+    setLoading(false);
+    history.goBack();
   };
 
   return (
     <Layout>
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
+      <Spin style={{height: '100%', position: 'fixed', top: '25%'}} size="large" spinning={loading}>
         <div className="newRecipe">
           <Form onFinish={onFinish}>
            
@@ -193,6 +201,7 @@ function NewRecipePage() {
             </Form.Item>
           </Form>
         </div>
+       </Spin>
       </Layout.Content>
     </Layout>
   );
