@@ -21,6 +21,7 @@
     display: flex;
     float: left;
     overflow: hidden;
+    border-radius: 7% 0 0 7%;
 }
  .previewImage {
     border-radius: 7% 0 0 7%;
