@@ -6,11 +6,11 @@ import Header from '../../components/Header/Header';
 import './styles.css';
 
 
-function NewRecipePage() {
+function EditRecipePage() {
   const { TextArea } = Input;
   const { Dragger } = Upload;
   const { Option } = Select;
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<string | null>("https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg");
   const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert"])
 
   const children: any = [];
@@ -23,12 +23,21 @@ function NewRecipePage() {
     console.log('Received values of form:', values);
   };
 
+
+
   return (
     <Layout>
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
         <div className="newRecipe">
-          <Form onFinish={onFinish}>
+          <Form onFinish={onFinish}
+            initialValues={{
+              "title": "World's Best Pizza",
+              "description": "Priy Fill these out with whatever values you want",
+              "categories": ['Pizza', 'Italian'],
+              "ingredients": [{ 'name': 'aidan', 'amount': 5, 'unit': 'kg' }],
+              "instructions": [{ 'instruction': 'do thing with thing' }, { 'instruction': 'do thing 2 with thing 2' }],
+            }}>
            
               <Row align='middle'>
                 <Col span={16}>
@@ -53,7 +62,7 @@ function NewRecipePage() {
                 </Col>
               </Row>
 
-         
+            
             <Form.Item name="description">
               <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
             </Form.Item>
@@ -198,4 +207,4 @@ function NewRecipePage() {
   );
 
 }
-export default NewRecipePage;
+export default EditRecipePage;

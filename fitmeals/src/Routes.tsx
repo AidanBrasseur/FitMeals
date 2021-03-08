@@ -8,6 +8,7 @@ import NewRecipePage from './pages/NewRecipePage/NewRecipePage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import SavedRecipesPage from './pages/SavedRecipesPage/SavedRecipesPage';
+import EditRecipePage from './pages/EditRecipePage/EditRecipePage';
 
 function Routes() {
   
@@ -29,6 +30,7 @@ function Routes() {
         <ProtectedRoute path='/admin-panel' component={AdminPage} />
         <ProtectedRoute path='/profile' component={ProfilePage} />
         <ProtectedRoute path='/saved-recipes' component={SavedRecipesPage} />
+        <ProtectedRoute path='/edit-recipe' component={EditRecipePage} />
       </Switch>
      
     </div>
