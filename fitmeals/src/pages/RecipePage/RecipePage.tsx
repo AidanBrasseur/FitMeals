@@ -120,15 +120,12 @@ function RecipePage() {
                                         <Text className="recipeDescription" style={{ fontSize: 20 }} type="secondary">Mr. Beans</Text>
                                     </Col>
                                     <Col style={{ marginRight: 10 }}>
-                                        {/* <div className='rating'>
-                                            <Row style={{ paddingTop: 5, paddingBottom: 5, paddingLeft: 3, paddingRight: 3 }} justify='space-around' align='middle'>
+                                      
+                                        <div className='recipeRatingDiv'>
+                                            <Row style={{ paddingLeft: 3, paddingRight: 3 }} justify='space-around' align='middle'>
                                                 <StarOutlined style={{ color: 'white', fontSize: 15 }} />
-                                                <div style={{ color: 'white' }}>4.5</div>
+                                                <div style={{ color: 'white' }}>{rating}</div>
                                             </Row>
-                                        </div> */}
-                                        <div className="recipeRatingDiv" >
-                                            <StarOutlined style={{ color: 'white', fontSize: 15 }} />
-                                            <text style={{ marginLeft: 5 }}>{rating}</text>
                                         </div>
                                     </Col>
 
@@ -144,7 +141,7 @@ function RecipePage() {
                             <Col className="recipeCats" >
                                 {/* <EditableTagGroup></EditableTagGroup> */}
                                 {categories.map((cat, index) =>
-                                    <Tag style={{ paddingLeft: 20, paddingRight: 20 }} color="#109D7C">
+                                    <Tag key={cat} style={{ paddingLeft: 20, paddingRight: 20 }} color="#109D7C">
                                         {cat}
                                     </Tag>
                                 )}
@@ -184,11 +181,11 @@ function RecipePage() {
 
                         </Row>
 
-                        <Row justify='space-between'style={{ width: '55vw', maxWidth: 1000 }}>
+                        <Row justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
                             <Col offset={1} span={11} style={{ marginBottom: 15 }}>
 
                                 {ingredients.map((item, index) =>
-                                    <Row style={{ marginBottom: 10 }}>
+                                    <Row key={index} style={{ marginBottom: 10 }}>
                                         <Checkbox>
                                             <Text style={{ fontSize: 20 }}>{`${item.quantity} ${item.unit} ${item.name}`}</Text>
                                         </Checkbox>
@@ -244,7 +241,7 @@ function RecipePage() {
                             <Col offset={1} span={24}>
                                 <Steps direction="vertical">
                                     {instructions.map((instruction, index) =>
-                                        <Step title={`Step ${index + 1}`} status="process" description={instruction} />
+                                        <Step key={index}  title={`Step ${index + 1}`} status="process" description={instruction} />
                                     )}
 
                                 </Steps>
