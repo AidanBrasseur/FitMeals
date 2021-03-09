@@ -2,14 +2,18 @@ import { StarOutlined } from '@ant-design/icons';
 import { Card, Col, Image, Row } from 'antd';
 import React from 'react';
 import './styles.css';
-import {RecipePreviewType} from '../../types';
+import {Recipe, RecipePreviewType} from '../../types';
 import { Link } from 'react-router-dom';
-
-function RecipePreview({category, title, subtitle, time, calories, image, rating, id} : RecipePreviewType) {
-
+type RecipePreviewProps = {
+    recipe: Recipe,
+   
+}
+function RecipePreview({recipe} : RecipePreviewProps ) {
+    const {categories, title, subtitle, time, calories, image, id, rating} = recipe
     return (
         <div className="previewContainer">
-            <Link to="/recipe">
+            <Link to={{pathname: '/recipe',
+                        state: { recipe: recipe }}}>
             <Card
                 hoverable
             >
@@ -31,7 +35,7 @@ function RecipePreview({category, title, subtitle, time, calories, image, rating
                        </div>}
                     </div>
                     <Col className='infoCol'>
-                        <p className='category'>{category}</p>
+                        <p className='category'>{categories[0]}</p>
                         <p className='title'>{title}</p>
                         <p className='previewSubtitle'>{subtitle}</p>
                         <Row style={{ justifyContent: 'space-between' }}>

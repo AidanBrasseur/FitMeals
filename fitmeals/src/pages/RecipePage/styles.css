@@ -5,6 +5,7 @@
     margin-bottom: 2%;
     padding: 50px;
     font-family: "Playfair Display";
+  
     background-color: white;
 }
 .recipeDescritption{
@@ -39,10 +40,23 @@
     width: 60px;
 }
 
-.recipeImage{
+.recipeImage .ant-image-img{
     border-radius: 7% 7% 7% 7%;
     object-fit: cover;
     transition: transform 1s;
+    width: 55vw;
+    height: 27vw;
+    max-width: 1000px;
+    max-height: 500px;
+}
+.recipeImage .ant-image{
+    border-radius: 7% 7% 7% 7%;
+    object-fit: cover;
+    transition: transform 1s;
+    width: 55vw;
+    height: 27vw;
+    max-width: 1000px;
+    max-height: 500px;
 }
 .subtitle{
     font-size: 28px;
@@ -56,6 +70,7 @@
     justify-content: center;
     font-family:'Segoe UI';
     margin-bottom: 40px;
+   
 }
 
 .uploadTitle{

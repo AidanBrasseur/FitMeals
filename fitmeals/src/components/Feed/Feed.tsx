@@ -48,7 +48,7 @@ function Feed({ title, user }: FeedProps) {
                                 <List.Item style={{ display: 'flex', justifyContent: 'center' }}
                                     key={recipe.id.toString()} >
 
-                                    <RecipePreview id={recipe.id} rating={recipe.rating} category={recipe.categories[0]} title={recipe.title} time={recipe.time} calories={recipe.calories} subtitle={recipe.subtitle} image={recipe.image}></RecipePreview>
+                                    <RecipePreview recipe={recipe}></RecipePreview>
 
                                 </List.Item>
                             </motion.div>

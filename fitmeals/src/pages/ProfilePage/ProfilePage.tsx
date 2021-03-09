@@ -3,7 +3,6 @@ import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Uplo
 import React from 'react';
 import Feed from '../../components/Feed/Feed';
 import Header from '../../components/Header/Header';
-import ProfileFeed from '../../components/ProfileFeed/ProfileFeed'
 
 import './styles.css';
 

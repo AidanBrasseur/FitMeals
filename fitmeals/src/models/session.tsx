@@ -33,7 +33,7 @@ const recipes = [
     calories: 700,
     image: "https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg",
     ingredients: ingredients,
-    categories: ['Pizza'],
+    categories: ['Pizza', 'Cheese', 'Italian', 'Unhealthy'],
     instructions: instructions
   } as Recipe,
   {
