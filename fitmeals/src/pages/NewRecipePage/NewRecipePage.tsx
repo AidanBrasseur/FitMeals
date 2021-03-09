@@ -5,14 +5,15 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import Header from '../../components/Header/Header';
 import './styles.css';
-
+import { useSessionContext } from '../../contexts/SessionContext';
+import { Recipe } from '../../types';
 
 function NewRecipePage() {
   const { TextArea } = Input;
   const { Dragger } = Upload;
   const { Option } = Select;
   const [image, setImage] = useState<string | null>(null);
-  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert"])
+  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup"])
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const children: any = [];
@@ -20,13 +21,24 @@ function NewRecipePage() {
   categories.forEach(category => {
     children.push(<Option value={category} key={category}>{category}</Option>);
   });
-
+  const [sessionContext, updateSessionContext] = useSessionContext();
 
   const onFinish = async(values: any) => {
     console.log('Received values of form:', values);
     setLoading(true)
     await delay(1000);
     setLoading(false);
+    values.image = image;
+    //Temporary will need more input fields
+    values.subtitle = 'test';
+    values.time = '20-30min';
+    values.calories = 400;
+    values.id = sessionContext.underReviewRecipes.length + 1;
+    let recipe = values as Recipe;
+
+    let underReviewRecipes = [recipe, ...sessionContext.underReviewRecipes]
+    let userRecipes = [recipe, ...sessionContext.userRecipes]
+    updateSessionContext({ ...sessionContext, underReviewRecipes: underReviewRecipes, userRecipes: userRecipes})
     success();
   };
 
@@ -73,7 +85,7 @@ function NewRecipePage() {
               <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
             </Form.Item>
             <div className="imagePicker">
-              <ImgCrop quality={1} aspect={70 / 30} rotate>
+              <ImgCrop aspect={70 / 30} rotate>
                 <Dragger beforeUpload={file => {
                   setImage(URL.createObjectURL(file))
 
@@ -108,7 +120,7 @@ function NewRecipePage() {
                           </Form.Item>
                         </Col>
                         <Col style={{ marginLeft: 10 }} span={3}>
-                          <Form.Item {...field} name={[field.name, 'amount']} fieldKey={[field.fieldKey, 'amount']}>
+                          <Form.Item {...field} name={[field.name, 'quantity']} fieldKey={[field.fieldKey, 'quantity']}>
                             <Input placeholder="Quantity"></Input>
                           </Form.Item>
                         </Col>
@@ -162,7 +174,7 @@ function NewRecipePage() {
                           <Avatar>{index + 1}</Avatar>
                         </Col>
                         <Col span={12}>
-                          <Form.Item {...field} name={[field.name, 'instruction']} fieldKey={[field.fieldKey, 'instruction']}>
+                          <Form.Item {...field} >
                             <TextArea placeholder="Enter your instruction" rows={4} bordered={false} style={{ fontSize: 16 }}></TextArea>
                           </Form.Item>
                         </Col>

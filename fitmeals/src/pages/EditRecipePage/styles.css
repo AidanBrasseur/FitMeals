@@ -51,3 +51,28 @@
 .selectCategory {
     width: 20vw;
 }
+.adminFullControls{
+    height: 20%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 8vh;
+    font-family: 'Segoe UI';
+}
+.adminFullControls .adminFullApproval .ant-btn {
+   background-color: #3BB54A;
+   min-width: fit-content;
+   font-size: 25px;
+   height: 5vh;
+   width: 15vw;
+   border-color: #3BB54A;
+   
+}
+.adminFullControls .adminFullReject .ant-btn {
+    background-color: #E04F5F;
+    border-color: #E04F5F;
+    font-size: 25px;
+    min-width: fit-content;
+    height: 5vh;
+    width: 15vw;
+ }

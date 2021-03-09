@@ -1,7 +1,4 @@
-.profile{
-    font-family: "Playfair Display";
-    
-}
+
 .banner{
     width: 100%;
     height: fit-content;
@@ -9,6 +6,7 @@
     display: flex;
     align-content: center;
     justify-content: center;
+    font-family: "Playfair Display";
 }
 
 .profilePic{
@@ -20,6 +18,7 @@
 
 .profileInfo{
     width: 100%;
+   
 }
 
 .name{

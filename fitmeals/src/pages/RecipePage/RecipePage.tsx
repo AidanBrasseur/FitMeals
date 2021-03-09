@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Header from '../../components/Header/Header';
 import ImgCrop from 'antd-img-crop';
 import './styles.css';
-import EditableTagGroup from '../../components/TagAdder/TagAdder';
 import { Rate, Image, Space, Typography, Tag, Divider } from 'antd';
 import { StarOutlined } from '@ant-design/icons';
 
@@ -20,7 +19,6 @@ function RecipePage() {
     const onFinish = (values: any) => {
         console.log('Received values of form:', values);
     };
-
 
     return (
         <Layout>

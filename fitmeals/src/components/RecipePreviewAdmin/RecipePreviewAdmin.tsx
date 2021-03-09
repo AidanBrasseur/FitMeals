@@ -2,15 +2,15 @@ import { CheckOutlined, CloseOutlined, StarOutlined, UserOutlined } from '@ant-d
 import { Button, Card, Col, Image, Row, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './styles.css';
-import {RecipePreviewType} from '../../types';
+import {Recipe, RecipePreviewType} from '../../types';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 type AdminPreviewProps = {
-    preview: RecipePreviewType,
+    preview: Recipe,
     removePreviewById: Function,
 }
 function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
-    const {category, title, subtitle, time, calories, image, id} = preview
+    const {categories, title, subtitle, time, calories, image, id} = preview
     const [ approve, setApprove ] = useState(false);
     const [ reject, setReject ] = useState(false);
     const delay = (ms : number) => new Promise(res => setTimeout(res, ms));
@@ -26,7 +26,7 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
     useEffect( () => {
         async function removeList () {
             await delay(300);
-            removePreviewById(id)
+            removePreviewById(id, true)
         }
         if(approve){
         removeList()
@@ -53,7 +53,8 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
         <div className="adminPreviewContainer">
             <Card
             >
-                <Link to={'/edit-recipe'}>
+                <Link to={{pathname: '/edit-recipe',
+                        state: { recipe: preview }}}>
                 <Row className='adminPreviewRow'>
                     <div className='adminImageDiv'>
                         <Image
@@ -65,7 +66,7 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
                         ></Image>
                     </div>
                     <Col className='adminInfoCol'>
-                        <p className='adminCategory'>{category}</p>
+                        <p className='adminCategory'>{categories[0]}</p>
                         <p className='adminTitle'>{title}</p>
                         <p className='adminPreviewSubtitle'>{subtitle}</p>
                         <Row style={{ justifyContent: 'space-between' }}>

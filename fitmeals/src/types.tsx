@@ -25,12 +25,14 @@ export type Ingredient = {
 }
 
 export type Recipe = {
+    id: number,
     title: string,
     categories: string[],
+    description: string,
     time: string,
     calories: number,
     subtitle: string,
-    rating: number,
+    rating?: number,
     ingredients: Ingredient[],
     image: string,
     instructions: string[],
