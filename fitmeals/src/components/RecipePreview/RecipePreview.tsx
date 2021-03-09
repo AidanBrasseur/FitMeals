@@ -23,12 +23,12 @@ function RecipePreview({category, title, subtitle, time, calories, image, rating
                             preview={false}
                             className='previewImage'
                         ></Image>
-                       <div className='rating'>
+                       {rating && <div className='rating'>
                            <Row  style={{paddingTop: 5, paddingBottom: 5, paddingLeft: 3, paddingRight: 3}}justify='space-around' align='middle'>
                                <StarOutlined style={{color: 'white', fontSize: 15}}/>
-                               <div style={{color: 'white'}}>{rating}</div>
+                               <div style={{color: 'white'}}>{rating }</div>
                            </Row>
-                       </div>
+                       </div>}
                     </div>
                     <Col className='infoCol'>
                         <p className='category'>{category}</p>

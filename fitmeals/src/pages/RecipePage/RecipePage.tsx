@@ -87,7 +87,6 @@ function RecipePage() {
         console.log('Received values of form:', values);
     };
 
-
     return (
         <Layout>
             <Header />

@@ -36,7 +36,7 @@ function ProfilePage() {
               </Col>
             </Row>
           </div>
-          <Feed title={"Recent Recipes"}></Feed>
+          <Feed title={"Recent Recipes"} user={true}></Feed>
 
 
 
