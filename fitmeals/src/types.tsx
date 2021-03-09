@@ -17,3 +17,21 @@ export type User = {
     isAdmin: boolean,
     image?: string,
 }
+
+export type Ingredient = {
+    name: string,
+    quantity: number,
+    unit: string,
+}
+
+export type Recipe = {
+    title: string,
+    categories: string[],
+    time: string,
+    calories: number,
+    subtitle: string,
+    rating: number,
+    ingredients: Ingredient[],
+    image: string,
+    instructions: string[],
+}
