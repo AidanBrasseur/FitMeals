@@ -21,6 +21,12 @@
     height: 50px;
 }
 
+.pieChart svg{
+    width: 300px;
+    height: 300px;
+
+}
+
 .recipeRatingDiv {
     display: inline-block;
     font-size: 15px;
