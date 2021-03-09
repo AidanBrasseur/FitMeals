@@ -1,0 +1,75 @@
+.recipePage{
+    margin-top: 2%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-bottom: 2%;
+    padding: 50px;
+    font-family: "Playfair Display";
+    background-color: white;
+}
+.recipeDescritption{
+    font-size: 448px;
+}
+.recipeCats .ant-tag{
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 15px;
+}
+.recipePageProfilePic{
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+}
+
+.recipeRatingDiv {
+    display: inline-block;
+    font-size: 15px;
+    background-color: #109D7C;
+    padding: 5px;
+    color: white;
+    
+    text-align: center;
+    border-radius: 7px;
+    width: 60px;
+}
+
+.recipeImage{
+    border-radius: 7% 7% 7% 7%;
+    object-fit: cover;
+    transition: transform 1s;
+}
+.subtitle{
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+}
+
+.imagePicker{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family:'Segoe UI';
+    margin-bottom: 40px;
+}
+
+.uploadTitle{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.imagePickerIcon{
+    font-size: 32px;
+}
+
+.submitDiv{
+    margin-top: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.uploadImagePreview {
+    width: 70vw;
+    height: 30vw;
+    object-fit: cover;
+}

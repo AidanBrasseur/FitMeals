@@ -8,6 +8,7 @@ import NewRecipePage from './pages/NewRecipePage/NewRecipePage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import SavedRecipesPage from './pages/SavedRecipesPage/SavedRecipesPage';
+import RecipePage from './pages/RecipePage/RecipePage'
 import EditRecipePage from './pages/EditRecipePage/EditRecipePage';
 
 function Routes() {
@@ -25,6 +26,9 @@ function Routes() {
         </Route>
         <Route path="/register">
           <RegisterPage />
+        </Route>
+        <Route path="/recipe">
+          <RecipePage />
         </Route>
         <ProtectedRoute path='/new-recipe' component={NewRecipePage} />
         <ProtectedRoute path='/admin-panel' component={AdminPage} />
