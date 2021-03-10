@@ -47,10 +47,20 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
   - If the heart is already filled, that means you already have it saved
 - To unsave a recipe, click on the filled heart and it will unfill - an indication that the recipe is no longer saved
 
+### Category Filtering
+- Each recipe has at least one category/tag and users will have the option to filter the website's recipes by these categories
+- We currently have the user interface for this at the beginning of the home page, but we are planning on doing this sorting in our backend and therefore, this functionality
+is not implemented for Phase 1
+
+### Recipe Search
+- At the top of FitMeals, there is a search bar that will let the user search the website for recipes based on their input
+- We currently have the search bar, but we are planning on doing the search in our backend and therefore, this functionality is not implemented for Phase 1
+
 ## Instructions
 FitMeals is powered by React and uses Yarn to manage dependencies and launch the application.
 - Open the project and run `yarn install` to install all the required dependencies for the web application
 - Once you have completed installing all dependencies, run `yarn start` to bring up FitMeals in your browser
+  - The application will run at http://localhost:3000 in your browser
 
 ## Login Credentials
 | User | Admin |
