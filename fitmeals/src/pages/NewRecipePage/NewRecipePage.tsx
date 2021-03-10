@@ -34,6 +34,7 @@ function NewRecipePage() {
     values.time = '20-30min';
     values.calories = 400;
     values.id = sessionContext.underReviewRecipes.length + 1;
+    values.comments = [];
     let recipe = values as Recipe;
 
     let underReviewRecipes = [recipe, ...sessionContext.underReviewRecipes]
