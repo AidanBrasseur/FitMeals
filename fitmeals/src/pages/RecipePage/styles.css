@@ -41,7 +41,7 @@
 }
 
 .recipeImage .ant-image-img{
-    border-radius: 7% 7% 7% 7%;
+    border-radius: 25px 25px 25px 25px;
     object-fit: cover;
     transition: transform 1s;
     width: 55vw;
@@ -50,7 +50,7 @@
     max-height: 500px;
 }
 .recipeImage .ant-image{
-    border-radius: 7% 7% 7% 7%;
+    border-radius: 25px 25px 25px 25px;
     object-fit: cover;
     transition: transform 1s;
     width: 55vw;

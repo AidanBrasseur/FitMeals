@@ -85,7 +85,7 @@ function NewRecipePage() {
               <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
             </Form.Item>
             <div className="imagePicker">
-              <ImgCrop aspect={2} rotate>
+              <ImgCrop aspect={3/2} rotate>
                 <Dragger beforeUpload={file => {
                   setImage(URL.createObjectURL(file))
 

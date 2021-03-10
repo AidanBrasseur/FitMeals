@@ -41,5 +41,6 @@
 .uploadImagePreview {
     width: 55vw;
     height: 27vw;
+    border-radius: 25px 25px 25px 25px;
     object-fit: cover;
 }
