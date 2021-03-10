@@ -28,6 +28,25 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
   - Green Checkmark: Approve
   - Red 'X': Reject
 
+### Editing Recipes
+- Admins have the option to edit existing recipes and change information as required
+- Navigate to the admin page
+  - Click on the profile icon in the top-right of the webpage, and select the "Admin Page" (you must be logged in as an admin to see this)
+- Find the recipe you wish to edit, click on it and you will be brought to the edit page of the recipe
+  - Once done, click the "Update and Approve" button at the bottom of the page
+
+### Profile Page
+- Each user has a profile page, where we can see their information and recipes they created
+  - Information includes name, username and their average rating
+
+### Saved Recipes Page
+- Users have an option to save recipes to their saved recipes list for easy access later
+- The saved recipes page can be accessed by clicking on the profile icon in the top-right of the webpage and then selecting the "Saved Recipes" link
+- To save a recipe, navigate to the recipe and click on the heart symbol to the right of the rating (you must be logged in to save a recipe)
+  - Once you click the heart, it will fill - an indication that the recipe is now saved
+  - If the heart is already filled, that means you already have it saved
+- To unsave a recipe, click on the filled heart and it will unfill - an indication that the recipe is no longer saved
+
 ## Instructions
 FitMeals is powered by React and uses Yarn to manage dependencies and launch the application.
 - Open the project and run `yarn install` to install all the required dependencies for the web application
@@ -36,5 +55,5 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
 ## Login Credentials
 | User | Admin |
 |------|-------|
-| Email: user@user.com | Email: admin@admin.com     |
+| Email: user@user.com | Email: admin@admin.com |
 | Password: user | Password: admin |
