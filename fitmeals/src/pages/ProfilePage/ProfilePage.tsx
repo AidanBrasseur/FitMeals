@@ -33,6 +33,11 @@ function ProfilePage() {
                       <div style={{ color: 'white' }}>Average rating of 4.5</div>
                     </Row>
                   </div>
+                  { sessionContext["user"]?.isAdmin &&
+                    <div className="banButton">
+                      <Button size="middle">Ban User</Button>
+                    </div>                   
+                  }
                 </div>
               </Col>
             </Row>

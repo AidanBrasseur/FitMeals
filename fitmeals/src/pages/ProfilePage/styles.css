@@ -45,6 +45,19 @@
     min-width: 200px;
 }
 
+.banButton{
+    margin-top: 4%;
+}
+
+.banButton .ant-btn{
+    font-size: 20px;
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    color: white;
+    background-color: #910606;
+    padding-bottom: 40px;
+}
+
 .recipes{
     margin-top: 8%;
 }
