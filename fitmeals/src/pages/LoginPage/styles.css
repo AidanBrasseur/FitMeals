@@ -52,11 +52,12 @@
     color: #AAA713;
 }
 
-.imageDiv{
+.imageLoginDiv{
     width: 50%;
     min-width: 100px;
     height: 100%;
-    float: right
+    float: right;
+    justify-content: center;
 }
 
 .login-form {

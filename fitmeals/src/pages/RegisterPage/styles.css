@@ -33,12 +33,12 @@
     bottom: 3%;
 }
 
-.imageDiv{
-    width: 50%;
-    height: 100%;
-    float: right;
+.imageRegisterDiv{
+  width: 50%;
+  height: 100%;
+  float: right;
+  justify-content: center;
 }
-
 .ant-carousel {
     width: 100%;
     height: 100vh;

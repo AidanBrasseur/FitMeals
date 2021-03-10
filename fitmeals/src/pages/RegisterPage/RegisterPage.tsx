@@ -39,7 +39,7 @@ function RegisterPage () {
                         <Button type="link" style={{ color: "#032D23", fontSize: 15 }}>Terms and Conditions</Button>
                     </div>
                 </div> 
-                <div className='imageDiv'>
+                <div className='imageRegisterDiv'>
                     <Carousel swipeToSlide draggable adaptiveHeight={false} variableWidth={false} >
 
                         <Image
