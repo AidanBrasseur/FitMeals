@@ -11,6 +11,13 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 ## Features of FitMeals
 FitMeals is a platform for users to access and post healthy recipes. Users have the ability to create recipes, comment on recipes, rate recipes and more...
 
+### Viewing Recipes
+- On the home page, there is a list of featured recipes that the user can click on
+- Each recipe contains the author's information, recipe rating, picture, ingredients, instructions and comments
+  - To see the author's profile, click on their avatar at the top of the page
+  - To save the recipe, see [Saved Recipes Page](#saved-recipes-page)
+  - To comment, see [Posting Comments](#posting-comments)
+
 ### Posting Recipes
 - Navigate to the new recipe page
   - This link can be found on the home page under the categories (you must be logged in to submit a new recipe)
