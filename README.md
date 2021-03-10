@@ -6,6 +6,7 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 1. [Features of FitMeals](#features-of-fitmeals)
 2. [Instructions](#instructions)
 3. [Login Credentials](#login-credentials)
+4. [Third Party Libraries](#third-party-libraries)
 
 ## Features of FitMeals
 FitMeals is a platform for users to access and post healthy recipes. Users have the ability to create recipes, comment on recipes, rate recipes and more...
@@ -67,3 +68,10 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
 |------|-------|
 | Email: user@user.com | Email: admin@admin.com |
 | Password: user | Password: admin |
+
+## Third Party Libraries
+- React
+- Yarn
+- React Router DOM
+- Ant Design and Ant Design Icons
+- React Minimal Pie Chart
