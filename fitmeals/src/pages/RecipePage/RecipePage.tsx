@@ -49,7 +49,7 @@ function RecipePage() {
             currentHistory.push('/login');
         } else {
             if (values["content"].length > 0) {
-                let newComment = { username: sessionContext["user"]?.username, content: values["content"] } as CommentType;
+                let newComment = { username: sessionContext["user"]?.username, content: values["content"], avatar: sessionContext["user"]?.image } as CommentType;
                 comments.push(newComment);
                 setCommentList([...commentList, newComment]);
             }
@@ -255,7 +255,7 @@ function RecipePage() {
                                                     actions={actions}
                                                     author={comment.username}
                                                     content={comment.content}
-                                                    avatar="https://i1.sndcdn.com/artworks-000362506068-4i6lyp-t500x500.jpg" />
+                                                    avatar={comment.avatar} />
                                             </List.Item>
                                         )}
                                     ></List>

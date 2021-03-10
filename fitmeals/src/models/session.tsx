@@ -6,7 +6,7 @@ export interface Session {
   userRecipes: Recipe[],
   savedRecipes: Recipe[]
 }
-let comments = [{ username: 'nedflanders', content: 'Hi-diddly-ho this is fan-diddly-tastic!' } as Comment]
+let comments = [{ username: 'nedflanders', content: 'Hi-diddly-ho this is fan-diddly-tastic!', avatar: "http://cdn.pastemagazine.com/www/articles/2015/09/22/Ned-Flanders-ned-flanders-37176770-1024-768.png" } as Comment]
 const salmonIngredients = [
   {
     name: "Salmon Fillets",

@@ -26,7 +26,8 @@ export type Ingredient = {
 
 export type Comment = {
     username: string,
-    content: string
+    content: string,
+    avatar: string
 }
 
 export type Macros = {

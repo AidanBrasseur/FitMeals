@@ -21,7 +21,7 @@ function ProfilePage() {
           <div className='banner'>
             <Row className="userInfoRow" align='middle'>
               <Col span={8} >
-                <Image className="profilePic" width={'22vw'} height={'22vw'} preview={false} src='https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg' />
+                <Image className="profilePic" width={'22vw'} height={'22vw'} preview={false} src={sessionContext["user"]?.image ? sessionContext["user"]?.image : "https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg"} />
               </Col>
               <Col span={16}>
                 <div className="profileInfo">

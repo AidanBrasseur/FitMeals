@@ -17,12 +17,12 @@ function LoginPage() {
     function login(values: any) {
         console.log(values)
         if (values.email === "user@user.com" && values.password === "user"){
-            let user = {name: 'Mr. Bean', email: values.email, authToken: 'test_token', isAdmin: false, username: 'user'} as User
+            let user = {name: 'User', email: values.email, authToken: 'test_token', isAdmin: false, username: 'user', image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"} as User
             updateSessionContext({ ...sessionContext, user});
             setRedirectToReferrer(true);
         } 
         else if (values.email === "admin@admin.com" && values.password === "admin"){
-            let user = {name: 'Bill', email: values.email, authToken: 'test_token', isAdmin: true, username: 'admin'} as User
+            let user = {name: 'Admin', email: values.email, authToken: 'test_token', isAdmin: true, username: 'admin', image: "https://i.pinimg.com/736x/3f/99/cc/3f99cc2a119992eff72412875e847a74.jpg"} as User
             updateSessionContext({ ...sessionContext, user});
             setRedirectToReferrer(true);
         }
