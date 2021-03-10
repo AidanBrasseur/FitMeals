@@ -20,7 +20,7 @@ export type User = {
 
 export type Ingredient = {
     name: string,
-    quantity: number,
+    quantity?: number,
     unit: string,
 }
 

@@ -5,10 +5,7 @@ export interface Session {
   underReviewRecipes: Recipe[],
   userRecipes: Recipe[],
 }
-
-let ingredients = [{ name: 'sugar', quantity: 4, unit: 'cups' } as Ingredient, { name: 'Cheese', quantity: 400, unit: 'g' } as Ingredient]
-let instructions = ['do thing 1', 'do thing 2']
-let comments = [{ username: 'mrbean55', content: 'this is amazing' } as Comment, { username: 'mrbean55', content: 'wow' } as Comment]
+let comments = [{ username: 'nedflanders', content: 'Hi-diddly-ho this is fan-diddly-tastic!' } as Comment]
 const salmonIngredients = [
   {
     name: "Salmon Fillets",
@@ -50,74 +47,70 @@ const recipes = [
   } as Recipe,
   {
     id: 2,
-    rating: 3.5,
+    author: "Mr. Bean",
+    rating: 4.3,
     title: "World's Best Pizza",
     subtitle: 'Super duper healthy pizza',
-    description: 'Super duper healthy pizza',
+    description: 'Your search for the best homemade margherita pizza (made in a standard oven with everyday ingredients) is over! You’ll want to make this homemade pizza recipe over and over again.',
     time: '15-20min',
-    calories: 700,
-    image: "https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg",
-    ingredients: ingredients,
-    categories: ['Pizza', 'Cheese', 'Italian', 'Unhealthy'],
-    instructions: instructions,
+    calories: 400,
+    image: "https://universityhealthnews.com/media/ispizzahealthy.jpg",
+    ingredients: [
+      { name: "All-purpose flour", quantity: 300, unit: "grams" } as Ingredient,
+      { name: "Sugar", quantity: 1, unit: "teaspoon" } as Ingredient,
+      { name: "Salt", quantity: 3 / 4, unit: "teaspoon" } as Ingredient,
+      { name: "Crushed tomatoes", quantity: 1, unit: "cup" } as Ingredient,
+      { name: "Crushed garlic cloves", quantity: 3, unit: "" } as Ingredient,
+      { name: "Finely grated Parmigiano-Reggiano cheese", quantity: 3, unit: "tablespoons" } as Ingredient,
+      { name: "Mozzarella cheese", quantity: 7, unit: "ounces" } as Ingredient,
+      { name: "Fresh basil leaves", quantity: 6, unit: "" } as Ingredient
+    ],
+    categories: ['Pizza', 'Cheese', 'Italian'],
+    instructions: ["Make the pizza dough", "Assemble the pizza by spreading the dough, adding the sauce and then the cheese/toppings", "Cook pizza in oven"],
     comments: comments
   } as Recipe,
   {
     id: 3,
-    rating: 4.3,
-    title: 'Healthy Pasta',
-    subtitle: 'Super duper healthy pasta',
-    description: 'Super duper healthy pasta',
-    time: '20-30min',
-    calories: 400,
-    image: "https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg",
-    ingredients: ingredients,
-    categories: ['Pasta'],
-    instructions: instructions,
+    author: "Mr. Bean",
+    rating: 3.5,
+    title: "Chickpea Salad",
+    subtitle: 'Super duper healthy salad',
+    description: 'Chickpea salad with tomatoes, cucumber and avocado is literally the easiest salad you can throw together in 15 minutes. Tasty, healthy, easy to make - there is nothing better than this!',
+    time: '15-20min',
+    calories: 235,
+    image: "https://ifoodreal.com/wp-content/uploads/2020/05/chickpea-salad-11.jpg",
+    ingredients: [
+      { name: "Chickpeas", quantity: 1, unit: "cup" } as Ingredient,
+      { name: "Chopped vegetables (cucumber, tomatoes)", quantity: 1, unit: "bowl" } as Ingredient,
+      { name: "Avocado", quantity: 1, unit: "" } as Ingredient,
+      { name: "Olive oil", quantity: 1, unit: "teaspoon" } as Ingredient,
+      { name: "Lemon", quantity: 1, unit: "" } as Ingredient,
+    ],
+    categories: ['Salad', 'Vegetarian'],
+    instructions: ["Dice avocado", "Make salad dressing by whisking the olive oil, lemon juice and salt/pepper", "Combine all ingredients into a bowl and stir gently"],
     comments: comments
   } as Recipe,
   {
     id: 4,
-    rating: 3.1,
-    title: 'Grilled Tuna',
-    subtitle: 'Super duper healthy fish',
-    description: 'Super duper healthy fish',
-    time: '10-20min',
-    calories: 500,
-    image: "https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg",
-    ingredients: ingredients,
-    categories: ['Fish'],
-    instructions: instructions,
+    author: "Mr. Bean",
+    rating: 3.4,
+    title: "Quinoa Salad",
+    subtitle: 'Super duper healthy quinoa salad',
+    description: 'Mediterranean quinoa salad with olives, feta and veggies is a marriage of quinoa and Greek salad. Lasts in the fridge for a few days making it perfect for work lunches!',
+    time: '15-20min',
+    calories: 235,
+    image: "https://ifoodreal.com/wp-content/uploads/2017/10/mediterranean-quinoa-salad-7.jpg",
+    ingredients: [
+      { name: "Quinoa", quantity: 2, unit: "cups" } as Ingredient,
+      { name: "Chopped vegetables (cucumber, tomatoes)", quantity: 1, unit: "bowl" } as Ingredient,
+      { name: "Olives", quantity: 1, unit: "small bowl" } as Ingredient,
+      { name: "Feta cheese", quantity: 1, unit: "block" } as Ingredient,
+      { name: "Olive oil", quantity: 2, unit: "teaspoons" } as Ingredient,
+    ],
+    categories: ['Salad', 'Vegetarian'],
+    instructions: ["Cook quinoa", "Add chopped vegetables and olives into bowl", "Crumble cheese into bowl and drizzle with olive oil", "Add cooked quinoa and mix"],
     comments: comments
-  } as Recipe,
-  {
-    id: 5,
-    rating: 4.7,
-    title: 'Healthy Salad',
-    subtitle: 'Super duper healthy salad',
-    description: 'Super duper healthy salad',
-    time: '10-20min',
-    calories: 200,
-    image: "https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg",
-    ingredients: ingredients,
-    categories: ['Salads'],
-    instructions: instructions,
-    comments: comments
-  } as Recipe,
-  {
-    id: 6,
-    rating: 4.1,
-    title: 'Healthy Burger',
-    subtitle: 'Super duper healthy burger',
-    description: 'Super duper healthy burger',
-    time: '20-30min',
-    calories: 1000,
-    image: "https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg",
-    ingredients: ingredients,
-    categories: ['Burgers'],
-    instructions: instructions,
-    comments: comments
-  } as Recipe,
+  } as Recipe
 ]
 
 

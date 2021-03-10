@@ -23,9 +23,8 @@ function RecipePage() {
     const { Dragger } = Upload;
     const { state } = useLocation<stateType>();
     const recipe = state.recipe;
-    const { author, image, title, categories, ingredients, instructions, description, comments } = recipe;
+    const { author, image, title, categories, rating, ingredients, instructions, description, comments } = recipe;
     const { Option } = Select;
-    const rating = 4.5;
     const [commentList, setCommentList] = useState(comments);
     const currentHistory = useHistory();
     const [sessionContext, updateSessionContext] = useSessionContext();
@@ -232,7 +231,7 @@ function RecipePage() {
                                                     actions={actions}
                                                     author={comment.username}
                                                     content={comment.content}
-                                                    avatar="https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg" />
+                                                    avatar="https://i1.sndcdn.com/artworks-000362506068-4i6lyp-t500x500.jpg" />
                                             </List.Item>
                                         )}
                                     ></List>
