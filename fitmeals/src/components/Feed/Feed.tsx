@@ -1,7 +1,7 @@
 import { List, Space } from 'antd';
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from 'react';
-import { RecipePreviewType } from '../../types';
+import { RecipePreviewType, Recipe } from '../../types';
 import RecipePreview from '../RecipePreview/RecipePreview';
 import './styles.css';
 import { useSessionContext } from '../../contexts/SessionContext';
@@ -11,7 +11,7 @@ type FeedProps = {
 }
 function Feed({ title, user }: FeedProps) {
     const [sessionContext, updateSessionContext] = useSessionContext();
-    let recipes = []
+    let recipes : Recipe[] = []
     if (user) {
         recipes = sessionContext.userRecipes;
     }

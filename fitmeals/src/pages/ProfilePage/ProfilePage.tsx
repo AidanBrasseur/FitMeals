@@ -3,6 +3,7 @@ import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Uplo
 import React from 'react';
 import Feed from '../../components/Feed/Feed';
 import Header from '../../components/Header/Header';
+import { useSessionContext } from '../../contexts/SessionContext';
 
 import './styles.css';
 
@@ -10,6 +11,7 @@ function ProfilePage() {
   const { TextArea } = Input;
   const { Dragger } = Upload;
   const { Option } = Select;
+  const [sessionContext, updateSessionContext] = useSessionContext();
 
   return (
     <Layout style={{ backgroundColor: "white" }}>
@@ -23,8 +25,8 @@ function ProfilePage() {
               </Col>
               <Col span={16}>
                 <div className="profileInfo">
-                  <p className="name">Rowan Atkinson</p>
-                  <p className="username">mrbean55</p>
+                  <p className="name">{sessionContext["user"]?.name}</p>
+                  <p className="username">{sessionContext["user"]?.username}</p>
                   <div className="userRating">
                     <Row style={{ paddingTop: 5, paddingBottom: 5, paddingLeft: 5, paddingRight: 5 }} justify='space-around' align='middle'>
                       <StarOutlined style={{ color: 'white', fontSize: 20 }} />

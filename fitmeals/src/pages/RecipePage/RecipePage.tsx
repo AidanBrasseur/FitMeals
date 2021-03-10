@@ -1,97 +1,59 @@
-import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload } from 'antd';
-import React, { useState } from 'react';
+import { MinusCircleOutlined, PlusOutlined, UploadOutlined, DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
+import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload, Comment, List, Tooltip } from 'antd';
+import React, { useState, createElement } from 'react';
 import Header from '../../components/Header/Header';
 import ImgCrop from 'antd-img-crop';
 import './styles.css';
-import { Rate, Image, Space, Typography, Tag, Divider, Steps, List, Checkbox } from 'antd';
+import { Rate, Image, Space, Typography, Tag, Divider, Steps, Checkbox } from 'antd';
 import { StarOutlined } from '@ant-design/icons';
-import { PieChart } from 'react-minimal-pie-chart';
-import { useLocation } from 'react-router-dom';
-import { Recipe } from '../../types';
+import { PieChart } from 'react-minimal-pie-chart'
+import { useLocation, useHistory } from 'react-router-dom';
+import { Recipe, Comment as CommentType } from '../../types';
+import { useSessionContext } from '../../contexts/SessionContext';
 interface stateType {
     recipe: Recipe
 }
 
 const { Text, Title } = Typography;
 const { Step } = Steps;
+const { TextArea } = Input;
+
 function RecipePage() {
     const { TextArea } = Input;
     const { Dragger } = Upload;
     const { state } = useLocation<stateType>();
     const recipe = state.recipe;
-    const { image, title, categories, ingredients, instructions, description } = recipe;
+    const { author, image, title, categories, ingredients, instructions, description, comments } = recipe;
     const { Option } = Select;
     const rating = 4.5;
+    const [commentList, setCommentList] = useState(comments);
+    const currentHistory = useHistory();
+    const [sessionContext, updateSessionContext] = useSessionContext();
 
-
-
-    // const description = "There's no healthier, easier, or faster summer entree than a perfect piece of grilled salmon. This 15-minute recipe is a staple in our regular dinner routine, and I'm so excited to share my tips with you today! Aside from pizza and spaghetti, I'd say that this particular grilled salmon recipe is one of the meals that I prepare most frequently for my family. It's my easy go-to when I feel like we need something nutritious, but I don't want to spend much time in the kitchen. Every boy in my house will clean his plate -- no questions asked -- which is certainly not always the case with other dinners that I serve. Any mom that's trying to please a family of 5 opinionated eaters can understand that it's a true GEM when you find a healthy recipe that appeals to the whole crew!"
+    const actions = [
+        <Tooltip key="comment-basic-like" title="Like">
+            <span onClick={() => { console.log("liked") }}>
+                {createElement(LikeOutlined)}
+            </span>
+        </Tooltip>
+    ];
 
     const macros = {
         protein: 50,
         carbs: 80,
         fats: 35
     }
-    // const image = "https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
-    // const title = "Grilled Salmon";
-    // const categories = ["Fish", "Salmon", "Grilled"];
-    // const ingredients = [
-    //     {
-    //         name: "Salmon Fillets",
-    //         quantity: 2,
-    //         unit: ""
-    //     },
-    //     {
-    //         name: "Garlic Cloves",
-    //         quantity: 2,
-    //         unit: ""
-    //     },
-    //     {
-    //         name: "Lemon",
-    //         quantity: 1,
-    //         unit: ""
-    //     },
-    //     {
-    //         name: "Butter",
-    //         quantity: 2,
-    //         unit: "Cups"
-    //     },
-    //     {
-    //         name: "Butter",
-    //         quantity: 2,
-    //         unit: "Cups"
-    //     },
-    //     {
-    //         name: "Butter",
-    //         quantity: 2,
-    //         unit: "Cups"
-    //     },
-    //     {
-    //         name: "Butter",
-    //         quantity: 2,
-    //         unit: "Cups"
-    //     },
-    //     {
-    //         name: "Butter",
-    //         quantity: 2,
-    //         unit: "Cups"
-    //     },
-    //     {
-    //         name: "Butter",
-    //         quantity: 2,
-    //         unit: "Cups"
-    //     }
-    // ]
-    // const instructions = [
-    //     "Take the salmon out",
-    //     "Cook it with garlic and lemon",
-    //     "Now you have Salmon"
-    // ]
-
 
     const onFinish = (values: any) => {
-        console.log('Received values of form:', values);
+        if (!("user" in sessionContext)){
+            currentHistory.push('/login');
+        } else {
+            if (values["content"].length > 0) {
+                let newComment = { username: sessionContext["user"]?.username, content: values["content"] } as CommentType;
+                comments.push(newComment);
+                setCommentList([...commentList, newComment]);
+            }
+        }
     };
 
     return (
@@ -117,10 +79,10 @@ function RecipePage() {
                                         </div>
                                     </Col>
                                     <Col style={{ marginRight: 25 }}>
-                                        <Text className="recipeDescription" style={{ fontSize: 20 }} type="secondary">Mr. Beans</Text>
+                                        <Text className="recipeDescription" style={{ fontSize: 20 }} type="secondary">{author}</Text>
                                     </Col>
                                     <Col style={{ marginRight: 10 }}>
-                                      
+
                                         <div className='recipeRatingDiv'>
                                             <Row style={{ paddingLeft: 3, paddingRight: 3 }} justify='space-around' align='middle'>
                                                 <StarOutlined style={{ color: 'white', fontSize: 15 }} />
@@ -152,14 +114,9 @@ function RecipePage() {
                         </Row>
                         <Row align="middle" style={{ width: '55vw', maxWidth: 1000 }}>
                             <Col  >
-                                <Text className="recipeDescription" style={{ fontSize: 20 }} type="secondary">{description}</Text>
+                                <Text className="recipeDescription" style={{ fontSize: 20, color: "black" }} type="secondary">{description}</Text>
                             </Col>
                         </Row>
-
-
-
-
-
                         <Row>
                             <Col span={24}>
                                 <div className='imagePicker'>
@@ -197,7 +154,6 @@ function RecipePage() {
                                 <Row>
                                     <PieChart
                                         data={[
-
                                             { title: 'Protein', value: macros.protein * 4, color: '#ACB9FF' },
                                             { title: 'Carbs', value: macros.carbs * 4, color: '#2121B0' },
                                             { title: 'Fats', value: macros.fats * 9, color: '#27AE60' },
@@ -241,13 +197,45 @@ function RecipePage() {
                             <Col offset={1} span={24}>
                                 <Steps direction="vertical">
                                     {instructions.map((instruction, index) =>
-                                        <Step key={index}  title={`Step ${index + 1}`} status="process" description={instruction} />
+                                        <Step key={index} title={`Step ${index + 1}`} status="process" description={instruction} />
                                     )}
 
                                 </Steps>
                             </Col>
                             <Col span={10}>
 
+                            </Col>
+                        </Row>
+
+                        <Row align='middle' justify='start' style={{ width: '55vw', maxWidth: 1000 }}>
+                            <Col span={24}>
+                                <h1 className="subtitle">Comments</h1>
+                                <Form onFinish={onFinish} name="commentForm" className="commentForm">
+                                    <Form.Item name="content">
+                                        <TextArea placeholder="Add a comment" bordered={false} autoSize={true}></TextArea>
+                                    </Form.Item>
+                                    <Form.Item>
+                                        <Button
+                                            type="primary"
+                                            htmlType="submit">
+                                            Add Comment
+                                    </Button>
+                                    </Form.Item>
+                                </Form>
+                                <div className="commentDiv">
+                                    <List
+                                        dataSource={comments}
+                                        renderItem={comment => (
+                                            <List.Item>
+                                              <Comment
+                                                    actions={actions}
+                                                    author={comment.username}
+                                                    content={comment.content}
+                                                    avatar="https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg" />
+                                            </List.Item>
+                                        )}
+                                    ></List>
+                                </div>
                             </Col>
                         </Row>
                     </Space>

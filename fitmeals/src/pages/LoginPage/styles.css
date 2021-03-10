@@ -9,8 +9,14 @@
     background-color: white;
     font-family: "Playfair Display";
 }
+
 .loginInputsDiv {
     width: 65%;
+}
+
+.loginInputsDiv .ant-input{
+    font-size: 18px;
+    margin: 10px;
 }
 
 .logo{
@@ -42,7 +48,7 @@
     align-items: center;
 }
 
-.name{
+.fitMealsName{
     color: #AAA713;
 }
 

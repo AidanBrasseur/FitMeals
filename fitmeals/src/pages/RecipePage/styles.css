@@ -94,3 +94,45 @@
     height: 30vw;
     object-fit: cover;
 }
+
+.commentForm .ant-input{
+    font-size: 18px;
+    margin-bottom: 1%;
+}
+
+.commentForm .ant-btn{
+    font-size: 16px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.commentDiv .ant-comment{
+    width: 100%;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.commentDiv .ant-comment-content{
+    font-size: 20px;
+}
+
+.commentDiv .ant-comment-content-author-name{
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+.commentDiv .ant-comment-avatar img{
+    width: 60px;
+    height: 60px;
+}
+
+.commentDiv .ant-comment-actions span{
+    font-size: 20px;
+}
+
+.commentDiv .ant-list-item{
+    padding: 0px;   
+}

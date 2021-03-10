@@ -17,7 +17,7 @@ function LoginPage() {
     function login(values: any) {
         console.log(values)
         if (values.email === "user@user.com" && values.password === "user"){
-            let user = {name: 'Joe', email: values.email, authToken: 'test_token', isAdmin: false, username: 'user'} as User
+            let user = {name: 'Mr. Bean', email: values.email, authToken: 'test_token', isAdmin: false, username: 'user'} as User
             updateSessionContext({ ...sessionContext, user});
             setRedirectToReferrer(true);
         } 
@@ -39,7 +39,7 @@ function LoginPage() {
                 </div>
                 <div className='loginDiv'>
                     <div className='loginInputsDiv'>
-                        <Typography.Title style={{ fontSize: 36 }}>Welcome to <span className="name">FitMeals</span></Typography.Title>
+                        <Typography.Title style={{ fontSize: 36 }}>Welcome to <span className="fitMealsName">FitMeals</span></Typography.Title>
                         <Typography.Title style={{ fontSize: 60, color: "#032D23" }}>Login</Typography.Title>
                         <Form
                             name="normal_login"
@@ -61,7 +61,6 @@ function LoginPage() {
                                     prefix={<LockOutlined className="site-form-item-icon" />}
                                     type="password"
                                     placeholder="Password"
-
                                 />
                             </Form.Item>
                             <Form.Item>
