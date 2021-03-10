@@ -7,16 +7,21 @@ import './styles.css';
 import { useSessionContext } from '../../contexts/SessionContext';
 type FeedProps = {
     title: string;
-    user?: boolean
+    user?: boolean;
+    saved?: boolean;
 }
-function Feed({ title, user }: FeedProps) {
+function Feed({ title, user, saved }: FeedProps) {
     const [sessionContext, updateSessionContext] = useSessionContext();
     let recipes : Recipe[] = []
-    if (user) {
-        recipes = sessionContext.userRecipes;
-    }
-    else {
-        recipes = sessionContext.approvedRecipes;
+    if (saved){
+        recipes = sessionContext.savedRecipes;
+    } else {
+        if (user) {
+            recipes = sessionContext.userRecipes;
+        }
+        else {
+            recipes = sessionContext.approvedRecipes;
+        }
     }
     return (
         <div className="feedContainer">

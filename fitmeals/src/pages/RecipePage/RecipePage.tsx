@@ -1,4 +1,4 @@
-import { MinusCircleOutlined, PlusOutlined, UploadOutlined, DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined, UploadOutlined, DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload, Comment, List, Tooltip } from 'antd';
 import React, { useState, createElement } from 'react';
 import Header from '../../components/Header/Header';
@@ -23,11 +23,12 @@ function RecipePage() {
     const { Dragger } = Upload;
     const { state } = useLocation<stateType>();
     const recipe = state.recipe;
-    const { author, image, title, categories, rating, ingredients, instructions, description, comments } = recipe;
+    const { id, author, image, title, categories, rating, ingredients, instructions, description, comments } = recipe;
     const { Option } = Select;
     const [commentList, setCommentList] = useState(comments);
     const currentHistory = useHistory();
     const [sessionContext, updateSessionContext] = useSessionContext();
+    const [saved, setSaved] = useState(false);
 
     const actions = [
         <Tooltip key="comment-basic-like" title="Like">
@@ -55,6 +56,22 @@ function RecipePage() {
         }
     };
 
+    // Save this recipe to the user's saved recipes list
+    const saveRecipe = () => {
+        if (!("user" in sessionContext)){
+            currentHistory.push('/login');
+        } else {
+            if (!saved){
+                if (!(sessionContext.savedRecipes.includes(recipe))){
+                    sessionContext.savedRecipes.push(recipe);
+                }
+            } else {
+                sessionContext.savedRecipes.splice(sessionContext.savedRecipes.indexOf(recipe), 1);
+            }
+            setSaved(!saved);
+        }
+    }
+
     return (
         <Layout>
             <Header />
@@ -64,7 +81,7 @@ function RecipePage() {
                     <Space direction="vertical" size={"large"} style={{ width: '100%' }} align='center'>
                         <Row align='middle' justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
 
-                            <Col >
+                            <Col span={16}>
                                 <Row align="middle">
                                     <Col >
                                         <Title style={{ fontSize: 48, fontWeight: "bold", marginBottom: 0 }}>{title}</Title>
@@ -90,10 +107,13 @@ function RecipePage() {
                                         </div>
                                     </Col>
 
-                                    <Col >
-
+                                    <Col span={6}>
                                         <Rate defaultValue={0} />
-
+                                    </Col>
+                                    <Col>
+                                        <span className="saveButton" onClick={saveRecipe}>
+                                            {createElement((saved || sessionContext.savedRecipes.includes(recipe)) ? HeartFilled : HeartOutlined)}
+                                        </span>
                                     </Col>
 
 

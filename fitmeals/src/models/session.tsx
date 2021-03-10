@@ -4,6 +4,7 @@ export interface Session {
   approvedRecipes: Recipe[],
   underReviewRecipes: Recipe[],
   userRecipes: Recipe[],
+  savedRecipes: Recipe[]
 }
 let comments = [{ username: 'nedflanders', content: 'Hi-diddly-ho this is fan-diddly-tastic!' } as Comment]
 const salmonIngredients = [
@@ -31,7 +32,7 @@ const salmonIngredients = [
 
 const recipes = [
   {
-    id: 1,
+    id: 0,
     author: "Mr. Bean",
     rating: 4.5,
     title: 'Grilled Salmon',
@@ -46,7 +47,7 @@ const recipes = [
     comments: comments
   } as Recipe,
   {
-    id: 2,
+    id: 1,
     author: "Mr. Bean",
     rating: 4.3,
     title: "World's Best Pizza",
@@ -70,8 +71,8 @@ const recipes = [
     comments: comments
   } as Recipe,
   {
-    id: 3,
-    author: "Mr. Bean",
+    id: 2,
+    author: "Captain Hook",
     rating: 3.5,
     title: "Chickpea Salad",
     subtitle: 'Super duper healthy salad',
@@ -91,8 +92,8 @@ const recipes = [
     comments: comments
   } as Recipe,
   {
-    id: 4,
-    author: "Mr. Bean",
+    id: 3,
+    author: "Det. James Carter",
     rating: 3.4,
     title: "Quinoa Salad",
     subtitle: 'Super duper healthy quinoa salad',
@@ -117,6 +118,6 @@ const recipes = [
 export const initialSession: Session = {
   approvedRecipes: recipes,
   underReviewRecipes: recipes,
-  userRecipes: recipes,
-
+  userRecipes: [recipes[0], recipes[1]],
+  savedRecipes: [recipes[3]]
 }

@@ -11,7 +11,7 @@ function SavedRecipesPage() {
     <Layout >
      <Header/>
       <Layout.Content className="saved-layout" >
-        <Feed title={"Your Saved Recipes"}></Feed>
+        <Feed title={"Your Saved Recipes"} saved={true}></Feed>
       </Layout.Content>
     </Layout>
   );

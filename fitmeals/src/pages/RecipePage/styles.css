@@ -8,6 +8,12 @@
   
     background-color: white;
 }
+
+.saveButton{
+    font-size: 26px;
+    margin-left: 10px;
+}
+
 .recipeDescritption{
     font-size: 448px;
 }
