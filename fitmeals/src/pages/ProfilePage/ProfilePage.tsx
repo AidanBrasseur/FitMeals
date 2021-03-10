@@ -25,8 +25,8 @@ function ProfilePage() {
               </Col>
               <Col span={16}>
                 <div className="profileInfo">
-                  <p className="name">{sessionContext["user"]?.name}</p>
-                  <p className="username">{sessionContext["user"]?.username}</p>
+                  <p className="name">{sessionContext["user"]?.name ? sessionContext["user"]?.name : "Mr. Bean"}</p>
+                  <p className="username">{sessionContext["user"]?.username ? sessionContext["user"]?.username : "mrbean55"}</p>
                   <div className="userRating">
                     <Row style={{ paddingTop: 5, paddingBottom: 5, paddingLeft: 5, paddingRight: 5 }} justify='space-around' align='middle'>
                       <StarOutlined style={{ color: 'white', fontSize: 20 }} />

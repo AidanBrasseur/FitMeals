@@ -32,7 +32,7 @@ function Routes() {
         </Route>
         <ProtectedRoute path='/new-recipe' component={NewRecipePage} />
         <ProtectedRoute path='/admin-panel' component={AdminPage} />
-        <ProtectedRoute path='/profile' component={ProfilePage} />
+        <Route path='/profile' component={ProfilePage} />
         <ProtectedRoute path='/saved-recipes' component={SavedRecipesPage} />
         <ProtectedRoute path='/edit-recipe' component={EditRecipePage} />
       </Switch>

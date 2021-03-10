@@ -72,6 +72,10 @@ function RecipePage() {
         }
     }
 
+    const goToProfile = () => {
+        currentHistory.push('/profile');
+    }
+
     return (
         <Layout>
             <Header />
@@ -91,7 +95,7 @@ function RecipePage() {
                                 <Row style={{ height: 70 }} align="middle" >
                                     <Col style={{ marginRight: 10 }}>
                                         <div className="recipePageProfilePic">
-                                            <Image style={{ borderRadius: "50%" }} src='https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg' />
+                                            <Image onClick={goToProfile} preview={false} style={{ borderRadius: "50%" }} src='https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg' />
                                         </div>
                                     </Col>
                                     <Col style={{ marginRight: 25 }}>
