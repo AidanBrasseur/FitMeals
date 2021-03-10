@@ -75,3 +75,4 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
 - React Router DOM
 - Ant Design and Ant Design Icons
 - React Minimal Pie Chart
+- Framer Motion
