@@ -35,7 +35,7 @@ const salmonIngredients = [
 const recipes = [
   {
     id: 1,
-    author: "Rowan Atkinson",
+    author: "Mr. Bean",
     rating: 4.5,
     title: 'Grilled Salmon',
     subtitle: 'Super duper healthy fish',

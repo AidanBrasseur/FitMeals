@@ -195,12 +195,13 @@ function RecipePage() {
 
                         <Row justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
                             <Col offset={1} span={24}>
-                                <Steps direction="vertical">
-                                    {instructions.map((instruction, index) =>
-                                        <Step key={index} title={`Step ${index + 1}`} status="process" description={instruction} />
-                                    )}
-
-                                </Steps>
+                                <div className="instructionsDiv">
+                                    <Steps direction="vertical">
+                                        {instructions.map((instruction, index) =>
+                                            <Step key={index} title={`Step ${index + 1}`} status="process" description={instruction} />
+                                        )}
+                                    </Steps>
+                                </div>
                             </Col>
                             <Col span={10}>
 
