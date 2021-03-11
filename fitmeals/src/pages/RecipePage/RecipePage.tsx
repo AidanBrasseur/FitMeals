@@ -73,7 +73,7 @@ function RecipePage() {
     }
 
     const goToProfile = () => {
-        currentHistory.push('/profile');
+        currentHistory.push('/profile', {hardcode: true});
     }
 
     return (
