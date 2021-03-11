@@ -64,6 +64,10 @@ is not implemented for Phase 1
 - At the top of FitMeals, there is a search bar that will let the user search the website for recipes based on their input
 - We currently have the search bar, but we are planning on doing the search in our backend and therefore, this functionality is not implemented for Phase 1
 
+### Ban Users
+- Admins have the ability to ban users by navigating to their profile and clicking the "Ban User" button
+  - As the button will require backend functionality, the button is available but has not functionality for Phase 1
+
 ## Instructions
 FitMeals is powered by React and uses Yarn to manage dependencies and launch the application.
 - Open the project and run `yarn install` to install all the required dependencies for the web application
