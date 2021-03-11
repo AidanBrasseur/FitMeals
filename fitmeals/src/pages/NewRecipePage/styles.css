@@ -44,3 +44,7 @@
     border-radius: 25px 25px 25px 25px;
     object-fit: cover;
 }
+
+.macroInputs .macroCol{
+    margin-right: 2%;
+}

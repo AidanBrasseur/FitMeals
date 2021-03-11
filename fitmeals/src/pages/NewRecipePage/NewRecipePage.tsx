@@ -34,7 +34,9 @@ function NewRecipePage() {
     values.calories = 400;
     values.id = sessionContext.underReviewRecipes.length + 1;
     values.comments = [];
+    values.macros = {protein: parseInt(values.macroProtein), carbs: parseInt(values.macroCarbs), fats: parseInt(values.macroFats)}
     let recipe = values as Recipe;
+    console.log(recipe);
 
     let underReviewRecipes = [recipe, ...sessionContext.underReviewRecipes]
     let userRecipes = [recipe, ...sessionContext.userRecipes]
@@ -159,6 +161,26 @@ function NewRecipePage() {
                   </>
                 )}
               </Form.List>
+              <h1 className="subtitle">Macros</h1>
+              <div className="macroInputs">
+                <Row>
+                  <Col span={4} className="macroCol">
+                    <Form.Item name="macroProtein">
+                      <Input placeholder="Number of Grams - Protein"></Input>
+                    </Form.Item>
+                  </Col>
+                  <Col span={4} className="macroCol">
+                    <Form.Item name="macroCarbs">
+                      <Input placeholder="Number of Grams - Carbs"></Input>
+                    </Form.Item>
+                  </Col>
+                  <Col span={4} className="macroCol">
+                    <Form.Item name="macroFats">
+                      <Input placeholder="Number of Grams - Fats"></Input>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </div>
               <h1 className="subtitle">Instructions</h1>
               <Form.List name="instructions">
                 {(fields, { add, remove }) => (

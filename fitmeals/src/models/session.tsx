@@ -29,6 +29,11 @@ const salmonIngredients = [
     unit: "Cups"
   } as Ingredient
 ]
+const macros = {
+  protein: 50,
+  carbs: 80,
+  fats: 35
+}
 
 const recipes = [
   {
@@ -44,7 +49,8 @@ const recipes = [
     ingredients: salmonIngredients,
     categories: ['Fish'],
     instructions: ["Take the salmon out", "Cook it with garlic and lemon", "Now you have Salmon"],
-    comments: comments
+    comments: comments,
+    macros: macros
   } as Recipe,
   {
     id: 1,
@@ -68,7 +74,8 @@ const recipes = [
     ],
     categories: ['Pizza', 'Cheese', 'Italian'],
     instructions: ["Make the pizza dough", "Assemble the pizza by spreading the dough, adding the sauce and then the cheese/toppings", "Cook pizza in oven"],
-    comments: comments
+    comments: comments,
+    macros: macros
   } as Recipe,
   {
     id: 2,
@@ -89,7 +96,8 @@ const recipes = [
     ],
     categories: ['Salad', 'Vegetarian'],
     instructions: ["Dice avocado", "Make salad dressing by whisking the olive oil, lemon juice and salt/pepper", "Combine all ingredients into a bowl and stir gently"],
-    comments: comments
+    comments: comments,
+    macros: macros
   } as Recipe,
   {
     id: 3,
@@ -110,7 +118,8 @@ const recipes = [
     ],
     categories: ['Salad', 'Vegetarian'],
     instructions: ["Cook quinoa", "Add chopped vegetables and olives into bowl", "Crumble cheese into bowl and drizzle with olive oil", "Add cooked quinoa and mix"],
-    comments: comments
+    comments: comments,
+    macros: macros
   } as Recipe
 ]
 

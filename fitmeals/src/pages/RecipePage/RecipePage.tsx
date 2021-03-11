@@ -23,7 +23,7 @@ function RecipePage() {
     const { Dragger } = Upload;
     const { state } = useLocation<stateType>();
     const recipe = state.recipe;
-    const { id, author, image, title, categories, rating, ingredients, instructions, description, comments } = recipe;
+    const { id, author, image, title, categories, rating, ingredients, instructions, description, comments, macros } = recipe;
     const { Option } = Select;
     const [commentList, setCommentList] = useState(comments);
     const currentHistory = useHistory();
@@ -37,12 +37,6 @@ function RecipePage() {
             </span>
         </Tooltip>
     ];
-
-    const macros = {
-        protein: 50,
-        carbs: 80,
-        fats: 35
-    }
 
     const onFinish = (values: any) => {
         if (!("user" in sessionContext)){
