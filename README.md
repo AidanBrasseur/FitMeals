@@ -21,7 +21,7 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 ### Posting Recipes
 - Navigate to the new recipe page
   - This link can be found on the home page under the categories (you must be logged in to submit a new recipe)
-- Enter information (title, description, image, ingredients, instructions)
+- Enter information (title, description, image, ingredients, macros, instructions)
 - Click submit and the recipe will be publicly available once approved by an admin
 
 ### Posting Comments
