@@ -7,6 +7,10 @@ app.use(express.json());
 const { mongoose } = require('./db/mongoose');
 const { User } = require('./models/user');
 
+// Additional library requirements
+const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
+
 /*
 GET: /users
 Get all the users of FitMeals
@@ -40,14 +44,23 @@ app.post("/users", (req, res) => {
 		return;
 	}
 
+	// Getting the encoded username/password info and hashing the password
+	const decoded = Buffer.from(req.headers.authorization, 'base64').toString('ascii');
+	const newUsername = decoded.substring(0, decoded.indexOf(":"));
+	const textPassword = decoded.substring(decoded.indexOf(":") + 1, decoded.length);
+	const hash = bcrypt.hashSync(textPassword, 10);
+
+	// Generating an auth token
+	const newAuthToken = uuidv4();
+
 	// Create a new user to be posted to the DB
 	let user = new User({
-		username: req.body.username,
-		password: req.body.password,
-		authToken: "TEMP_AUTH_TOKEN",
+		username: newUsername,
+		password: hash,
+		authToken: newAuthToken,
 		fullname: req.body.fullname,
 		email: req.body.email,
-		profileImageURL: "TEMP_PROFILE_IMAGE_URL",
+		profileImageURL: "https://www.clipartmax.com/png/middle/15-153139_big-image-login-icon-with-transparent-background.png",
 		isAdmin: false
 	}); 
 
