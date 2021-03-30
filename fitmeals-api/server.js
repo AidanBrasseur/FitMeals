@@ -7,7 +7,7 @@ app.use(express.json());
 app.use("/auth", require('./routes/auth-routes'));
 app.use("/admin", require('./routes/admin-routes'));
 app.use("/recipes", require('./routes/recipe-routes'));
-
+app.use("/comments", require('./routes/comment-routes'));
 // Running the Express app
 const port = process.env.PORT || 5000
 app.listen(port, () => {
