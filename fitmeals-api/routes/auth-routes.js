@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 
 /*
-POST: /register
+POST: /auth/register
 Adds a new user to the FitMeals DB
 */
 router.post("/register", (req, res) => {
@@ -78,7 +78,7 @@ router.post("/register", (req, res) => {
 });
 
 /*
-POST: /login
+POST: /auth/login
 Login to FitMeals
 */
 router.post("/login", (req, res) => {

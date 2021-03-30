@@ -6,7 +6,7 @@ const { mongoose } = require('../db/mongoose');
 const { User } = require('../models/user');
 
 /*
-POST: /promote
+POST: /admin/promote
 Promotes a user to admin
 */
 router.post("/promote", (req, res) => {
@@ -51,7 +51,7 @@ router.post("/promote", (req, res) => {
 });
 
 /*
-POST: /ban
+POST: /admin/ban
 Ban a user from FitMeals
 */
 router.post("/ban", (req, res) => {
