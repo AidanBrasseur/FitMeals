@@ -100,6 +100,11 @@ router.post("/login", (req, res) => {
             res.status(404).send({ success: false, error: "User not found" });
             return;
         }
+        // Checking if the user is banned
+        if (user.isBanned) {
+            res.status(401).send({ success: false, error: "User banned" });
+            return;
+        }
         // Checking if the password is correct and sending user info if it is
         if (bcrypt.compareSync(textPassword, user.password)) {
             res.send({
@@ -110,7 +115,7 @@ router.post("/login", (req, res) => {
                     fullname: user.fullname,
                     email: user.email,
                     profileImageURL: user.profileImageURL,
-                    isAdmin: user.isAdmin
+                    isAdmin: user.isAdmin,
                 }
             });
         } else {
