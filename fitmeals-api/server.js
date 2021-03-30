@@ -5,6 +5,7 @@ app.use(express.json());
 
 // API routes
 app.use("/auth", require('./routes/auth-routes'));
+app.use("/admin", require('./routes/admin-routes'));
 
 // Running the Express app
 const port = process.env.PORT || 5000
