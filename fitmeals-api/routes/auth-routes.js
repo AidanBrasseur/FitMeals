@@ -54,7 +54,8 @@ router.post("/register", (req, res) => {
                         fullname: req.body.fullname,
                         email: req.body.email,
                         profileImageURL: "https://www.clipartmax.com/png/middle/15-153139_big-image-login-icon-with-transparent-background.png",
-                        isAdmin: false
+                        isAdmin: false,
+                        isBanned: false
                     });
 
                     // Saving the user to the DB

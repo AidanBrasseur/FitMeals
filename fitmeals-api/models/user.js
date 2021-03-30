@@ -7,7 +7,8 @@ const UserSchema = new mongoose.Schema({
     fullname: String,
     email: String,
     profileImageURL: String,
-    isAdmin: Boolean
+    isAdmin: Boolean,
+    isBanned: Boolean
 });
 
 const User = mongoose.model("User", UserSchema);
