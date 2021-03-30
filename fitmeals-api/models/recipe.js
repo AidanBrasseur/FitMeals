@@ -28,8 +28,7 @@ const MacroSchema = new mongoose.Schema({
 });
 
 const RecipeSchema = new mongoose.Schema({
-    authorFullName: String,
-    authorUsername: String,
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     rating: Number,
     title: String,
     subtitle: String,
@@ -44,6 +43,7 @@ const RecipeSchema = new mongoose.Schema({
     comments: [CommentSchema],
     macros: [MacroSchema]
 });
+RecipeSchema.index({title: 'text', subtitle: 'text', description: 'text', 'categories.name': 'text', 'instructions.instruction': 'text', 'comments.content': 'text'});
 
 const Recipe = mongoose.model("Recipe", RecipeSchema);
 
