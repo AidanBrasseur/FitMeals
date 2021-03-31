@@ -315,6 +315,57 @@ router.post("/save/:recipeid", (req, res) => {
     }
 });
 
+/*
+POST: /recipes/unsave/:id
+Unsave the recipe with the given ID
+*/
+router.post("/unsave/:recipeid", (req, res) => {
+    // Check for a valid mongoose connection
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+
+    // Find the user to remove the saved recipe from
+    if (req.headers.authorization) {
+        User.findOne({ authToken: req.headers.authorization }).then((user) => {
+            if (user) {
+                // Find the recipe and remove it from the user's saved recipes collection
+                Recipe.findOne({ _id: req.params.recipeid }).then((recipe) => {
+                    if (recipe) {
+                        // Removing the specified saved recipe
+                        for (i = 0; i < user.savedRecipes.length; i++){
+                            if (user.savedRecipes[i].recipeId === req.params.recipeid) {
+                                user.savedRecipes.splice(i, 1);
+                                break;
+                            }
+                        }
+                        user.save().then(() => {
+                            res.send({ success: true });
+                        }).catch((error) => {
+                            console.log(error);
+                            res.status(500).send({ success: false, error: "Internal server error" });
+                        });
+                    } else {
+                        res.status(404).send({ success: false, error: "Recipe not found" });
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    res.status(500).send({ success: false, error: "Internal server error" });
+                });
+            } else {
+                res.status(401).send({ success: false, error: "Unauthorized" });
+            }
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send({ success: false, error: "Internal server error" });
+        });
+    } else {
+        res.status(401).send({ success: false, error: "Unauthorized" });
+    }
+});
+
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
     return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
 }
