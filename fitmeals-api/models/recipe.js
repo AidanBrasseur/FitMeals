@@ -16,9 +16,9 @@ const InstructionSchema = new mongoose.Schema({
 });
 
 const CommentSchema = new mongoose.Schema({
-    username: String,
-    userImage: String,
-    content: String
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    content: String,
+    likes: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 const MacroSchema = new mongoose.Schema({
