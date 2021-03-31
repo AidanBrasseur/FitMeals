@@ -33,6 +33,41 @@ router.get("/", async (req, res) => {
         })
         res.send(recipes)
     } catch (error) {
+        console.log(error)
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+})
+
+/*
+Get: /recipes/categories
+Gets current number of recipes in each category
+*/
+router.get("/categories", async (req, res) => {
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    try {
+        const categoryOperators = [{
+            $unwind: '$categories'
+        },
+        {
+            $group: {
+                _id: '$categories.name',
+                count: { $sum: 1 }
+            }
+        },
+        {
+            $match: {
+                approved: true
+            }
+        }]
+        const categoryCounts = await Recipe.aggregate(categoryOperators)
+        res.send(categoryCounts)
+    } catch (error) {
+        console.log(error)
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
@@ -53,12 +88,12 @@ router.get("/:id", async (req, res) => {
         if (req.headers.authorization) {
             requestUser = User.findOne({ authToken: req.headers.authorization })
         }
-        const recipe = await Recipe.find({ approved: true, _id: req.params.id }, "-__v")
-        const user = await User.findById(recipe.user)
+        const recipe = await Recipe.findOne({ approved: true, _id: req.params.id }, "-__v")
+        const user = await User.findOne({_id: recipe.user}, "-password -authToken -email -isAdmin -__v")
         recipe.user = user
         let fullComments = []
         recipe.comments.forEach(async comment => {
-            const commentUser = await User.findById(comment.user)
+            const commentUser = await User.findOne({_id: comment.user})
             if(!commentUser.isBanned){
                 let isLiked = false
                 if(requestUser){
@@ -75,6 +110,7 @@ router.get("/:id", async (req, res) => {
         recipe.comments = fullComments
         res.send(recipe)
     } catch (error) {
+        console.log(error)
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
