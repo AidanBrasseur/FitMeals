@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const SavedRecipeSchema = new mongoose.Schema({
-    recipeId: String
+    recipeId: mongoose.Types.ObjectId
 });
 
 const UserSchema = new mongoose.Schema({

@@ -102,9 +102,13 @@ router.get("/:id", async (req, res) => {
     try {
         let requestUser = undefined
         if (req.headers.authorization) {
-            requestUser = User.findOne({ authToken: req.headers.authorization })
+            requestUser = await User.findOne({ authToken: req.headers.authorization })
         }
         const recipe = await Recipe.findOne({ approved: true, _id: req.params.id }, "-__v")
+        if(!recipe){
+            res.status(404).send("A recipe with that id was not found") 
+            return
+        }
         const user = await User.findOne({ _id: recipe.user }, "-password -authToken -email -isAdmin -__v")
         recipe.user = user
         let fullComments = []
@@ -365,6 +369,41 @@ router.post("/unsave/:recipeid", (req, res) => {
         res.status(401).send({ success: false, error: "Unauthorized" });
     }
 });
+
+/*
+DELETE: /recipes/:id/delete
+Delete the recipe with the given ID
+*/
+router.delete("/:id", async (req, res) => {
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    const recipeId = req.params.id
+    try {
+        if (!req.headers.authorization) {
+            res.status(401).send({ success: false, error: "Unauthorized" });
+            return;
+        }
+        const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        const recipe = await Recipe.findOne( {_id: recipeId } )
+        const recipeUserId = recipe.user
+        if(requestUser.isAdmin || requestUser._id == recipeUserId){
+            const deleted = await Recipe.findByIdAndDelete(recipeId)
+            res.sendStatus(200)
+            return
+        }
+        else{
+            res.status(401).send({ success: false, error: "Unauthorized" });
+            return;
+        }
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+})
 
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
     return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
