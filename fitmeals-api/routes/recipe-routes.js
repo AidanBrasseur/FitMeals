@@ -95,7 +95,8 @@ router.get("/:id", async (req, res) => {
         const user = await User.findOne({_id: recipe.user}, "-password -authToken -email -isAdmin -__v")
         recipe.user = user
         let fullComments = []
-        recipe.comments.forEach(async comment => {
+        for(let i = 0; i < recipe.comments.length; i++) {
+            let comment = recipe.comments[i]
             const commentUser = await User.findOne({_id: comment.user})
             if(!commentUser.isBanned){
                 let isLiked = false
@@ -107,11 +108,12 @@ router.get("/:id", async (req, res) => {
                       }
                     }
                 }
-                fullComments.push({content: comment.content, userImage: commentUser.userImage, username: commentUser.username, userFullName: commentUser.userFullName, numLikes: comment.likes.length, isLiked: isLiked})
+                fullComments.push({commentId: comment._id, userId: commentUser._id, content: comment.content, userImage: commentUser.profileImageURL, username: commentUser.username, userFullName: commentUser.fullname, numLikes: comment.likes.length, isLiked: isLiked})
             }
-        });
-        recipe.comments = fullComments
-        res.send(recipe)
+        };
+        let recipeObj = recipe.toObject()
+        recipeObj.comments = fullComments
+        res.send(recipeObj)
     } catch (error) {
         console.log(error)
         res.status(500).send({ success: false, error: "Internal server error" });
@@ -141,7 +143,7 @@ router.get("/users/:id", async (req, res) => {
         }
         if (user.isBanned) {
             if (req.headers.authorization) {
-                const requestUser = User.findOne({ authToken: req.headers.authorization })
+                const requestUser = await User.findOne({ authToken: req.headers.authorization })
                 if (!requestUser.isAdmin) {
                     res.status(403).send('This user account has been banned')
                     return
