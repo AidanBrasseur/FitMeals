@@ -29,11 +29,24 @@ router.get("/", async (req, res) => {
         if(categoryQuery){
             match.categories = {$in: categoryQuery}
         }
-        const recipes = await Recipe.find(match, "-description -__v -ingredients -instructions -comments -macros").sort([['date', -1]])
+        let sort = {}
+        let search = {}
+        if(!searchQuery){
+           sort = [['date', -1]]
+          
+        }
+        else{
+            sort =  {
+                score: { $meta : "textScore" }
+              }
+              search = {score : { $meta: "textScore" }}
+        }
+        let recipes =  await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
         recipes.filter(async (recipe) => {
             const user = await User.findById(recipe.user)
             return !user.isBanned
         })
+        console.log(recipes)
         res.send(recipes)
     } catch (error) {
         console.log(error)
@@ -167,7 +180,19 @@ router.get("/users/:id", async (req, res) => {
         if(categoryQuery){
             match.categories = {$in: categoryQuery}
         }
-        const recipes = await Recipe.find(match, "-description -__v -ingredients -instructions -comments -macros").sort([['date', -1]])
+        let sort = {}
+        let search = {}
+        if(!searchQuery){
+           sort = [['date', -1]]
+        }
+        else{
+            sort =  {
+                score: { $meta : "textScore" }
+              }
+              search = {score : { $meta: "textScore" }}
+        }
+        let recipes =  await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
+        console.log(recipes)
         res.send(recipes)
     } catch (error) {
         res.status(500).send({ success: false, error: "Internal server error" });
