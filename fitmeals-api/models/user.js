@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+const SavedRecipeSchema = new mongoose.Schema({
+    recipeId: String
+});
+
 const UserSchema = new mongoose.Schema({
     username: String,
     password: String,
@@ -8,6 +12,7 @@ const UserSchema = new mongoose.Schema({
     email: String,
     profileImageURL: String,
     rating: Number,
+    savedRecipes: [SavedRecipeSchema],
     isAdmin: Boolean,
     isBanned: Boolean
 });

@@ -55,6 +55,7 @@ router.post("/register", (req, res) => {
                         email: req.body.email,
                         profileImageURL: "https://www.clipartmax.com/png/middle/15-153139_big-image-login-icon-with-transparent-background.png",
                         rating: 0.0,
+                        savedRecipes: [],
                         isAdmin: false,
                         isBanned: false
                     });
