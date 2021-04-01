@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     authToken: String,
     fullname: String,
     email: String,
-    profileImageURL: String,
+    image: String,
     rating: Number,
     savedRecipes: [SavedRecipeSchema],
     isAdmin: Boolean,
