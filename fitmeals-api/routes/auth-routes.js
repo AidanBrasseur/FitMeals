@@ -9,6 +9,8 @@ const { User } = require('../models/user');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 
+const log = console.log;
+
 /*
 POST: /auth/register
 Adds a new user to the FitMeals DB
@@ -54,6 +56,8 @@ router.post("/register", (req, res) => {
                         fullname: req.body.fullname,
                         email: req.body.email,
                         profileImageURL: "https://www.clipartmax.com/png/middle/15-153139_big-image-login-icon-with-transparent-background.png",
+                        rating: 0.0,
+                        savedRecipes: [],
                         isAdmin: false,
                         isBanned: false
                     });

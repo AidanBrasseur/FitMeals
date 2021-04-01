@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { User } = require('./user');
 
 const IngredientSchema = new mongoose.Schema({
     name: String,
@@ -16,9 +17,9 @@ const InstructionSchema = new mongoose.Schema({
 });
 
 const CommentSchema = new mongoose.Schema({
-    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     content: String,
-    likes: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
 const MacroSchema = new mongoose.Schema({
@@ -28,7 +29,7 @@ const MacroSchema = new mongoose.Schema({
 });
 
 const RecipeSchema = new mongoose.Schema({
-    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     rating: Number,
     title: String,
     subtitle: String,
@@ -44,8 +45,21 @@ const RecipeSchema = new mongoose.Schema({
     comments: [CommentSchema],
     macros: [MacroSchema]
 });
-RecipeSchema.index({title: 'text', subtitle: 'text', description: 'text', 'categories.name': 'text', 'instructions.instruction': 'text', 'comments.content': 'text'});
-
+RecipeSchema.index({ title: 'text', subtitle: 'text', description: 'text', 'categories.name': 'text', 'instructions.instruction': 'text', 'comments.content': 'text' });
+RecipeSchema.post("findOneAndDelete", document => {
+    const recipeId = document._id
+    User.find({ "savedRecipes.recipeId": recipeId }).then(users =>
+        Promise.all(
+            users.map(user =>
+                User.findOneAndUpdate(
+                    { _id: user._id },
+                    { $pull: { savedRecipes: { recipeId: recipeId } } },
+                    { new: true, useFindAndModify: false }
+                )
+            )
+        )
+    );
+})
 const Recipe = mongoose.model("Recipe", RecipeSchema);
 
 module.exports = { Recipe };
