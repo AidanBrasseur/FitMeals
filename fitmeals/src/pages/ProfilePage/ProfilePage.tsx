@@ -1,6 +1,6 @@
 import { UserOutlined, StarOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Upload, Image } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Feed from '../../components/Feed/Feed';
 import Header from '../../components/Header/Header';
@@ -14,6 +14,7 @@ interface stateType{
 
 function ProfilePage() {
   const { TextArea } = Input;
+  const [searchQuery, setSearchQuery] = useState<string | undefined>()
   const { Dragger } = Upload;
   const { Option } = Select;
   const [sessionContext, updateSessionContext] = useSessionContext();
@@ -21,7 +22,7 @@ function ProfilePage() {
 
   return (
     <Layout style={{ backgroundColor: "white" }}>
-      <Header />
+      <Header setSearchQuery={setSearchQuery}/>
       <Layout.Content>
         <div className='profile'>
           <div className='banner'>
@@ -48,7 +49,7 @@ function ProfilePage() {
               </Col>
             </Row>
           </div>
-          <Feed title={"Recent Recipes"} userId={sessionContext["user"]?.id}></Feed>
+          <Feed title={"Recent Recipes"} userId={sessionContext["user"]?.id} searchQuery={searchQuery}></Feed>
 
 
 
