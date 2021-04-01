@@ -1,5 +1,5 @@
 export type RecipePreviewType =  {
-    category: string,
+    categories: [string],
     title: string,
     subtitle: string,
     time: string,
@@ -10,6 +10,7 @@ export type RecipePreviewType =  {
 }
 
 export type User = {
+    id: string,
     name: string,
     email: string,
     authToken: string,

@@ -1,15 +1,25 @@
 import { Badge, Card, Space } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles.css';
 import Icon from '@ant-design/icons';
 import { motion } from 'framer-motion';
 type CardProps = {
     name: string,
     icon: any,
-    count?: number
+    count?: number,
+    selectCategory: (cat: string) => void,
+    deselectCategory: (cat: string) => void
 }
-function CategoryCard({ name, icon, count }: CardProps) {
+function CategoryCard({ name, icon, count, selectCategory, deselectCategory }: CardProps) {
     const [selected, setSelected] = React.useState(false);
+    useEffect(() => {
+        if(!selected){
+            deselectCategory(name)
+        }
+        else{
+            selectCategory(name)
+        }
+    }, [selected]);
     return (
         <motion.div
             onClick={() => setSelected(!selected)}
@@ -23,7 +33,6 @@ function CategoryCard({ name, icon, count }: CardProps) {
                 <Card
                     hoverable
                 >
-                  
                     <Space size={20} direction='vertical' align='center' >
                         <Badge style={{ backgroundColor: '#AFD3AA' }} count={count} offset={[-10, 20]}>
 

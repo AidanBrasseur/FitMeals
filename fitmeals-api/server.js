@@ -1,14 +1,16 @@
 // Creating the Express app
 const express = require('express')
+const cors = require('cors');
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 // API routes
 app.use("/auth", require('./routes/auth-routes'));
 app.use("/admin", require('./routes/admin-routes'));
 app.use("/recipes", require('./routes/recipe-routes'));
 app.use("/comments", require('./routes/comment-routes'));
 app.use("/users", require('./routes/users-routes'));
+
 
 // Running the Express app
 const port = process.env.PORT || 5000

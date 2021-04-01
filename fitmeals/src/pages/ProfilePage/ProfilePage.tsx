@@ -48,7 +48,7 @@ function ProfilePage() {
               </Col>
             </Row>
           </div>
-          <Feed title={"Recent Recipes"} user={true}></Feed>
+          <Feed title={"Recent Recipes"} userId={sessionContext["user"]?.id}></Feed>
 
 
 

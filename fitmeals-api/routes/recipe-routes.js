@@ -20,15 +20,16 @@ router.get("/", async (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
-    const searchQuery = req.body.searchQuery
-    const categoryQuery = req.body.categoryQuery
+    const searchQuery = req.query.searchQuery
+    const categoryQuery = req.query.categoryQuery
+    console.log(categoryQuery)
     try {
         let match = { approved: true }
         if (searchQuery) {
             match.$text = { $search: searchQuery }
         }
         if (categoryQuery) {
-            match.categories = { $in: categoryQuery }
+            match["categories.nane"] = { $in: categoryQuery }
         }
         let sort = {}
         let search = {}
@@ -47,7 +48,6 @@ router.get("/", async (req, res) => {
             const user = await User.findById(recipe.user)
             return !user.isBanned
         })
-        console.log(recipes)
         res.send(recipes)
     } catch (error) {
         console.log(error)

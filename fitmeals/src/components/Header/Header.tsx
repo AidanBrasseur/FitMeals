@@ -1,15 +1,21 @@
 import { BookOutlined, SecurityScanOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Input, Layout, Menu, Space } from 'antd';
+import Search from 'antd/lib/transfer/search';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSessionContext } from '../../contexts/SessionContext';
 import './styles.css';
 
+type HeaderProps = {
+  setSearchQuery?: (searchQuery: string | undefined) => void
+} 
 
-
-function Header() {
-    const onSearch = () => {
-
+function Header({setSearchQuery}: HeaderProps) {
+    const onSearch = (value: string) => {
+      if(setSearchQuery){
+        setSearchQuery(value)
+        console.log(value)
+      }
     }
     const [sessionContext, updateSessionContext] = useSessionContext();
 

@@ -5,7 +5,7 @@ import './styles.css';
 import {Recipe, RecipePreviewType} from '../../types';
 import { Link } from 'react-router-dom';
 type RecipePreviewProps = {
-    recipe: Recipe,
+    recipe: RecipePreviewType,
    
 }
 function RecipePreview({recipe} : RecipePreviewProps ) {

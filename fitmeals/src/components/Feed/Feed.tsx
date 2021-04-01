@@ -1,28 +1,55 @@
 import { List, Space } from 'antd';
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RecipePreviewType, Recipe } from '../../types';
 import RecipePreview from '../RecipePreview/RecipePreview';
 import './styles.css';
-import { useSessionContext } from '../../contexts/SessionContext';
+import { HOST } from '../../config';
+import axios from 'axios';
+
 type FeedProps = {
     title: string;
-    user?: boolean;
+    userId?: string;
     saved?: boolean;
+    searchQuery?: string | undefined;
+    categoryQuery?: string[] | undefined;
 }
-function Feed({ title, user, saved }: FeedProps) {
-    const [sessionContext, updateSessionContext] = useSessionContext();
-    let recipes : Recipe[] = []
-    if (saved){
-        recipes = sessionContext.savedRecipes;
-    } else {
-        if (user) {
-            recipes = sessionContext.userRecipes;
-        }
-        else {
-            recipes = sessionContext.approvedRecipes;
-        }
+function Feed({ title, userId, saved, searchQuery, categoryQuery }: FeedProps) {
+    const [recipes, setRecipes] = useState<RecipePreviewType[] | undefined>(undefined);
+    const fetchRecipes = () => {
+        axios.get(HOST + 'recipes', {
+            params:{
+                searchQuery: searchQuery,
+                categoryQuery: categoryQuery,
+            }
+        }).then(response => {
+            const parsedRecipes = response.data.map((r : any) => {
+                const categories = r.categories.map((cat: any) => {
+                    return cat.name
+                })
+                return {id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: "https://universityhealthnews.com/media/ispizzahealthy.jpg", categories: categories } as RecipePreviewType
+            })
+            setRecipes(parsedRecipes)
+        }).catch((error) => {
+            console.log(error)
+        })
     }
+    const fetchUserRecipes = () => {
+        axios.get(HOST + 'recipes/users/?id' + userId).then(response => {
+            const parsedRecipes = response.data.map((r : any) => {
+                const categories = r.categories.map((cat: any) => {
+                    return cat.name
+                })
+                return {id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: "https://universityhealthnews.com/media/ispizzahealthy.jpg", categories: categories } as RecipePreviewType
+            })
+            setRecipes(parsedRecipes)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+    useEffect(() => {
+        fetchRecipes();
+    }, [searchQuery, categoryQuery]);
     return (
         <div className="feedContainer">
 
