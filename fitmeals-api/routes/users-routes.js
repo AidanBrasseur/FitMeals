@@ -86,7 +86,7 @@ router.patch("/:username", (req, res) => {
                 }
                 // Saving the user to the DB
                 user.save().then((result) => {
-                    res.status(201).send({ success: true });
+                    res.send({ success: true });
                 }).catch((error) => {
                     console.log(error);
                     res.status(500).send({ success: false, error: "Internal server error" });
@@ -130,7 +130,7 @@ router.patch("/update-pic/:username", async (req, res) => {
                 user.image = req.file.id;
                 // Saving the user to the DB
                 user.save().then((result) => {
-                    res.status(201).send({ success: true });
+                    res.send({ success: true });
                 }).catch((error) => {
                     console.log(error);
                     res.status(500).send({ success: false, error: "Internal server error" });
