@@ -17,7 +17,7 @@ function LoginPage() {
     function login(values: any) {
         console.log(values)
         if (values.email === "user@user.com" && values.password === "user"){
-            let user = {name: 'User', email: values.email, authToken: '7a85121b-f8de-4b6e-89b4-e943e0783272', isAdmin: false, username: 'user', image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"} as User
+            let user = {id: "6065f30c8b61152fbcf2b74d", name: 'User', email: values.email, authToken: '7a85121b-f8de-4b6e-89b4-e943e0783272', isAdmin: false, username: 'user', image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"} as User
             updateSessionContext({ ...sessionContext, user});
             setRedirectToReferrer(true);
         } 

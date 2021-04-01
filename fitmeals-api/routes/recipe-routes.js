@@ -69,16 +69,16 @@ router.get("/saved", async (req, res) => {
     try {
         if (!req.headers.authorization) {
             res.status(403).send('Unauthorized to view this information')
-            return 
+            return
         }
         const requestUser = await User.findOne({ authToken: req.headers.authorization })
         const searchQuery = req.query.searchQuery
         const categoryQuery = req.query.categoryQuery
-        const idList = requestUser.savedRecipes.map( (elem) => {
+        const idList = requestUser.savedRecipes.map((elem) => {
             return elem.recipeId
         })
-       
-        let match = { _id: { $in: [...idList]} }
+
+        let match = { _id: { $in: [...idList] } }
         if (searchQuery) {
             match.$text = { $search: searchQuery }
         }
@@ -160,12 +160,12 @@ router.get("/:id", async (req, res) => {
             requestUser = await User.findOne({ authToken: req.headers.authorization })
         }
         const recipe = await Recipe.findOne({ approved: true, _id: req.params.id }, "-__v")
-        if(!recipe){
-            res.status(404).send("A recipe with that id was not found") 
+        if (!recipe) {
+            res.status(404).send("A recipe with that id was not found")
             return
         }
         let isSaved = false
-        if(requestUser){
+        if (requestUser) {
             isSaved = requestUser.savedRecipes.some(i => i.recipeId == req.params.id)
         }
         const user = await User.findOne({ _id: recipe.user }, "-password -authToken -email -isAdmin -__v -savedRecipes -rating")
@@ -186,7 +186,7 @@ router.get("/:id", async (req, res) => {
                     }
 
                 }
-                 
+
                 fullComments.push({ id: comment._id, userId: commentUser._id, content: comment.content, avatar: commentUser.image, username: commentUser.username, userFullName: commentUser.fullname, numLikes: comment.likes.length, isLiked: isLiked })
             }
         };
@@ -221,13 +221,18 @@ router.get("/users/:id", async (req, res) => {
         if (!user) {
             res.status(404).send('A user with that id could not be found')
         }
+        let needApproval = true
+        let requestUser = undefined
+        if (req.headers.authorization) {
+            requestUser = await User.findOne({ authToken: req.headers.authorization })
+            if (requestUser._id == userId) {
+                needApproval = false
+            }
+        }
         if (user.isBanned) {
-            if (req.headers.authorization) {
-                const requestUser = await User.findOne({ authToken: req.headers.authorization })
-                if (!requestUser.isAdmin) {
-                    res.status(403).send('This user account has been banned')
-                    return
-                }
+            if (!requestUser?.isAdmin) {
+                res.status(403).send('This user account has been banned')
+                return
             }
             else {
                 res.status(403).send('This user account has been banned')
@@ -238,6 +243,9 @@ router.get("/users/:id", async (req, res) => {
         const categoryQuery = req.query.categoryQuery
 
         let match = { user: userId }
+        if (needApproval) {
+            match["approved"] = true
+        }
         if (searchQuery) {
             match.$text = { $search: searchQuery }
         }
@@ -348,7 +356,7 @@ router.post("/save/:recipeid", (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
- 
+
     // Find the user to save this recipe to
     if (req.headers.authorization) {
         User.findOne({ authToken: req.headers.authorization }).then((user) => {
@@ -401,7 +409,7 @@ router.post("/unsave/:recipeid", (req, res) => {
                 Recipe.findOne({ _id: req.params.recipeid }).then((recipe) => {
                     if (recipe) {
                         // Removing the specified saved recipe
-                        for (i = 0; i < user.savedRecipes.length; i++){
+                        for (i = 0; i < user.savedRecipes.length; i++) {
                             if (user.savedRecipes[i].recipeId === req.params.recipeid) {
                                 user.savedRecipes.splice(i, 1);
                                 break;
@@ -449,14 +457,14 @@ router.delete("/:id", async (req, res) => {
             return;
         }
         const requestUser = await User.findOne({ authToken: req.headers.authorization })
-        const recipe = await Recipe.findOne( {_id: recipeId } )
+        const recipe = await Recipe.findOne({ _id: recipeId })
         const recipeUserId = recipe.user
-        if(requestUser.isAdmin || requestUser._id == recipeUserId){
+        if (requestUser.isAdmin || requestUser._id == recipeUserId) {
             const deleted = await Recipe.findByIdAndDelete(recipeId)
             res.sendStatus(200)
             return
         }
-        else{
+        else {
             res.status(401).send({ success: false, error: "Unauthorized" });
             return;
         }
@@ -478,20 +486,20 @@ router.get("/saved", async (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
-    try{
+    try {
         if (!req.headers.authorization) {
             res.status(403).send('Unauthorized to view this information')
-            return 
+            return
         }
         const requestUser = await User.findOne({ authToken: req.headers.authorization })
         const searchQuery = req.body.searchQuery
         const categoryQuery = req.body.categoryQuery
-        const idList = requestUser.savedRecipes.map( (elem) => {
+        const idList = requestUser.savedRecipes.map((elem) => {
             return elem.recipeId
         })
         console.log(idList)
 
-        let match = { _id: { $in: [...idList]} }
+        let match = { _id: { $in: [...idList] } }
         if (searchQuery) {
             match.$text = { $search: searchQuery }
         }

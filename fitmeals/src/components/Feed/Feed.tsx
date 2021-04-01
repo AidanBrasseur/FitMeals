@@ -41,6 +41,9 @@ function Feed({ title, userId, saved, searchQuery, categoryQuery }: FeedProps) {
             params:{
                 searchQuery: searchQuery,
                 categoryQuery: categoryQuery,
+            },
+            headers:{
+                authorization: sessionContext["user"]?.authToken
             }
         }).then(response => {
             const parsedRecipes = response.data.map((r : any) => {
