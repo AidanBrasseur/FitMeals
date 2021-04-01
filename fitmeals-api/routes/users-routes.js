@@ -5,6 +5,9 @@ const router = require('express').Router();
 const { mongoose } = require('../db/mongoose');
 const { User } = require('../models/user');
 
+// Upload image middleware
+const upload = require('../middleware/upload');
+
 const log = console.log;
 
 /*
@@ -83,7 +86,7 @@ router.patch("/:username", (req, res) => {
                 }
                 // Saving the user to the DB
                 user.save().then((result) => {
-                    res.status(201).send({ success: true });
+                    res.send({ success: true });
                 }).catch((error) => {
                     console.log(error);
                     res.status(500).send({ success: false, error: "Internal server error" });
@@ -98,6 +101,50 @@ router.patch("/:username", (req, res) => {
     } else {
         res.status(401).send({ success: false, error: "Unauthorized" });
     }
+});
+
+/*
+PATCH: /users/update-pic/:username
+Update the profile picture of the user with the given username
+*/
+router.patch("/update-pic/:username", async (req, res) => {
+    // Check for a valid mongoose connection
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+
+    // Update the user's info if the username and auth token belong to the same user
+    if (req.headers.authorization) {
+        User.findOne({ username: req.params.username, authToken: req.headers.authorization }).then(async (user) => {
+            if (user) {
+                // Uploading the picture to storage and updating the user's image property             
+                try {
+                    await upload(req, res)
+                } catch (error) {
+                    console.log(error)
+                    res.status(500).send({ success: false, error: 'Error when trying to upload image' });
+                    return;
+                }
+                user.image = req.file.id;
+                // Saving the user to the DB
+                user.save().then((result) => {
+                    res.send({ success: true });
+                }).catch((error) => {
+                    console.log(error);
+                    res.status(500).send({ success: false, error: "Internal server error" });
+                });
+            } else {
+                res.status(404).send({ success: false, error: "User not found or username and auth token do not match a user" });
+            }             
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send({ success: false, error: "Internal server error" });
+        });
+    } else {
+        res.status(401).send({ success: false, error: "Unauthorized" });
+    }        
 });
 
 module.exports = router;

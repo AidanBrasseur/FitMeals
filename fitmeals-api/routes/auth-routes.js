@@ -55,7 +55,7 @@ router.post("/register", (req, res) => {
                         authToken: newAuthToken,
                         fullname: req.body.fullname,
                         email: req.body.email,
-                        profileImageURL: "https://www.clipartmax.com/png/middle/15-153139_big-image-login-icon-with-transparent-background.png",
+                        image: "NOT_AVAILABLE",
                         rating: 0.0,
                         savedRecipes: [],
                         isAdmin: false,
@@ -118,7 +118,7 @@ router.post("/login", (req, res) => {
                     authToken: user.authToken,
                     fullname: user.fullname,
                     email: user.email,
-                    profileImageURL: user.profileImageURL,
+                    image: "NOT_AVAILABLE",
                     isAdmin: user.isAdmin,
                 }
             });
