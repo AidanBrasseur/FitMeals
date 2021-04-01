@@ -76,7 +76,7 @@ router.post("/:id/like", async (req, res) => {
         }
 
         let modification = {}
-        if (req.body.like) {
+        if (req.body.data.like) {
             modification.$addToSet = { 'comments.$.likes': requestUser._id }
         }
         else {

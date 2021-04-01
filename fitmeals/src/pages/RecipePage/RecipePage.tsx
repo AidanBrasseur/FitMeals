@@ -11,6 +11,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { Recipe, Comment as CommentType, Ingredient, Macros } from '../../types';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { HOST } from '../../config';
+import CommentItem from '../../components/CommentItem/CommentItem';
 import axios from 'axios';
 interface stateType {
     recipe: string
@@ -80,13 +81,8 @@ function RecipePage() {
     useEffect(() => {
         getRecipe();
     }, []);
-    const actions = [
-        <Tooltip key="comment-basic-like" title="Like">
-            <span onClick={() => { console.log("liked") }}>
-                {createElement(LikeOutlined)}
-            </span>
-        </Tooltip>
-    ];
+
+    
 
     const onFinish = (values: any) => {
         if (!("user" in sessionContext)){
@@ -330,11 +326,7 @@ function RecipePage() {
                                         dataSource={commentList}
                                         renderItem={comment => (
                                             <List.Item>
-                                              <Comment
-                                                    actions={actions}
-                                                    author={comment.username}
-                                                    content={comment.content}
-                                                    avatar={comment.avatar} />
+                                                <CommentItem comment={comment}></CommentItem>
                                             </List.Item>
                                         )}
                                     ></List>

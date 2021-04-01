@@ -29,7 +29,8 @@ export type Comment = {
     id: string,
     username: string,
     content: string,
-    avatar?: string
+    avatar?: string,
+    isLiked?: boolean,
 }
 
 export type Macros = {

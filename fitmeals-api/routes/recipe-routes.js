@@ -124,8 +124,9 @@ router.get("/:id", async (req, res) => {
                 let isLiked = false
                 if (requestUser) {
                     for (let i = 0; i < comment.likes.length; i++) {
-                        if (comment.likes[i] == requestUser._id) {
+                        if (comment.likes[i].toString() == requestUser._id.toString()) {
                             isLiked = true
+                            console.log(isLiked)
                             break;
                         }
                     }
