@@ -4,25 +4,27 @@ import ImgCrop from 'antd-img-crop';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import Header from '../../components/Header/Header';
-import { Recipe } from '../../types';
+import { Ingredient, Macros, Recipe, Comment as CommentType } from '../../types';
 import './styles.css';
 import { useSessionContext } from '../../contexts/SessionContext';
+import axios from 'axios';
+import { HOST } from '../../config';
 interface stateType {
-  recipe: Recipe
+  recipeId: string
 }
 
 function EditRecipePage() {
   const { TextArea } = Input;
   const history = useHistory();
   const { state } = useLocation<stateType>();
-  const recipe = state.recipe
+  const recipeId = state.recipeId
   const { Dragger } = Upload;
   const { Option } = Select;
-  const [image, setImage] = useState<string | null>(recipe.image);
+  const [image, setImage] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup"])
   const [loading, setLoading] = useState(false);
   const children: any = [];
-
+  const [recipe, setRecipe] = useState<Recipe | undefined>();
   const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
   categories.forEach(category => {
     children.push(<Option value={category} key={category}>{category}</Option>);
@@ -31,6 +33,51 @@ function EditRecipePage() {
   const [form] = Form.useForm();
   const [approve, setApprove] = useState(false);
   const [reject, setReject] = useState(false);
+  const getRecipe = () => {
+    axios.get(HOST + 'recipes/' + recipeId, {
+        headers:{
+            authorization: sessionContext["user"]?.authToken
+        }
+    }).then(response => {
+        const r = response.data
+       console.log(r)
+            const categories = r.categories.map((cat: any) => {
+                return cat.name
+            })
+            const instructions = r.instructions.map((i: any) => {
+                return i.instruction
+            })
+            const ingredients = r.ingredients as Ingredient[]
+            const macros = r.macros as Macros
+            const detailRecipe = {
+                id: r._id,
+                author: r.user.fullname,
+                authorId: r.user._id,
+                // authorAvatar: r.user.image,
+                title: r.title,
+                categories: categories,
+                description: r.description,
+                time: r.time,
+                calories: r.calories,
+                subtitle: r.subtitle,
+                rating: r.rating,
+                ingredients: ingredients,
+                image: "https://universityhealthnews.com/media/ispizzahealthy.jpg",
+                instructions: instructions,
+                comments: r.comments as CommentType[],
+                macros: macros,
+            } as Recipe
+            setImage(detailRecipe.image)
+            setRecipe(detailRecipe)
+           
+           
+    }).catch((error) => {
+        console.log(error)
+    })
+}
+useEffect(() => {
+    getRecipe();
+}, []);
   const onFinish = async (values: any) => {
     console.log('Received values of form:', values);
 
@@ -41,17 +88,16 @@ function EditRecipePage() {
     values.time = '20-30min';
     values.calories = 400;
     values.id = sessionContext.underReviewRecipes.length + 1;
-    values.macros = recipe.macros;
+    values.macros = recipe?.macros;
     values.comments = [];
     let newRecipe = values as Recipe;
 
     setLoading(true)
     if (approve) {
-      let approvedRecipes = [newRecipe, ...sessionContext.approvedRecipes]
-      updateSessionContext({ ...sessionContext, underReviewRecipes: sessionContext.underReviewRecipes.filter((recipe2: Recipe) => recipe2.id !== recipe.id), approvedRecipes: approvedRecipes })
+     
     }
     else {
-      updateSessionContext({ ...sessionContext, underReviewRecipes: sessionContext.underReviewRecipes.filter((recipe2: Recipe) => recipe2.id !== recipe.id) })
+      
     }
     await delay(1000);
     setLoading(false);
@@ -96,19 +142,19 @@ function EditRecipePage() {
 
 
   return (
-    <Layout>
+     <Layout>
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
 
         <Spin style={{ height: '100%', position: 'fixed', top: '25%' }} size="large" spinning={loading}>
-          <div className="newRecipe">
-            <Form form={form} onFinish={onFinish}
+          <div className="newRecipeEdit">
+          {recipe && <Form form={form} onFinish={onFinish}
               initialValues={{
-                "title": recipe.title,
-                "description": recipe.description,
-                "categories": recipe.categories,
-                "ingredients": recipe.ingredients,
-                "instructions": recipe.instructions,
+                "title": recipe?.title,
+                "description": recipe?.description,
+                "categories": recipe?.categories,
+                "ingredients": recipe?.ingredients,
+                "instructions": recipe?.instructions,
               }}>
 
               <Row align='middle'>
@@ -275,7 +321,7 @@ function EditRecipePage() {
               </Row>
 
 
-            </Form>
+            </Form>}
 
           </div>
         </Spin>

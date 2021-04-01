@@ -6,7 +6,7 @@ export type RecipePreviewType =  {
     calories: number,
     image: string,
     rating?: number,
-    id: number,
+    id: string,
 }
 
 export type User = {

@@ -43,7 +43,7 @@ function AdminFeed({ searchQuery }: AdminProps) {
 
     }, [searchQuery]);
 
-    const removePreviewById = (id: number) => {
+    const removePreviewById = (id: string) => {
         const removeApprove = recipes?.filter((recipe: RecipePreviewType) => recipe.id != id)
         setRecipes(removeApprove)
     }

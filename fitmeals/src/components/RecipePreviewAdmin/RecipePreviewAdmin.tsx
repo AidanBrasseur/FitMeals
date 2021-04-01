@@ -72,7 +72,7 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
             <Card
             >
                 <Link to={{pathname: '/edit-recipe',
-                        state: { recipe: preview }}}>
+                        state: { recipeId: preview.id }}}>
                 <Row className='adminPreviewRow'>
                     <div className='adminImageDiv'>
                         <Image

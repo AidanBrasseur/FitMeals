@@ -20,6 +20,7 @@ router.get("/", async (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
+    
     const searchQuery = req.query.searchQuery
     const categoryQuery = req.query.categoryQuery
     console.log(categoryQuery)
@@ -159,7 +160,11 @@ router.get("/:id", async (req, res) => {
         if (req.headers.authorization) {
             requestUser = await User.findOne({ authToken: req.headers.authorization })
         }
-        const recipe = await Recipe.findOne({ approved: true, _id: req.params.id }, "-__v")
+        let match = { approved: true, _id: req.params.id }
+        if(requestUser?.isAdmin){
+            match = {_id: req.params.id }
+        }
+        const recipe = await Recipe.findOne(match, "-__v")
         if (!recipe) {
             res.status(404).send("A recipe with that id was not found")
             return
