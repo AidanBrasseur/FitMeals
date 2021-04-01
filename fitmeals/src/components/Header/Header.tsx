@@ -45,9 +45,9 @@ function Header({setSearchQuery}: HeaderProps) {
         <Layout.Header style={{ position: 'fixed', zIndex: 1, width: '100%', background: 'white' }}>
         <Link to='/'><div className="textLogo">FitMeals</div></Link>
         <Space size={50} className="menu" direction="horizontal" align='center'>
-          <div className='search'>
+          { setSearchQuery && <div className='search'>
             <Input.Search allowClear placeholder="Search Recipes" onSearch={onSearch} size='large' />
-          </div>
+          </div>}
           <Dropdown overlay={menu} placement="bottomCenter" className='dropdown'>
             <Space size={20} direction='horizontal' className='userRow' align='center'>
           

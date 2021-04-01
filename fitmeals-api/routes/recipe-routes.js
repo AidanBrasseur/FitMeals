@@ -29,7 +29,61 @@ router.get("/", async (req, res) => {
             match.$text = { $search: searchQuery }
         }
         if (categoryQuery) {
-            match["categories.nane"] = { $in: categoryQuery }
+            match["categories.name"] = { $in: categoryQuery }
+        }
+        let sort = {}
+        let search = {}
+        if (!searchQuery) {
+            sort = [['date', -1]]
+
+        }
+        else {
+            sort = {
+                score: { $meta: "textScore" }
+            }
+            search = { score: { $meta: "textScore" } }
+        }
+        let recipes = await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
+        recipes.filter(async (recipe) => {
+            const user = await User.findById(recipe.user)
+            return !user.isBanned
+        })
+        res.send(recipes)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+})
+
+/*
+Get: /recipes
+Gets currently approved recipe preview 
+*/
+router.get("/saved", async (req, res) => {
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    try {
+        if (!req.headers.authorization) {
+            res.status(403).send('Unauthorized to view this information')
+            return 
+        }
+        const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        const searchQuery = req.query.searchQuery
+        const categoryQuery = req.query.categoryQuery
+        const idList = requestUser.savedRecipes.map( (elem) => {
+            return elem.recipeId
+        })
+       
+        let match = { _id: { $in: [...idList]} }
+        if (searchQuery) {
+            match.$text = { $search: searchQuery }
+        }
+        if (categoryQuery) {
+            match["categories.name"] = { $in: categoryQuery }
         }
         let sort = {}
         let search = {}
@@ -180,8 +234,8 @@ router.get("/users/:id", async (req, res) => {
                 return
             }
         }
-        const searchQuery = req.body.searchQuery
-        const categoryQuery = req.body.categoryQuery
+        const searchQuery = req.query.searchQuery
+        const categoryQuery = req.query.categoryQuery
 
         let match = { user: userId }
         if (searchQuery) {
@@ -408,6 +462,60 @@ router.delete("/:id", async (req, res) => {
         }
     } catch (error) {
         console.log(error)
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+})
+
+
+/*
+Get: /recipes/saved
+Gets list of saved recipes for an authorized user
+*/
+router.get("/saved", async (req, res) => {
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    try{
+        if (!req.headers.authorization) {
+            res.status(403).send('Unauthorized to view this information')
+            return 
+        }
+        const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        const searchQuery = req.body.searchQuery
+        const categoryQuery = req.body.categoryQuery
+        const idList = requestUser.savedRecipes.map( (elem) => {
+            return elem.recipeId
+        })
+        console.log(idList)
+
+        let match = { _id: { $in: [...idList]} }
+        if (searchQuery) {
+            match.$text = { $search: searchQuery }
+        }
+        if (userId != user._id) {
+            match.approved = true
+        }
+        if (categoryQuery) {
+            match.categories = { $in: categoryQuery }
+        }
+        let sort = {}
+        let search = {}
+        if (!searchQuery) {
+            sort = [['date', -1]]
+        }
+        else {
+            sort = {
+                score: { $meta: "textScore" }
+            }
+            search = { score: { $meta: "textScore" } }
+        }
+        let recipes = await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
+        console.log(recipes)
+        res.send(recipes)
+    } catch (error) {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
