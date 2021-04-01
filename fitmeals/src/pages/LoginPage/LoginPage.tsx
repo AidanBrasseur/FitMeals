@@ -22,7 +22,7 @@ function LoginPage() {
             setRedirectToReferrer(true);
         } 
         else if (values.email === "admin@admin.com" && values.password === "admin"){
-            let user = {name: 'Admin', email: values.email, authToken: 'test_token', isAdmin: true, username: 'admin', image: "https://i.pinimg.com/736x/3f/99/cc/3f99cc2a119992eff72412875e847a74.jpg"} as User
+            let user = {id: '6065f3278b61152fbcf2b74e', name: 'Admin', email: values.email, authToken: '308274cc-ffb2-4158-97c7-20c21f3b199b', isAdmin: true, username: 'admin', image: "https://i.pinimg.com/736x/3f/99/cc/3f99cc2a119992eff72412875e847a74.jpg"} as User
             updateSessionContext({ ...sessionContext, user});
             setRedirectToReferrer(true);
         }

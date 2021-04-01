@@ -1,29 +1,51 @@
 import { Checkbox, List, Space } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RecipePreviewAdmin from '../RecipePreviewAdmin/RecipePreviewAdmin';
 import './styles.css';
 import { Recipe, RecipePreviewType } from '../../types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSessionContext } from '../../contexts/SessionContext';
-function AdminFeed() {
+import axios from 'axios';
+import { HOST } from '../../config';
+type AdminProps = {
+    searchQuery?: string | undefined;
+
+}
+function AdminFeed({ searchQuery }: AdminProps) {
 
     const [sessionContext, updateSessionContext] = useSessionContext();
 
 
-    const recipes = sessionContext.underReviewRecipes;
+    const [recipes, setRecipes] = useState<RecipePreviewType[] | undefined>(undefined);
+    const fetchRecipes = () => {
+        axios.get(HOST + 'admin/recipes', {
+            params: {
+                searchQuery: searchQuery,
+            },
+            headers:{
+                authorization: sessionContext["user"]?.authToken
+            }
+        }).then(response => {
+            const parsedRecipes = response.data.map((r: any) => {
+                const categories = r.categories.map((cat: any) => {
+                    return cat.name
+                })
+                return { id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: "https://universityhealthnews.com/media/ispizzahealthy.jpg", categories: categories } as RecipePreviewType
+            })
+            setRecipes(parsedRecipes)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+    useEffect(() => {
 
-    const removePreviewById = (id: number, approve?: boolean) => {
-        let recipeById = recipes.find((recipe: Recipe) => recipe.id === id)
-        if (recipeById === undefined) {
-            return;
-        }
-        if (approve) {
-            let approvedRecipes = [recipeById, ...sessionContext.approvedRecipes]
-            updateSessionContext({ ...sessionContext, underReviewRecipes: recipes.filter((recipe: Recipe) => recipe.id !== id), approvedRecipes: approvedRecipes })
-        }
-        else {
-            updateSessionContext({ ...sessionContext, underReviewRecipes: recipes.filter((recipe: Recipe) => recipe.id !== id) })
-        }
+        fetchRecipes();
+
+    }, [searchQuery]);
+
+    const removePreviewById = (id: number) => {
+        const removeApprove = recipes?.filter((recipe: RecipePreviewType) => recipe.id != id)
+        setRecipes(removeApprove)
     }
 
 

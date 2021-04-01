@@ -154,7 +154,7 @@ router.patch("/reject-recipe/:recipeid", (req, res) => {
         User.findOne({ authToken: req.headers.authorization }).then((user) => {
             // Promote if the requesting user is an admin
             if (user && user.isAdmin) {
-                Recipe.findOneAndUpdate({ _id: req.params.recipeid }, { approved: false }, { useFindAndModify: false }).then((rejectedRecipe) => {
+                Recipe.findOneAndUpdate({ _id: req.params.recipeid }, { approved: null }, { useFindAndModify: false }).then((rejectedRecipe) => {
                     if (rejectedRecipe) {
                         res.send({ success: true });
                     } else {
@@ -175,5 +175,51 @@ router.patch("/reject-recipe/:recipeid", (req, res) => {
         res.status(401).send({ success: false, error: "Unauthorized" });
     }
 });
+
+/*
+Get: /admin/recipes
+Gets currently under review recipe previews
+*/
+router.get("/recipes", async (req, res) => {
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    const searchQuery = req.query.searchQuery
+    const categoryQuery = req.query.categoryQuery
+    console.log(categoryQuery)
+    try {
+        let match = { approved: false }
+        if (searchQuery) {
+            match.$text = { $search: searchQuery }
+        }
+        if (categoryQuery) {
+            match["categories.name"] = { $in: categoryQuery }
+        }
+        let sort = {}
+        let search = {}
+        if (!searchQuery) {
+            sort = [['date', -1]]
+
+        }
+        else {
+            sort = {
+                score: { $meta: "textScore" }
+            }
+            search = { score: { $meta: "textScore" } }
+        }
+        let recipes = await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
+        recipes.filter(async (recipe) => {
+            const user = await User.findById(recipe.user)
+            return !user.isBanned
+        })
+        res.send(recipes)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+})
 
 module.exports = router;
