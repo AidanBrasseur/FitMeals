@@ -110,7 +110,11 @@ router.get("/:id", async (req, res) => {
             res.status(404).send("A recipe with that id was not found") 
             return
         }
-        const user = await User.findOne({ _id: recipe.user }, "-password -authToken -email -isAdmin -__v")
+        let isSaved = false
+        if(requestUser){
+            isSaved = requestUser.savedRecipes.some(i => i.recipeId == req.params.id)
+        }
+        const user = await User.findOne({ _id: recipe.user }, "-password -authToken -email -isAdmin -__v -savedRecipes -rating")
         recipe.user = user
         let fullComments = []
         for (let i = 0; i < recipe.comments.length; i++) {
@@ -125,12 +129,15 @@ router.get("/:id", async (req, res) => {
                             break;
                         }
                     }
+
                 }
-                fullComments.push({ commentId: comment._id, userId: commentUser._id, content: comment.content, userImage: commentUser.profileImageURL, username: commentUser.username, userFullName: commentUser.fullname, numLikes: comment.likes.length, isLiked: isLiked })
+                 
+                fullComments.push({ id: comment._id, userId: commentUser._id, content: comment.content, avatar: commentUser.image, username: commentUser.username, userFullName: commentUser.fullname, numLikes: comment.likes.length, isLiked: isLiked })
             }
         };
         let recipeObj = recipe.toObject()
         recipeObj.comments = fullComments
+        recipeObj.isSaved = isSaved
         res.send(recipeObj)
     } catch (error) {
         console.log(error)
@@ -286,7 +293,7 @@ router.post("/save/:recipeid", (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
-
+ 
     // Find the user to save this recipe to
     if (req.headers.authorization) {
         User.findOne({ authToken: req.headers.authorization }).then((user) => {
@@ -331,7 +338,6 @@ router.post("/unsave/:recipeid", (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
-
     // Find the user to remove the saved recipe from
     if (req.headers.authorization) {
         User.findOne({ authToken: req.headers.authorization }).then((user) => {

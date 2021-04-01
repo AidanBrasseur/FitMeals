@@ -23,7 +23,7 @@ router.post("/recipes/:id", async (req, res) => {
         res.status(404).send('A recipe with that id could not be found')
         return;
     }
-    const commentContent = req.body.comment
+    const commentContent = req.body.data.comment
     try {
         if (!req.headers.authorization) {
             res.status(403).send('You must be logged in to comment')

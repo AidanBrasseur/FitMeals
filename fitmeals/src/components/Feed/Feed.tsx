@@ -35,7 +35,7 @@ function Feed({ title, userId, saved, searchQuery, categoryQuery }: FeedProps) {
         })
     }
     const fetchUserRecipes = () => {
-        axios.get(HOST + 'recipes/users/?id' + userId).then(response => {
+        axios.get(HOST + 'recipes/users/' + userId).then(response => {
             const parsedRecipes = response.data.map((r : any) => {
                 const categories = r.categories.map((cat: any) => {
                     return cat.name

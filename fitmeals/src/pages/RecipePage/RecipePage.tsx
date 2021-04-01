@@ -1,6 +1,6 @@
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined, DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload, Comment, List, Tooltip } from 'antd';
-import React, { useState, createElement } from 'react';
+import React, { useState, createElement, useEffect } from 'react';
 import Header from '../../components/Header/Header';
 import ImgCrop from 'antd-img-crop';
 import './styles.css';
@@ -8,10 +8,12 @@ import { Rate, Image, Space, Typography, Tag, Divider, Steps, Checkbox } from 'a
 import { StarOutlined } from '@ant-design/icons';
 import { PieChart } from 'react-minimal-pie-chart'
 import { useLocation, useHistory } from 'react-router-dom';
-import { Recipe, Comment as CommentType } from '../../types';
+import { Recipe, Comment as CommentType, Ingredient, Macros } from '../../types';
 import { useSessionContext } from '../../contexts/SessionContext';
+import { HOST } from '../../config';
+import axios from 'axios';
 interface stateType {
-    recipe: Recipe
+    recipe: string
 }
 
 const { Text, Title } = Typography;
@@ -22,14 +24,62 @@ function RecipePage() {
     const { TextArea } = Input;
     const { Dragger } = Upload;
     const { state } = useLocation<stateType>();
-    const recipe = state.recipe;
-    const { id, author, image, title, categories, rating, ingredients, instructions, description, comments, macros } = recipe;
+    const [recipe, setRecipe] = useState<Recipe | undefined>();
+    const recipeId = state.recipe
+    // const { id, author, image, title, categories, rating, ingredients, instructions, description, comments, macros } = recipe;
     const { Option } = Select;
-    const [commentList, setCommentList] = useState(comments);
+    const [commentList, setCommentList] = useState<CommentType[]>([] as CommentType[]);
     const currentHistory = useHistory();
     const [sessionContext, updateSessionContext] = useSessionContext();
     const [saved, setSaved] = useState(false);
-
+   
+    
+    const getRecipe = () => {
+        axios.get(HOST + 'recipes/' + recipeId, {
+            headers:{
+                authorization: sessionContext["user"]?.authToken
+            }
+        }).then(response => {
+            const r = response.data
+           console.log(r)
+                const categories = r.categories.map((cat: any) => {
+                    return cat.name
+                })
+                const instructions = r.instructions.map((i: any) => {
+                    return i.instruction
+                })
+                const ingredients = r.ingredients as Ingredient[]
+                const macros = r.macros as Macros
+                const detailRecipe = {
+                    id: r._id,
+                    author: r.user.fullname,
+                    authorId: r.user._id,
+                    // authorAvatar: r.user.image,
+                    title: r.title,
+                    categories: categories,
+                    description: r.description,
+                    time: r.time,
+                    calories: r.calories,
+                    subtitle: r.subtitle,
+                    rating: r.rating,
+                    ingredients: ingredients,
+                    image: "https://universityhealthnews.com/media/ispizzahealthy.jpg",
+                    instructions: instructions,
+                    comments: r.comments as CommentType[],
+                    macros: macros,
+                } as Recipe
+                setSaved(r.isSaved)
+                setCommentList([...(detailRecipe?.comments as CommentType[])])
+                setRecipe(detailRecipe)
+               
+               
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+    useEffect(() => {
+        getRecipe();
+    }, []);
     const actions = [
         <Tooltip key="comment-basic-like" title="Like">
             <span onClick={() => { console.log("liked") }}>
@@ -43,27 +93,65 @@ function RecipePage() {
             currentHistory.push('/login');
         } else {
             if (values["content"].length > 0) {
-                let newComment = { username: sessionContext["user"]?.username, content: values["content"], avatar: sessionContext["user"]?.image } as CommentType;
-                comments.push(newComment);
-                setCommentList([...commentList, newComment]);
+               postComment(values["content"])
             }
         }
     };
+    const postComment = (content: string)=> {
+        axios.post(HOST + 'comments/recipes/' + recipe?.id, {
+            data: {
+                comment: content
+            },
+        },{ headers:{
+            authorization: sessionContext["user"]?.authToken
+        }}).then(response => {
+            console.log(response.data)
+            let newComment = {
+                username: sessionContext["user"]?.username,
+                avatar: sessionContext["user"]?.image,
+                content: response.data.content,
+                id: response.data._id
+            } as CommentType
+            setCommentList([...commentList, newComment])
+         }).catch((error) => {
+             console.log(error)
+         })
+    }
 
     // Save this recipe to the user's saved recipes list
-    const saveRecipe = () => {
+    const toggleSave = () => {
+        console.log("saving")
         if (!("user" in sessionContext)){
             currentHistory.push('/login');
         } else {
             if (!saved){
-                if (!(sessionContext.savedRecipes.includes(recipe))){
-                    sessionContext.savedRecipes.push(recipe);
-                }
+                saveRecipe();
             } else {
-                sessionContext.savedRecipes.splice(sessionContext.savedRecipes.indexOf(recipe), 1);
+               unsaveRecipe();
             }
-            setSaved(!saved);
         }
+    }
+    const saveRecipe = () => {
+        axios.post(HOST + 'recipes/save/' + recipe?.id, {}, {
+            headers:{
+                authorization: sessionContext["user"]?.authToken
+            }
+        }).then(response => {
+           setSaved(true)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+    const unsaveRecipe = () => {
+        axios.post(HOST + 'recipes/unsave/' + recipe?.id, {}, {
+            headers:{
+                authorization: sessionContext["user"]?.authToken
+            }
+        }).then(response => {
+           setSaved(false)
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
     const goToProfile = () => {
@@ -82,7 +170,7 @@ function RecipePage() {
                             <Col span={16}>
                                 <Row align="middle">
                                     <Col >
-                                        <Title style={{ fontSize: 48, fontWeight: "bold", marginBottom: 0 }}>{title}</Title>
+                                        <Title style={{ fontSize: 48, fontWeight: "bold", marginBottom: 0 }}>{recipe?.title}</Title>
                                     </Col>
 
                                 </Row>
@@ -93,14 +181,14 @@ function RecipePage() {
                                         </div>
                                     </Col>
                                     <Col style={{ marginRight: 25 }}>
-                                        <Text className="recipeDescription" style={{ fontSize: 20 }} type="secondary">{author}</Text>
+                                        <Text className="recipeDescription" style={{ fontSize: 20 }} type="secondary">{recipe?.author}</Text>
                                     </Col>
                                     <Col style={{ marginRight: 10 }}>
 
                                         <div className='recipeRatingDiv'>
                                             <Row style={{ paddingLeft: 3, paddingRight: 3 }} justify='space-around' align='middle'>
                                                 <StarOutlined style={{ color: 'white', fontSize: 15 }} />
-                                                <div style={{ color: 'white' }}>{rating}</div>
+                                                <div style={{ color: 'white' }}>{recipe?.rating}</div>
                                             </Row>
                                         </div>
                                     </Col>
@@ -109,8 +197,8 @@ function RecipePage() {
                                         <Rate defaultValue={0} />
                                     </Col>
                                     <Col>
-                                        <span className="saveButton" onClick={saveRecipe}>
-                                            {createElement((saved || sessionContext.savedRecipes.includes(recipe)) ? HeartFilled : HeartOutlined)}
+                                        <span className="saveButton" onClick={toggleSave}>
+                                            {createElement((saved) ? HeartFilled : HeartOutlined)}
                                         </span>
                                     </Col>
 
@@ -119,7 +207,7 @@ function RecipePage() {
                             </Col>
                             <Col className="recipeCats" >
                                 {/* <EditableTagGroup></EditableTagGroup> */}
-                                {categories.map((cat, index) =>
+                                {recipe?.categories.map((cat: string, index: number) =>
                                     <Tag key={cat} style={{ paddingLeft: 20, paddingRight: 20 }} color="#109D7C">
                                         {cat}
                                     </Tag>
@@ -131,7 +219,7 @@ function RecipePage() {
                         </Row>
                         <Row align="middle" style={{ width: '55vw', maxWidth: 1000 }}>
                             <Col  >
-                                <Text className="recipeDescription" style={{ fontSize: 20, color: "black" }} type="secondary">{description}</Text>
+                                <Text className="recipeDescription" style={{ fontSize: 20, color: "black" }} type="secondary">{recipe?.description}</Text>
                             </Col>
                         </Row>
                         <Row>
@@ -141,7 +229,7 @@ function RecipePage() {
                                         <Image
                                             height={'27vw'}
                                             width={'55vw'}
-                                            src={image}
+                                            src={recipe?.image}
                                         />
                                     </div>
                                 </div>
@@ -158,7 +246,7 @@ function RecipePage() {
                         <Row justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
                             <Col offset={1} span={11} style={{ marginBottom: 15 }}>
 
-                                {ingredients.map((item, index) =>
+                                {recipe?.ingredients.map((item : any, index: number) =>
                                     <Row key={index} style={{ marginBottom: 10 }}>
                                         <Checkbox>
                                             <Text style={{ fontSize: 20 }}>{`${item.quantity} ${item.unit} ${item.name}`}</Text>
@@ -167,13 +255,14 @@ function RecipePage() {
 
                                 )}
                             </Col>
+                            {recipe?.macros.carbs &&
                             <Col span={8} className="pieChart">
                                 <Row>
-                                    <PieChart
+                                     <PieChart
                                         data={[
-                                            { title: 'Protein', value: macros.protein * 4, color: '#ACB9FF' },
-                                            { title: 'Carbs', value: macros.carbs * 4, color: '#2121B0' },
-                                            { title: 'Fats', value: macros.fats * 9, color: '#27AE60' },
+                                            { title: 'Protein', value: recipe?.macros ? recipe.macros.protein *4 : 0, color: '#ACB9FF' },
+                                            { title: 'Carbs', value: recipe?.macros ? recipe.macros.carbs *4 : 0, color: '#2121B0' },
+                                            { title: 'Fats', value: recipe?.macros ? recipe.macros.fats *9 : 0, color: '#27AE60' },
                                         ]}
                                         label={(labelRenderProps) =>
                                             `${labelRenderProps.dataEntry.value}`}
@@ -186,23 +275,19 @@ function RecipePage() {
                                 <Row justify='space-between' style={{ marginTop: 30 }}>
                                     <Col span={6}>
                                         <div style={{ backgroundColor: "#ACB9FF", width: 10, height: 10, borderRadius: "50%", marginBottom: 5 }}></div>
-                                        <Text>{macros.protein * 4} calories from Protein</Text>
+                                        <Text>{recipe?.macros ? recipe.macros.protein *4 : undefined} calories from Protein</Text>
                                     </Col>
                                     <Col span={6}>
                                         <div style={{ backgroundColor: "#2121B0", width: 10, height: 10, borderRadius: "50%", marginBottom: 5 }}></div>
-                                        <Text>{macros.carbs * 4} calories from Carbs</Text>
+                                        <Text>{recipe?.macros ? recipe.macros.protein *4 : undefined} calories from Carbs</Text>
                                     </Col>
                                     <Col span={6}>
                                         <div style={{ backgroundColor: "#27AE60", width: 10, height: 10, borderRadius: "50%", marginBottom: 5 }}></div>
-                                        <Text>{macros.fats * 9} calories from Fats</Text>
+                                        <Text>{recipe?.macros ? recipe.macros.fats *9 : undefined} calories from Fats</Text>
                                     </Col>
                                 </Row>
-                            </Col>
+                            </Col>}
                         </Row>
-
-
-
-
                         <Row align='middle' justify='start' style={{ width: '55vw', maxWidth: 1000 }}>
                             <Col >
                                 <h1 className="subtitle">Instructions</h1>
@@ -214,7 +299,7 @@ function RecipePage() {
                             <Col offset={1} span={24}>
                                 <div className="instructionsDiv">
                                     <Steps direction="vertical">
-                                        {instructions.map((instruction, index) =>
+                                        {recipe?.instructions.map((instruction: string, index: number) =>
                                             <Step key={index} title={`Step ${index + 1}`} status="process" description={instruction} />
                                         )}
                                     </Steps>
@@ -242,7 +327,7 @@ function RecipePage() {
                                 </Form>
                                 <div className="commentDiv">
                                     <List
-                                        dataSource={comments}
+                                        dataSource={commentList}
                                         renderItem={comment => (
                                             <List.Item>
                                               <Comment

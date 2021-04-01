@@ -17,6 +17,5 @@ function HomePage() {
       </Layout.Content>
     </Layout>
   );
-
 }
 export default HomePage;

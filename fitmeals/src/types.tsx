@@ -26,9 +26,10 @@ export type Ingredient = {
 }
 
 export type Comment = {
+    id: string,
     username: string,
     content: string,
-    avatar: string
+    avatar?: string
 }
 
 export type Macros = {
@@ -37,9 +38,12 @@ export type Macros = {
     fats: number
 }
 
+
 export type Recipe = {
     id: number,
     author: string,
+    authorId: string,
+    authorAvatar?: string,
     title: string,
     categories: string[],
     description: string,

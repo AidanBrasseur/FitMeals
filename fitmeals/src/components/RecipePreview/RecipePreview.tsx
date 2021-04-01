@@ -13,7 +13,7 @@ function RecipePreview({recipe} : RecipePreviewProps ) {
     return (
         <div className="previewContainer">
             <Link to={{pathname: '/recipe',
-                        state: { recipe: recipe }}}>
+                        state: { recipe: id }}}>
             <Card
                 hoverable
             >
