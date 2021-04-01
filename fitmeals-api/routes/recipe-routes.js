@@ -188,7 +188,7 @@ router.post('/', async (req, res) => {
         ingredients: req.body.ingredients ? JSON.parse(req.body.ingredients) : [],
         categories: req.body.categories ? JSON.parse(req.body.categories) : [],
         instructions: req.body.instructions ? JSON.parse(req.body.instructions) : [],
-        comments: [],
+        comments: req.body.comments ? JSON.parse(req.body.comments) : [],
         macros: req.body.macros
     })
 
