@@ -6,6 +6,8 @@ const { mongoose } = require('../db/mongoose');
 const { User } = require('../models/user');
 const { Recipe } = require('../models/recipe');
 
+const log = console.log;
+
 /*
 POST: /admin/promote
 Promotes a user to admin

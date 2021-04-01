@@ -8,6 +8,7 @@ const { User } = require('../models/user');
 const { ObjectID } = require('mongodb')
 const upload = require('../middleware/upload');
 
+const log = console.log;
 
 /*
 Get: /recipes

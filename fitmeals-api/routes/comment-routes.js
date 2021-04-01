@@ -5,6 +5,9 @@ const { mongoose } = require('../db/mongoose');
 const { Recipe } = require('../models/recipe');
 const { User } = require('../models/user');
 const { ObjectID } = require('mongodb')
+
+const log = console.log;
+
 /*
 Post: /recipes/:id/comment
 Posts a new comment to a recipe

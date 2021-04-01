@@ -9,6 +9,8 @@ const { User } = require('../models/user');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 
+const log = console.log;
+
 /*
 POST: /auth/register
 Adds a new user to the FitMeals DB
