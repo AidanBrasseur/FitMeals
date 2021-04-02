@@ -1,10 +1,12 @@
-import Icon, { LockOutlined, MailOutlined } from '@ant-design/icons';
+import Icon, { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Carousel, Checkbox, Form, Image, Input, Layout, Typography } from 'antd';
 import React, { useState } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { ReactComponent as logoSVG } from '../../assets/logo.svg';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { User } from '../../types';
+import axios from 'axios';
+import { HOST } from '../../config';
 import './styles.css';
 
 
@@ -15,18 +17,32 @@ function LoginPage() {
     const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
     function login(values: any) {
-        console.log(values)
-        if (values.email === "user@user.com" && values.password === "user"){
-            let user = {id: "6065f30c8b61152fbcf2b74d", name: 'User', email: values.email, authToken: '7a85121b-f8de-4b6e-89b4-e943e0783272', isAdmin: false, username: 'user', image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"} as User
+        // Sending a login request to the server
+        axios.post(HOST + 'auth/login', null, {
+            headers:{
+                authorization: btoa(values.username + ":" + values.password)
+            }
+        }).then(response => {
+            // Creating the user and redirecting to the main page
+            let res = response.data;
+            let user = {
+                id: res.id,
+                name: res.fullname,
+                email: res.email,
+                authToken: res.authToken,
+                username: res.username,
+                isAdmin: res.isAdmin,
+                image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
+            } as User;
             updateSessionContext({ ...sessionContext, user});
             setRedirectToReferrer(true);
-        } 
-        else if (values.email === "admin@admin.com" && values.password === "admin"){
-            let user = {id: '6065f3278b61152fbcf2b74e', name: 'Admin', email: values.email, authToken: '308274cc-ffb2-4158-97c7-20c21f3b199b', isAdmin: true, username: 'admin', image: "https://i.pinimg.com/736x/3f/99/cc/3f99cc2a119992eff72412875e847a74.jpg"} as User
-            updateSessionContext({ ...sessionContext, user});
-            setRedirectToReferrer(true);
-        }
-        
+        }).catch((error) => {
+            if (error.response.status == 404) {
+                alert("Invalid username or password");
+            } else {
+                alert("Sorry, FitMeals was unable to process your login request. Please try again.")
+            }
+        });       
     }
     if (redirectToReferrer) {
         return <Redirect to={from} />;
@@ -48,10 +64,10 @@ function LoginPage() {
                             onFinish={login}
                         >
                             <Form.Item
-                                name="email"
-                                rules={[{ required: true, message: 'Please input your email!' }]}
+                                name="username"
+                                rules={[{ required: true, message: 'Please input your username!' }]}
                             >
-                                <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
+                                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                             </Form.Item>
                             <Form.Item
                                 name="password"

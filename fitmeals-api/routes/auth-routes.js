@@ -114,6 +114,7 @@ router.post("/login", (req, res) => {
             res.send({
                 success: true,
                 user: {
+                    id: user._id,
                     username: user.username,
                     authToken: user.authToken,
                     fullname: user.fullname,
