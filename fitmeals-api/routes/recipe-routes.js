@@ -126,17 +126,19 @@ router.get("/categories", async (req, res) => {
             $unwind: '$categories'
         },
         {
+            $match: {
+                approved: true
+            }
+        },
+        {
             $group: {
                 _id: '$categories.name',
                 count: { $sum: 1 }
             }
-        },
-        {
-            $match: {
-                approved: true
-            }
-        }]
+        }
+        ]
         const categoryCounts = await Recipe.aggregate(categoryOperators)
+       
         res.send(categoryCounts)
     } catch (error) {
         console.log(error)

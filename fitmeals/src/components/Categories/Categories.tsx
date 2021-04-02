@@ -63,14 +63,19 @@ function Categories({setCategoryQuery}: CategoriesProps) {
   }
   const fetchCategoryCounts = () => {
     axios.get(HOST + 'recipes/categories').then(response => {
+      let result = response.data.reduce(function(map : any, obj : any) {
+        map[obj._id] = obj.count;
+        return map;
+      }, {});
+
       const newCounts = featuredCategories.map(cat => {
-          cat.count = 25
+          cat.count = result[cat.name] ?  result[cat.name] : 0
           return cat
       });
+      console.log(response.data)
       remainingCategories.map(cat => {
-        cat.count = 35;
+        cat.count = result[cat.name] ?  result[cat.name] : 0
       })
-      console.log(featuredCategories)
       setCategories(newCounts)
   }).catch((error) => {
       console.log(error)

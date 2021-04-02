@@ -22,7 +22,7 @@ function CategoryCard({ name, icon, count, selectCategory, deselectCategory }: C
     }, [selected]);
     return (
         <motion.div
-            onClick={() => setSelected(!selected)}
+            onTap={() => setSelected(!selected)}
             whileHover={{ scale: 1.05 }}
             whileTap={{
                 scale: 0.9
