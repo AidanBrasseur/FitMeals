@@ -302,8 +302,8 @@ Create a new FitMeals recipe
 router.post('/', multipartMiddleware, async (req, res) => {
     // Check for a valid mongoose connection
     if (mongoose.connection.readyState != 1) {
-        console.log('Issue with mongoose connection')
-        res.status(500).send('Internal server error')
+        console.log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: 'Internal server error' });
         return;
     }
 
