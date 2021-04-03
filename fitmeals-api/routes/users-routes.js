@@ -1,6 +1,9 @@
 // Creating the router
 const router = require('express').Router();
 
+// Config file
+const config = require('../config');
+
 // Get the Mongoose instance and models
 const { mongoose } = require('../db/mongoose');
 const { User } = require('../models/user');
@@ -10,9 +13,9 @@ const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart();
 const cloudinary = require('cloudinary');
 cloudinary.config({
-    cloud_name: "dsra1nu4c",
-    api_key: "917725798299619",
-    api_secret: "VtJUGZiPYWUvb7Kl2osB_iqsTNI"
+    cloud_name: config.cloudinary.cloud_name,
+    api_key: config.cloudinary.api_key,
+    api_secret: config.cloudinary.api_secret
 });
 
 const log = console.log;
