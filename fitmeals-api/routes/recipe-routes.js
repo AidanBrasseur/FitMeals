@@ -1,4 +1,8 @@
+// Creating the router
 const router = require('express').Router();
+
+// Config file
+const config = require('../config');
 
 // Get the Mongoose instance and models
 const { mongoose } = require('../db/mongoose');
@@ -6,7 +10,16 @@ const { Recipe } = require('../models/recipe');
 const { User } = require('../models/user');
 
 const { ObjectID } = require('mongodb')
-const upload = require('../middleware/upload');
+
+// Upload image libraries and middleware
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
+const cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: config.cloudinary.cloud_name,
+    api_key: config.cloudinary.api_key,
+    api_secret: config.cloudinary.api_secret
+});
 
 const log = console.log;
 
@@ -282,75 +295,77 @@ router.get("/users/:id", async (req, res) => {
     }
 })
 
-
-router.post('/', async (req, res) => {
-    // Add code here
-    // check mongoose connection established.
-
-    try {
-        await upload(req, res)
-    } catch (error) {
-        console.log(error)
-        res.send('Error when trying to upload image');
-        return;
-    }
-
+/*
+POST: /recipes
+Create a new FitMeals recipe
+*/
+router.post('/', multipartMiddleware, async (req, res) => {
+    // Check for a valid mongoose connection
     if (mongoose.connection.readyState != 1) {
         console.log('Issue with mongoose connection')
         res.status(500).send('Internal server error')
         return;
     }
-    console.log(req.file);
 
-    // Create a new restaurant using the restaurant mongoose model
-    // const restaurant = new Restaurant({
-    // 	name: req.body.name,
-    // 	description: req.body.description,
-    // 	reservations: []
-    // })
-
-    const user = await User.findOne({ authToken: req.headers.authorization });
-    if (!user) {
-        res.status(401).send({ success: false, error: "Unauthorized" });
-        return;
+    // Add a new recipe if the user has valid authorization
+    if (req.headers.authorization) {
+        User.findOne({ authToken: req.headers.authorization, isBanned: false }).then(async (user) => {
+            if (user) {
+                // Creating the recipe
+                const recipe = new Recipe({
+                    user: user._id,
+                    rating: 0.0,
+                    title: req.body.title,
+                    subtitle: req.body.subtitle,
+                    description: req.body.description,
+                    time: req.body.time,
+                    calories: req.body.calories,
+                    approved: false,
+                    date: Date.now(),
+                    ingredients: req.body.ingredients ? JSON.parse(req.body.ingredients) : [],
+                    categories: req.body.categories ? JSON.parse(req.body.categories) : [],
+                    comments: req.body.comments ? JSON.parse(req.body.comments) : [],
+                    macros: req.body.macros ? JSON.parse(req.body.macros) : {}
+                })
+                // Uploading the main image
+                cloudinary.uploader.upload(req.files.image.path, (result) => {
+                    recipe.image = {
+                        url: result.url,
+                        cloudinaryID: result.public_id,
+                        created_at: new Date()
+                    }
+                });
+                // Getting the instructions and their images
+                let instructionsList = req.body.instructions ? JSON.parse(req.body.instructions) : [];
+                for (var i = 0; i < instructionsList.length; i++) {
+                    let index = instructionsList[i].order;
+                    // Checking if the instruction has an image and uploading it                   
+                    if (req.files.hasOwnProperty(`image_instruction${index}`)) {
+                        const result = await cloudinary.uploader.upload(req.files[`image_instruction${index}`].path);
+                        instructionsList[i].image = {
+                            url: result.url,
+                            cloudinaryID: result.public_id,
+                            created_at: new Date()
+                        }
+                    }
+                }
+                recipe.instructions = instructionsList;  // Adding the instructions list to the recipe model
+                // Saving the recipe to the DB
+                recipe.save().then((result) => {
+                    res.status(201).send({ success: true, recipe: recipe });
+                }).catch((error) => {
+                    console.log(error);
+                    res.status(500).send({ success: false, error: "Internal server error" });
+                });
+            } else {
+                res.status(401).send({ success: false, error: "Unauthorized" });
+            }
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send({ success: false, error: "Internal server error" });
+        });
     }
-
-
-    console.log(user);
-    console.log(JSON.parse(req.body.instructions))
-
-    const recipe = new Recipe({
-        user: user._id,
-        rating: req.body.rating,
-        title: req.body.title,
-        subtitle: req.body.subtitle,
-        description: req.body.description,
-        time: req.body.time,
-        calories: req.body.calories,
-        image: req.file.id,
-        approved: false,
-        date: Date.now(),
-        ingredients: req.body.ingredients ? JSON.parse(req.body.ingredients) : [],
-        categories: req.body.categories ? JSON.parse(req.body.categories) : [],
-        instructions: req.body.instructions ? JSON.parse(req.body.instructions) : [],
-        comments: req.body.comments ? JSON.parse(req.body.comments) : [],
-        macros: req.body.macros
-    })
-
-    // Save restuarant to the database
-    try {
-        const result = await recipe.save()
-        res.send(recipe)
-    } catch (error) {
-        console.log(error) // log server error to the console, not to the client.
-        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
-            res.status(500).send('Internal server error')
-        } else {
-            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-        }
-    }
-
-})
+});
 
 /*
 POST: /recipes/save/:id

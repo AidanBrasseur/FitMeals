@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const { User } = require('./user');
 
+const ImageSchema = new mongoose.Schema({
+    url: String,
+    cloudinaryID: String,
+    createdAt: String
+});
+
 const IngredientSchema = new mongoose.Schema({
     name: String,
     quantity: Number,
@@ -13,7 +19,8 @@ const CategorySchema = new mongoose.Schema({
 
 const InstructionSchema = new mongoose.Schema({
     order: Number,
-    instruction: String
+    instruction: String,
+    image: ImageSchema
 });
 
 const CommentSchema = new mongoose.Schema({
@@ -36,14 +43,14 @@ const RecipeSchema = new mongoose.Schema({
     description: String,
     time: String,
     calories: Number,
-    image: String,
+    image: ImageSchema,
     approved: Boolean,
     date: Date,
     ingredients: [IngredientSchema],
     categories: [CategorySchema],
     instructions: [InstructionSchema],
     comments: [CommentSchema],
-    macros: [MacroSchema]
+    macros: MacroSchema
 });
 RecipeSchema.index({ title: 'text', subtitle: 'text', description: 'text', 'categories.name': 'text', 'instructions.instruction': 'text', 'comments.content': 'text' });
 RecipeSchema.post("findOneAndDelete", document => {
