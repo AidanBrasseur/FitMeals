@@ -42,38 +42,40 @@ function RecipePage() {
             }
         }).then(response => {
             const r = response.data
-           console.log(r)
-                const categories = r.categories.map((cat: any) => {
-                    return cat.name
-                })
-                const instructions = r.instructions.map((i: any) => {
-                    return i.instruction
-                })
-                const ingredients = r.ingredients as Ingredient[]
-                const macros = r.macros as Macros
-                const detailRecipe = {
-                    id: r._id,
-                    author: r.user.fullname,
-                    authorId: r.user._id,
-                    // authorAvatar: r.user.image,
-                    title: r.title,
-                    categories: categories,
-                    description: r.description,
-                    time: r.time,
-                    calories: r.calories,
-                    subtitle: r.subtitle,
-                    rating: r.rating,
-                    ingredients: ingredients,
-                    image: "https://universityhealthnews.com/media/ispizzahealthy.jpg",
-                    instructions: instructions,
-                    comments: r.comments as CommentType[],
-                    macros: macros,
-                } as Recipe
-                setSaved(r.isSaved)
-                setCommentList([...(detailRecipe?.comments as CommentType[])])
-                setRecipe(detailRecipe)
-               
-               
+            const categories = r.categories.map((cat: any) => {
+                return cat.name
+            })
+            const instructions = r.instructions.map((i: any) => {
+                return i.instruction
+            })
+            const ingredients = r.ingredients as Ingredient[]
+            const macros = {
+                protein: r.macros.protein,
+                carbs: r.macros.carbs,
+                fats: r.macros.fats
+            } as Macros
+            const detailRecipe = {
+                id: r._id,
+                author: r.user.fullname,
+                authorId: r.user._id,
+                authorAvatar: r.user.image.url,
+                authorUsername: r.user.username,
+                title: r.title,
+                categories: categories,
+                description: r.description,
+                time: r.time,
+                calories: r.calories,
+                subtitle: r.subtitle,
+                rating: r.rating,
+                ingredients: ingredients,
+                image: r.image.url,
+                instructions: instructions,
+                comments: r.comments as CommentType[],
+                macros: macros,
+            } as Recipe
+            setSaved(r.isSaved)
+            setCommentList([...(detailRecipe?.comments as CommentType[])])
+            setRecipe(detailRecipe)              
         }).catch((error) => {
             console.log(error)
         })
@@ -151,7 +153,7 @@ function RecipePage() {
     }
 
     const goToProfile = () => {
-        currentHistory.push('/profile', {hardcode: true});
+        currentHistory.push(`/profile/${recipe?.authorUsername}`, {hardcode: true});
     }
 
     return (
@@ -173,7 +175,7 @@ function RecipePage() {
                                 <Row style={{ height: 70 }} align="middle" >
                                     <Col style={{ marginRight: 10 }}>
                                         <div className="recipePageProfilePic">
-                                            <Image onClick={goToProfile} preview={false} style={{ borderRadius: "50%" }} src='https://www.biography.com/.image/t_share/MTE4MDAzNDEwNDQwMjU5MDg2/rowan-atkinson-9191636-1-402.jpg' />
+                                            <Image onClick={goToProfile} preview={false} width={'4vw'} height={'4vw'} style={{ borderRadius: "50%" }} src={recipe?.authorAvatar} />
                                         </div>
                                     </Col>
                                     <Col style={{ marginRight: 25 }}>
@@ -275,7 +277,7 @@ function RecipePage() {
                                     </Col>
                                     <Col span={6}>
                                         <div style={{ backgroundColor: "#2121B0", width: 10, height: 10, borderRadius: "50%", marginBottom: 5 }}></div>
-                                        <Text>{recipe?.macros ? recipe.macros.protein *4 : undefined} calories from Carbs</Text>
+                                        <Text>{recipe?.macros ? recipe.macros.carbs *4 : undefined} calories from Carbs</Text>
                                     </Col>
                                     <Col span={6}>
                                         <div style={{ backgroundColor: "#27AE60", width: 10, height: 10, borderRadius: "50%", marginBottom: 5 }}></div>

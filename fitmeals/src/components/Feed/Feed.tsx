@@ -29,7 +29,7 @@ function Feed({ title, userId, saved, searchQuery, categoryQuery }: FeedProps) {
                 const categories = r.categories.map((cat: any) => {
                     return cat.name
                 })
-                return {id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: "https://universityhealthnews.com/media/ispizzahealthy.jpg", categories: categories } as RecipePreviewType
+                return {id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: r.image.url, categories: categories } as RecipePreviewType
             })
             setRecipes(parsedRecipes)
         }).catch((error) => {
@@ -50,7 +50,7 @@ function Feed({ title, userId, saved, searchQuery, categoryQuery }: FeedProps) {
                 const categories = r.categories.map((cat: any) => {
                     return cat.name
                 })
-                return {id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: "https://universityhealthnews.com/media/ispizzahealthy.jpg", categories: categories } as RecipePreviewType
+                return {id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: r.image.url, categories: categories } as RecipePreviewType
             })
             setRecipes(parsedRecipes)
         }).catch((error) => {
@@ -72,7 +72,7 @@ function Feed({ title, userId, saved, searchQuery, categoryQuery }: FeedProps) {
                 const categories = r.categories.map((cat: any) => {
                     return cat.name
                 })
-                return {id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: "https://universityhealthnews.com/media/ispizzahealthy.jpg", categories: categories } as RecipePreviewType
+                return {id: r._id, title: r.title, subtitle: r.subtitle, time: r.time, calories: r.calories, image: r.image.url, categories: categories } as RecipePreviewType
             })
             setRecipes(parsedRecipes)
         }).catch((error) => {

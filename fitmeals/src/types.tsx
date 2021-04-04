@@ -39,12 +39,12 @@ export type Macros = {
     fats: number
 }
 
-
 export type Recipe = {
     id: number,
     author: string,
     authorId: string,
     authorAvatar?: string,
+    authorUsername?: string,
     title: string,
     categories: string[],
     description: string,

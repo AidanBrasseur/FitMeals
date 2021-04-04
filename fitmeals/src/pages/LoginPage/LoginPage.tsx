@@ -24,7 +24,7 @@ function LoginPage() {
             }
         }).then(response => {
             // Creating the user and redirecting to the main page
-            let res = response.data;
+            let res = response.data.user;
             let user = {
                 id: res.id,
                 name: res.fullname,

@@ -22,7 +22,7 @@ function Header({setSearchQuery}: HeaderProps) {
     const menu = sessionContext.user ? (
       <Menu>
         <Menu.Item>
-          <Link to="/profile"><UserOutlined />Profile Page</Link>
+          <Link to={{ pathname: `/profile/${sessionContext.user?.username}` }}><UserOutlined />Profile Page</Link>
         </Menu.Item>
         <Menu.Item>
           <Link to="/saved-recipes" ><BookOutlined />Saved Recipes</Link>

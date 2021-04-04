@@ -36,7 +36,6 @@ router.get("/", async (req, res) => {
     
     const searchQuery = req.query.searchQuery
     const categoryQuery = req.query.categoryQuery
-    console.log(categoryQuery)
     try {
         let match = { approved: true }
         if (searchQuery) {
@@ -57,7 +56,7 @@ router.get("/", async (req, res) => {
             }
             search = { score: { $meta: "textScore" } }
         }
-        let recipes = await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
+        let recipes = await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments").sort(sort)
         recipes.filter(async (recipe) => {
             const user = await User.findById(recipe.user)
             return !user.isBanned
