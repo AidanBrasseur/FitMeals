@@ -1,0 +1,24 @@
+
+
+
+.footerContainer{
+    width: 100%;
+    align-content: 'center';
+    align-items: 'center';
+   
+    text-align: center;
+}
+
+.textLogoFooter {
+    font-size: 40px;
+    color: black;
+    font-weight: bold;
+    font-family: "Playfair Display";
+    margin-left: 0px;
+    margin-top: 0px;
+    height: 100%;
+  }
+
+  .footerText{
+    font-size: 17px;
+  }

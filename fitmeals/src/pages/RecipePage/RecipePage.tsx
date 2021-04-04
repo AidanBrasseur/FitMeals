@@ -13,6 +13,7 @@ import { useSessionContext } from '../../contexts/SessionContext';
 import { HOST } from '../../config';
 import CommentItem from '../../components/CommentItem/CommentItem';
 import axios from 'axios';
+import Footer from '../../components/Footer/Footer';
 interface stateType {
     recipe: string
 }
@@ -70,7 +71,10 @@ function RecipePage() {
                 ingredients: ingredients,
                 image: r.image.url,
                 instructions: instructions,
-                comments: r.comments as CommentType[],
+                comments: r.comments.map((comment: any) => {
+                    comment.avatar = comment.avatar.url
+                    return comment
+                }) as CommentType[],
                 macros: macros,
             } as Recipe
             setSaved(r.isSaved)
@@ -175,7 +179,7 @@ function RecipePage() {
                                 <Row style={{ height: 70 }} align="middle" >
                                     <Col style={{ marginRight: 10 }}>
                                         <div className="recipePageProfilePic">
-                                            <Image onClick={goToProfile} preview={false} style={{ borderRadius: "50%" }} src={recipe?.authorAvatar} />
+                                            <Image onClick={goToProfile} preview={false} src={recipe?.authorAvatar} />
                                         </div>
                                     </Col>
                                     <Col style={{ marginRight: 25 }}>
@@ -338,6 +342,7 @@ function RecipePage() {
                     </Space>
                 </div>
             </Layout.Content>
+            <Footer></Footer>
         </Layout>
     );
 

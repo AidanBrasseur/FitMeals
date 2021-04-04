@@ -156,3 +156,15 @@
 .commentDiv .ant-list-item{
     padding: 0px;   
 }
+.recipePageProfilePic .ant-image{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: 'cover'; 
+}
+.recipePageProfilePic .ant-image .ant-image-img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: 'cover'; 
+}
