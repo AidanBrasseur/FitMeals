@@ -14,6 +14,14 @@
     margin-left: 10px;
     cursor: pointer;
 }
+.deleteRecipeIcon{
+    cursor: pointer;
+    font-size: 25px;
+}
+.goBackIcon{
+    cursor: pointer;
+    font-size: 30px;
+}
 
 .recipeDescritption{
     font-size: 448px;

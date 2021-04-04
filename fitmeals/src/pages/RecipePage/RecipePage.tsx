@@ -1,8 +1,8 @@
-import { StarOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Col, ConfigProvider, Form, Image, Input, Layout, List, Rate, Row, Select, Space, Steps, Tag, Typography, Upload } from 'antd';
+import Icon, { ArrowLeftOutlined, StarOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Col, ConfigProvider, Form, Image, Input, Layout, List, Popconfirm, Rate, Row, Select, Space, Steps, Tag, Typography, Upload } from 'antd';
 import axios from 'axios';
 import React, { createElement, useEffect, useState } from 'react';
-import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { FaBookmark, FaRegBookmark, FaTrashAlt } from 'react-icons/fa';
 import { PieChart } from 'react-minimal-pie-chart';
 import { useHistory, useLocation } from 'react-router-dom';
 import CommentItem from '../../components/CommentItem/CommentItem';
@@ -157,14 +157,39 @@ function RecipePage() {
     const goToProfile = () => {
         currentHistory.push(`/profile/${recipe?.authorUsername}`, {hardcode: true});
     }
+    const confirmDelete = () => {
+        axios.delete(HOST + 'recipes/' + recipe?.id, {
+            headers:{
+                authorization: sessionContext["user"]?.authToken
+            }
+        }).then(response => {
+            currentHistory.goBack();
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
 
     return (
         <Layout>
             <Header />
             <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
                 <div className="recipePage" >
-
+                    <Row align='middle' justify='space-between' style={{width: '100%'}}>
+                            <ArrowLeftOutlined onClick={() => currentHistory.goBack()}className="goBackIcon"></ArrowLeftOutlined>
+                            {(sessionContext.user?.id === recipe?.authorId || sessionContext.user?.isAdmin) && 
+                            <Popconfirm
+                             placement="leftBottom"
+                            title="Are you sure to delete this Recipe?"
+                            onConfirm={confirmDelete}
+                            okText="Yes"
+                            cancelText="No"
+                          >
+                         <FaTrashAlt className="deleteRecipeIcon"></FaTrashAlt> 
+                          </Popconfirm>}
+                        </Row>
                     <Space direction="vertical" size={"large"} style={{ width: '100%' }} align='center'>
+                       
                         <Row align='middle' justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
 
                             <Col span={16}>
