@@ -133,7 +133,7 @@ router.post("/login", (req, res) => {
 });
 
 /*
-POST: /auth/login-with-authtoken
+POST: /auth/login-authtoken
 Login to FitMeals with an authtoken instead of username/password
 */
 router.post("/login-authtoken", (req, res) => {
