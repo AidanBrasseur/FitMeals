@@ -7,6 +7,7 @@ import Header from '../../components/Header/Header';
 import './styles.css';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { Recipe } from '../../types';
+import Footer from '../../components/Footer/Footer';
 
 function NewRecipePage() {
   const { TextArea } = Input;
@@ -243,6 +244,7 @@ function NewRecipePage() {
           </div>
         </Spin>
       </Layout.Content>
+      <Footer></Footer>
     </Layout>
   );
 
