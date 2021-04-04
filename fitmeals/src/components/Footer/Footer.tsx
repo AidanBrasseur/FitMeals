@@ -15,10 +15,10 @@ function Footer() {
 
     return (
         <Layout.Footer className="footerContainer" style={{backgroundColor: '#032D23'}}>
-        <Space size={25} direction='horizontal'>
+        <Space size={25} direction='horizontal' align='center'>
     
         <Link to='/'> <Icon component={logoSVG} style={{ fontSize: 110 }} /></Link>
-        <Space direction="vertical" className="footerText">
+        <Space direction="vertical" className="footerText" align='start'>
         <Link to={{ pathname: `/profile/${sessionContext.user?.username}` }} style={{  color: 'white'}}>Profile Page</Link>
         <Link to='/new-recipe' style={{  color: 'white'}}>Create a Recipe</Link>
         <Link to='/' style={{  color: 'white'}}>Saved Recipes</Link>
