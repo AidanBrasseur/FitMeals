@@ -1,4 +1,4 @@
-import { List, Space } from 'antd';
+import { ConfigProvider, Empty, List, Space } from 'antd';
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from 'react';
 import { RecipePreviewType, Recipe } from '../../types';
@@ -96,6 +96,7 @@ function Feed({ title, userId, saved, searchQuery, categoryQuery }: FeedProps) {
             <Space style={{ marginTop: 20 }} size={25} direction="vertical">
                 <div className='feedTitle'>{title}</div>
                 <AnimatePresence>
+                <ConfigProvider renderEmpty={() => <Empty description="No Recipes"/>}>
                     <List
                         className='feedGrid'
                         grid={{
@@ -128,6 +129,7 @@ function Feed({ title, userId, saved, searchQuery, categoryQuery }: FeedProps) {
 
                         )}
                     />
+                    </ConfigProvider>
                 </AnimatePresence>
 
             </Space>

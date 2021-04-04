@@ -1,5 +1,5 @@
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined, DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload, Comment, List, Tooltip } from 'antd';
+import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload, Comment, List, Tooltip, ConfigProvider } from 'antd';
 import React, { useState, createElement, useEffect } from 'react';
 import Header from '../../components/Header/Header';
 import ImgCrop from 'antd-img-crop';
@@ -328,6 +328,7 @@ function RecipePage() {
                                     </Form.Item>
                                 </Form>
                                 <div className="commentDiv">
+                                    <ConfigProvider renderEmpty={() => <div></div>}>
                                     <List
                                         dataSource={commentList}
                                         renderItem={comment => (
@@ -336,6 +337,7 @@ function RecipePage() {
                                             </List.Item>
                                         )}
                                     ></List>
+                                    </ConfigProvider>
                                 </div>
                             </Col>
                         </Row>
