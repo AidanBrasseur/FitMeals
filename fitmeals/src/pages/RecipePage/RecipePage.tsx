@@ -175,7 +175,7 @@ function RecipePage() {
                                 <Row style={{ height: 70 }} align="middle" >
                                     <Col style={{ marginRight: 10 }}>
                                         <div className="recipePageProfilePic">
-                                            <Image onClick={goToProfile} preview={false} width={'4vw'} height={'4vw'} style={{ borderRadius: "50%" }} src={recipe?.authorAvatar} />
+                                            <Image onClick={goToProfile} preview={false} style={{ borderRadius: "50%" }} src={recipe?.authorAvatar} />
                                         </div>
                                     </Col>
                                     <Col style={{ marginRight: 25 }}>
