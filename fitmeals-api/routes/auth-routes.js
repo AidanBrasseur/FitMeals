@@ -55,7 +55,7 @@ router.post("/register", (req, res) => {
                         authToken: newAuthToken,
                         fullname: req.body.fullname,
                         email: req.body.email,
-                        image: "NOT_AVAILABLE",
+                        image: null,
                         rating: 0.0,
                         savedRecipes: [],
                         isAdmin: false,
@@ -119,7 +119,7 @@ router.post("/login", (req, res) => {
                     authToken: user.authToken,
                     fullname: user.fullname,
                     email: user.email,
-                    image: "NOT_AVAILABLE",
+                    image: user.image,
                     isAdmin: user.isAdmin,
                 }
             });
@@ -131,6 +131,53 @@ router.post("/login", (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
     });
 });
+
+/*
+POST: /auth/login-with-authtoken
+Login to FitMeals with an authtoken instead of username/password
+*/
+router.post("/login-authtoken", (req, res) => {
+    // Check for a valid mongoose connection
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+
+    // Try to find the correct user
+    if (req.headers.authorization) {
+        User.findOne({ authToken: req.headers.authorization }).then((user) => {
+            if (user == null) {
+                res.status(404).send({ success: false, error: "User not found" });
+                return;
+            }
+            // Checking if the user is banned
+            if (user.isBanned) {
+                res.status(401).send({ success: false, error: "User banned" });
+                return;
+            }
+            // Sending the user info
+            res.send({
+                success: true,
+                user: {
+                    id: user._id,
+                    username: user.username,
+                    authToken: user.authToken,
+                    fullname: user.fullname,
+                    email: user.email,
+                    image: user.image,
+                    isAdmin: user.isAdmin,
+                }
+            });
+        }).catch((error) => {
+            console.log(error);
+            res.status(500).send({ success: false, error: "Internal server error" });
+        });
+    } else {
+        res.status(401).send({ success: false, error: "Unauthorized" });
+    }
+});
+
 
 // Exporting the routes
 module.exports = router;
