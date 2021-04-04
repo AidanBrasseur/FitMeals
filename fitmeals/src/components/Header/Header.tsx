@@ -31,7 +31,7 @@ function Header({setSearchQuery}: HeaderProps) {
           <Link to="/admin-panel" ><SecurityScanOutlined />Admin Page</Link>
         </Menu.Item> : null}
         <Menu.Item>
-          <Link to="/login" ><Button style={{width: '100%'}}>Logout</Button></Link>
+          <Link to="/login" ><Button onClick={() => localStorage.clear()}style={{width: '100%'}}>Logout</Button></Link>
         </Menu.Item>
       </Menu>
     ) : (

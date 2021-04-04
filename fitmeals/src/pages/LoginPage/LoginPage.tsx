@@ -17,6 +17,7 @@ function LoginPage() {
     const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
     function login(values: any) {
+        localStorage.clear()
         // Sending a login request to the server
         axios.post(HOST + 'auth/login', null, {
             headers:{
@@ -35,6 +36,10 @@ function LoginPage() {
                 image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
             } as User;
             updateSessionContext({ ...sessionContext, user});
+         
+            if(values.remember){
+                localStorage.setItem('authToken', res.authToken);
+            }
             setRedirectToReferrer(true);
         }).catch((error) => {
             if (error.response.status == 404) {

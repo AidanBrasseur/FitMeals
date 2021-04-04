@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import ProtectedRoute from './components/ProtectedRoute';
+import CheckAuthRoute from './components/CheckAuthRoute';
 import AdminPage from './pages/AdminPage/AdminPage';
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -18,21 +19,18 @@ function Routes() {
     <div>
       
       <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
+        
+        <CheckAuthRoute exact path="/" component={HomePage}/>
         <Route path="/login">
           <LoginPage />
         </Route>
         <Route path="/register">
           <RegisterPage />
         </Route>
-        <Route path="/recipe">
-          <RecipePage />
-        </Route>
+        <CheckAuthRoute path="/recipe" component={RecipePage}/>
         <ProtectedRoute path='/new-recipe' component={NewRecipePage} />
         <ProtectedRoute path='/admin-panel' component={AdminPage} />
-        <Route path='/profile' component={ProfilePage} />
+        <CheckAuthRoute path='/profile' component={ProfilePage} />
         <ProtectedRoute path='/saved-recipes' component={SavedRecipesPage} />
         <ProtectedRoute path='/edit-recipe' component={EditRecipePage} />
       </Switch>

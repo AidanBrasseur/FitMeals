@@ -3,7 +3,7 @@ import { Redirect, Route, useLocation } from "react-router-dom";
 import { useSessionContext } from "../contexts/SessionContext";
 
 
-function ProtectedRoute({ component: Component, ...rest } : any) {
+function CheckAuthRoute({ component: Component, ...rest } : any) {
   const location = useLocation();
   const [sessionState, setSessionState] = useSessionContext();
   const auth = localStorage.getItem('authToken')
@@ -19,13 +19,9 @@ function ProtectedRoute({ component: Component, ...rest } : any) {
 
   return (
     <Route {...rest}>
-      { user ?
         <Component />
-      :
-        <Redirect to={{ pathname: "/login", state: { from: location } }} />
-      }
     </Route>
   );
 };
 
-export default ProtectedRoute;
+export default CheckAuthRoute;
