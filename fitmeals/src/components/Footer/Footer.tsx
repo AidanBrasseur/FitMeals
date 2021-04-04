@@ -21,7 +21,7 @@ function Footer() {
         <Space direction="vertical" className="footerText" align='start'>
         <Link to={{ pathname: `/profile/${sessionContext.user?.username}` }} style={{  color: 'white'}}>Profile Page</Link>
         <Link to='/new-recipe' style={{  color: 'white'}}>Create a Recipe</Link>
-        <Link to='/' style={{  color: 'white'}}>Saved Recipes</Link>
+        <Link to='/saved-recipes' style={{  color: 'white'}}>Saved Recipes</Link>
         </Space>
         </Space>
       
