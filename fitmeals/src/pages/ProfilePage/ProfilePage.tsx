@@ -9,6 +9,7 @@ import { useSessionContext } from '../../contexts/SessionContext';
 import { HOST } from '../../config';
 
 import './styles.css';
+import Footer from '../../components/Footer/Footer';
 
 function ProfilePage() {
   const { TextArea } = Input;
@@ -76,6 +77,7 @@ function ProfilePage() {
           <Feed title={"Recent Recipes"} userId={sessionContext["user"]?.id} searchQuery={searchQuery}></Feed>
         </div>
       </Layout.Content>
+      <Footer></Footer>
     </Layout>
   );
 

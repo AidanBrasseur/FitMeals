@@ -9,6 +9,7 @@ import './styles.css';
 import { useSessionContext } from '../../contexts/SessionContext';
 import axios from 'axios';
 import { HOST } from '../../config';
+import Footer from '../../components/Footer/Footer';
 interface stateType {
   recipeId: string
 }
@@ -326,6 +327,7 @@ useEffect(() => {
           </div>
         </Spin>
       </Layout.Content>
+      <Footer></Footer>
     </Layout>
 
   );
