@@ -1,19 +1,17 @@
-import { MinusCircleOutlined, PlusOutlined, UploadOutlined, DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled, HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Upload, Comment, List, Tooltip, ConfigProvider } from 'antd';
-import React, { useState, createElement, useEffect } from 'react';
-import Header from '../../components/Header/Header';
-import ImgCrop from 'antd-img-crop';
-import './styles.css';
-import { Rate, Image, Space, Typography, Tag, Divider, Steps, Checkbox } from 'antd';
 import { StarOutlined } from '@ant-design/icons';
-import { PieChart } from 'react-minimal-pie-chart'
-import { useLocation, useHistory } from 'react-router-dom';
-import { Recipe, Comment as CommentType, Ingredient, Macros } from '../../types';
-import { useSessionContext } from '../../contexts/SessionContext';
-import { HOST } from '../../config';
-import CommentItem from '../../components/CommentItem/CommentItem';
+import { Button, Checkbox, Col, ConfigProvider, Form, Image, Input, Layout, List, Rate, Row, Select, Space, Steps, Tag, Typography, Upload } from 'antd';
 import axios from 'axios';
+import React, { createElement, useEffect, useState } from 'react';
+import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import { PieChart } from 'react-minimal-pie-chart';
+import { useHistory, useLocation } from 'react-router-dom';
+import CommentItem from '../../components/CommentItem/CommentItem';
 import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
+import { HOST } from '../../config';
+import { useSessionContext } from '../../contexts/SessionContext';
+import { Comment as CommentType, Ingredient, Macros, Recipe } from '../../types';
+import './styles.css';
 interface stateType {
     recipe: string
 }
@@ -178,9 +176,11 @@ function RecipePage() {
                                 </Row>
                                 <Row style={{ height: 70 }} align="middle" >
                                     <Col style={{ marginRight: 10 }}>
+                                      
                                         <div className="recipePageProfilePic">
                                             <Image onClick={goToProfile} preview={false} src={recipe?.authorAvatar} />
                                         </div>
+                                       
                                     </Col>
                                     <Col style={{ marginRight: 25 }}>
                                         <Text className="recipeDescription" style={{ fontSize: 20 }} type="secondary">{recipe?.author}</Text>
@@ -200,7 +200,7 @@ function RecipePage() {
                                     </Col>
                                     <Col>
                                         <span className="saveButton" onClick={toggleSave}>
-                                            {createElement((saved) ? HeartFilled : HeartOutlined)}
+                                            {createElement((saved) ? FaBookmark : FaRegBookmark)}
                                         </span>
                                     </Col>
 
