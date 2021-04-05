@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Categories from '../../components/Categories/Categories';
 import Feed from '../../components/Feed/Feed';
 import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import './styles.css';
 
 function HomePage() {
@@ -15,6 +16,7 @@ function HomePage() {
         <Categories setCategoryQuery={setCategoryQuery}></Categories>
         <Feed title={"Featured Recipes"} searchQuery={searchQuery} categoryQuery={categoryQuery}></Feed>
       </Layout.Content>
+      <Footer></Footer>
     </Layout>
   );
 }

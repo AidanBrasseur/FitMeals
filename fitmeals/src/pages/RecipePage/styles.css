@@ -12,6 +12,15 @@
 .saveButton{
     font-size: 26px;
     margin-left: 10px;
+    cursor: pointer;
+}
+.deleteRecipeIcon{
+    cursor: pointer;
+    font-size: 25px;
+}
+.goBackIcon{
+    cursor: pointer;
+    font-size: 30px;
 }
 
 .recipeDescritption{
@@ -155,4 +164,17 @@
 
 .commentDiv .ant-list-item{
     padding: 0px;   
+}
+.recipePageProfilePic .ant-image{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: 'cover'; 
+}
+.recipePageProfilePic .ant-image .ant-image-img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: 'cover'; 
 }

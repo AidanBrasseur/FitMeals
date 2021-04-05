@@ -7,15 +7,13 @@ import Header from '../../components/Header/Header';
 import './styles.css';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { Recipe } from '../../types';
-import Item from 'antd/lib/list/Item';
 import { useAlert } from 'react-alert'
 import { stringify } from 'querystring';
 import axios from 'axios';
 import { HOST } from '../../config';
 
-
+import Footer from '../../components/Footer/Footer';
 function NewRecipePage() {
-  const { TextArea } = Input;
   const { Dragger } = Upload;
   const { Option } = Select;
   // const alert = useAlert()
@@ -391,6 +389,7 @@ function NewRecipePage() {
           </div>
         </Spin>
       </Layout.Content>
+      <Footer></Footer>
     </Layout>
   );
 

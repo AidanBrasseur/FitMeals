@@ -1,4 +1,4 @@
-import { Checkbox, List, Space } from 'antd';
+import { Checkbox, ConfigProvider, List, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import RecipePreviewAdmin from '../RecipePreviewAdmin/RecipePreviewAdmin';
 import './styles.css';
@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useSessionContext } from '../../contexts/SessionContext';
 import axios from 'axios';
 import { HOST } from '../../config';
+import { Empty } from 'antd';
 type AdminProps = {
     searchQuery?: string | undefined;
 
@@ -48,14 +49,14 @@ function AdminFeed({ searchQuery }: AdminProps) {
         setRecipes(removeApprove)
     }
 
-
     return (
 
         <div className="adminFeedContainer">
             <Space style={{ marginTop: 20 }} size={25} direction="vertical">
                 <div className='adminFeedTitle'>Admin Panel</div>
-
+                <ConfigProvider renderEmpty={() => <Empty description="No Recipes"/>}>
                 <List
+                   
                     className='adminFeedGrid'
                     grid={{
                         gutter: 10,
@@ -80,6 +81,7 @@ function AdminFeed({ searchQuery }: AdminProps) {
 
                     )}
                 />
+                </ConfigProvider>
 
 
             </Space>
