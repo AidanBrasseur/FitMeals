@@ -7,12 +7,31 @@ import Header from '../../components/Header/Header';
 import './styles.css';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { Recipe } from '../../types';
+import Item from 'antd/lib/list/Item';
+import { useAlert } from 'react-alert'
+import { stringify } from 'querystring';
+import axios from 'axios';
+import { HOST } from '../../config';
+
 
 function NewRecipePage() {
   const { TextArea } = Input;
   const { Dragger } = Upload;
   const { Option } = Select;
-  const [image, setImage] = useState<string | null>(null);
+  // const alert = useAlert()
+  type MainImage = {
+    url: string, 
+    file: File
+  }
+  const [image, setImage] = useState<MainImage | null>(null);
+  type InstructImage = {
+      key: number,
+      image: string, 
+      file: File
+  }
+  const [instsructImages, setInstsructImages] = useState<InstructImage[]>([])
+  const [sessionContext, updateSessionContext] = useSessionContext();
+
   const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup"])
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -21,27 +40,113 @@ function NewRecipePage() {
   categories.forEach(category => {
     children.push(<Option value={category} key={category}>{category}</Option>);
   });
-  const [sessionContext, updateSessionContext] = useSessionContext();
 
   const onFinish = async (values: any) => {
     console.log('Received values of form:', values);
-    setLoading(true)
-    await delay(1000);
-    setLoading(false);
-    values.image = image;
-    //Temporary will need more input fields
-    values.time = '20-30min';
-    values.calories = 400;
-    values.id = sessionContext.underReviewRecipes.length + 1;
-    values.comments = [];
-    values.macros = {protein: parseInt(values.macroProtein), carbs: parseInt(values.macroCarbs), fats: parseInt(values.macroFats)}
-    let recipe = values as Recipe;
-    console.log(recipe);
+    // setLoading(true)
+    // await delay(1000);
+    // setLoading(false);
+    // values.image = image;
+    // //Temporary will need more input fields
+    // values.time = '20-30min';
+    // values.calories = 400;
+    // values.id = sessionContext.underReviewRecipes.length + 1;
+    // values.comments = [];
+    // values.macros = { protein: parseInt(values.macroProtein), carbs: parseInt(values.macroCarbs), fats: parseInt(values.macroFats) }
+    // let recipe = values as Recipe;
+    // console.log(recipe);
 
-    let underReviewRecipes = [recipe, ...sessionContext.underReviewRecipes]
-    let userRecipes = [recipe, ...sessionContext.userRecipes]
-    updateSessionContext({ ...sessionContext, underReviewRecipes: underReviewRecipes, userRecipes: userRecipes })
-    success();
+    // let underReviewRecipes = [recipe, ...sessionContext.underReviewRecipes]
+    // let userRecipes = [recipe, ...sessionContext.userRecipes]
+    // updateSessionContext({ ...sessionContext, underReviewRecipes: underReviewRecipes, userRecipes: userRecipes })
+    // success();
+    const formData = new FormData();
+    // alert.show('clicked')
+    if (values.title == undefined || values.title == ''){
+      // alert.show('Please provide a title')
+      Modal.error({
+        content: "Please provide a title"
+      })
+      return;
+    }
+    if (values.description == undefined || values.description == ''){
+      // alert.show('Please provide a title')
+      Modal.error({
+        content: "Please provide a description"
+      })
+      return;
+    }
+    formData.append('title', values.title)
+    if (values.categories != undefined){
+      const categories = values.categories.map((item: string) => {
+        return {name: item}
+      })
+      formData.append('categories', JSON.stringify(categories))
+    }
+    
+    
+    formData.append('description', values.description)
+    if (values.ingredients == undefined || values.ingredients.length == 0){
+      // alert.show('Please provide a title')
+      Modal.error({
+        content: "Please provide at least one ingredient"
+      })
+      return;
+    }
+    formData.append('ingredients', JSON.stringify(values.ingredients))
+    if (values.instructions == undefined || values.instructions.length == 0){
+      // alert.show('Please provide a title')
+      Modal.error({
+        content: "Please provide at least one instruction step"
+      })
+      return;
+    }
+    const instructionsForm = values.instructions.map((item: string, index: number)=>{
+      return {order: index + 1, instruction: item}
+    })
+    formData.append('instructions', JSON.stringify(instructionsForm))
+  
+    formData.append('calories', values.macroCalories)
+    formData.append('macros', JSON.stringify({
+      protein: Number(values.macroProtein),
+      carbs: Number(values.macroCarbs),
+      fats: Number(values.macroFats)
+    }))
+    if (image != undefined){
+      let blob = await fetch(image?.url).then(r => r.blob());
+      formData.append('image', blob)
+    }
+    else {
+      Modal.error({
+        content: "Please provide a main image"
+      })
+      return;
+    }
+    
+    for(let i=0; i<instsructImages.map.length; i++){
+      let blob = await fetch(instsructImages[i].image).then(r => r.blob());
+      formData.append(`image_instruction${i+1}`, blob)
+    }
+    try{
+      const res = await axios.post(HOST + 'recipes/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', 
+          'authorization' : sessionContext["user"]?.authToken
+        }
+      })
+      console.log(res)
+      success();
+
+    } catch(error) {
+      console.log(error)
+      Modal.error({
+        content: "Something went wrong please try again"
+      })
+      return;
+    }
+    
+
+
   };
 
   function success() {
@@ -60,7 +165,7 @@ function NewRecipePage() {
             <Form onFinish={onFinish}>
               <Row align='middle'>
                 <Col span={16}>
-                  <Form.Item name="title">
+                  <Form.Item name="title" required={true}>
                     <Input placeholder="Your Recipe's Title" bordered={false} style={{ fontSize: 48, fontWeight: "bold" }} />
                   </Form.Item>
                 </Col>
@@ -89,13 +194,15 @@ function NewRecipePage() {
               <div className="imagePicker">
                 <ImgCrop aspect={3 / 2} rotate>
                   <Dragger beforeUpload={file => {
-                    setImage(URL.createObjectURL(file))
-
+                    setImage({
+                      url: URL.createObjectURL(file),
+                      file: file
+                    })
 
                     // Prevent upload
                     return false;
                   }} style={{ minWidth: "75vw" }} multiple={false} showUploadList={false}>
-                    {image ? <img className='uploadImagePreview' src={image} /> :
+                    {image ? <img className='uploadImagePreview' src={image.url} /> :
                       <div>
                         <div className="imagePickerIcon">
                           <UploadOutlined />
@@ -165,6 +272,11 @@ function NewRecipePage() {
               <div className="macroInputs">
                 <Row>
                   <Col span={4} className="macroCol">
+                    <Form.Item name="macroCalories">
+                      <Input placeholder="Total Calories"></Input>
+                    </Form.Item>
+                  </Col>
+                  <Col span={4} className="macroCol">
                     <Form.Item name="macroProtein">
                       <Input placeholder="Number of Grams - Protein"></Input>
                     </Form.Item>
@@ -200,14 +312,50 @@ function NewRecipePage() {
                             </Form.Item>
                           </Col>
                           <Col style={{ marginLeft: 10, paddingTop: 5 }}>
-                            {fields.length > 1 ? (
+                            {fields.length > 0 ? (
 
                               <MinusCircleOutlined
                                 className="dynamic-delete-button"
-                                onClick={() => remove(field.name)}
+                                onClick={() => {
+                                  const newList = instsructImages.filter((item) => item.key != field.fieldKey)
+                                  setInstsructImages(newList);
+                                  remove(field.name);
+                                }}
                               />
 
                             ) : null}
+                          </Col>
+                          <Col>
+                            <ImgCrop aspect={3 / 2} rotate>
+                              <Dragger beforeUpload={file => {
+                                console.log('Adding image index')
+                                console.log(index)
+                                setInstsructImages([
+                                  ...instsructImages, 
+                                  {
+                                    key: field.fieldKey,
+                                    image: URL.createObjectURL(file), 
+                                    file: file, 
+                                  }
+                                ])
+                                console.log(instsructImages)
+                                  
+
+                                // Prevent upload
+                                return false;
+                              }} style={{ minWidth: "30vw" }} multiple={false} showUploadList={false}>
+                                {(instsructImages.find((item) => {
+                                  return item.key === field.fieldKey})) ?  <img className='uploadImagePreviewInstructions' src={(instsructImages.find((item) => {
+                                  return item.key === field.fieldKey}))?.image} /> :
+                                  <div>
+                                    <div className="imagePickerIcon">
+                                      <UploadOutlined />
+                                    </div>
+                                    <p className="uploadTitle">Upload image</p>
+                                    <p style={{margin: '10px'}}>Click or drag an image to this area to upload</p>
+                                  </div>}
+                              </Dragger>
+                            </ImgCrop>
                           </Col>
 
                         </Row>
