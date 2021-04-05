@@ -4,10 +4,12 @@ const router = require('express').Router();
 // Get the Mongoose instance and models
 const { mongoose } = require('../db/mongoose');
 const { User } = require('../models/user');
+const { Auth } = require('../models/auth');
 
 // Additional library requirements
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
 const log = console.log;
 
@@ -178,6 +180,95 @@ router.post("/login-authtoken", (req, res) => {
     }
 });
 
+/*
+POST: /auth/forgot-password
+Send an email for password reset when a user forgets it
+*/
+router.post("/forgot-password", (req, res) => {
+    // Check for a valid mongoose connection
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+
+    // Check if the email or username is given in the body
+    if (!("username" in req.body || "email" in req.body)) {
+        res.status(400).send({ success: false, error: "Bad request" });
+        return;
+    }
+    
+    // Getting the email credentials
+    Auth.findById("606a6d20d41301e5181aef0f").then((emailInfo) => {
+        // Getting the user and sending the email
+        if ("username" in req.body) {
+            User.findOne({ username: req.body.username }).then((user) => {
+                if (user) {
+                    sendForgotPasswordEmail(emailInfo.emailName, emailInfo.emailPassword, user.email);
+                    res.send({ success: true });
+                } else {
+                    res.status(404).send({ success: false, error: "User not found" });
+                    return;
+                }
+            })
+        } else {
+            User.findOne({ email: req.body.email }).then((user) => {
+                if (user) {
+                    sendForgotPasswordEmail(emailInfo.emailName, emailInfo.emailPassword, user.email);
+                    res.send({ success: true });
+                } else {
+                    res.status(404).send({ success: false, error: "User not found" });
+                    return;
+                }
+            })
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send({ success: false, error: "Internal server error" });
+    });
+});
+
+// Helper function: Send forgot password email
+function sendForgotPasswordEmail(emailName, password, recipient) {
+    // Creating the email transporter 
+    let transporter = nodemailer.createTransport({
+        host: "smtp-mail.outlook.com",
+        secure: false,
+        port: 587,
+        tls: {
+           ciphers:'SSLv3'
+        },
+        auth: {
+            user: emailName,
+            pass: password
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    // Setting the email content
+    let mailOptions = {
+        from: `"FitMeals Admin" <${emailName}>`,
+        to: recipient,
+        subject: 'FitMeals Password Reset',
+        html: `
+        <b>Hello!</b><br>
+        <br>
+        You're getting this email because we received a request to reset the password of your account. To reset your password, click the link below:<br><br>
+        <a href="https://www.google.com/">Click here to reset your password.</a><br><br>
+        If you did not request a password reset, please ignore this email.<br><br>
+        <b>The FitMeals Team</b>
+        `
+    };
+
+    // Sending the email
+    transporter.sendMail(mailOptions).then((info) => {
+        console.log(info.response);
+    }).catch((error) => {
+        console.log(error);
+    });
+}
 
 // Exporting the routes
 module.exports = router;
