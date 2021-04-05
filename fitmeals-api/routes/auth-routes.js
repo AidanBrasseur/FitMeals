@@ -181,6 +181,51 @@ router.post("/login-authtoken", (req, res) => {
 });
 
 /*
+PATCH: /auth/change-password
+Change a user's password assuming they know their old password
+*/
+router.patch("/change-password", (req, res) => {
+    // Check for a valid mongoose connection
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+
+    // Getting the encoded authToken/username/password info and hashing the password
+    const decoded = Buffer.from(req.headers.authorization, 'base64').toString('ascii');
+    const userAuthToken = decoded.substring(0, decoded.indexOf(":"));
+    const decoded2 = decoded.substring(decoded.indexOf(":") + 1, decoded.length);
+    const oldPassword = decoded2.substring(0, decoded2.indexOf(":"));
+    const newPassword = decoded2.substring(decoded2.indexOf(":") + 1, decoded2.length)
+
+    // Try to find the correct user
+    User.findOne({ authToken: userAuthToken }).then((user) => {
+        if (user == null) {
+            res.status(404).send({ success: false, error: "User not found" });
+            return;
+        }
+        // Checking if the password is correct and changing the password
+        if (bcrypt.compareSync(oldPassword, user.password)) {
+            const hash = bcrypt.hashSync(newPassword, 10);
+            user.password = hash;
+            // Saving the user to the DB
+            user.save().then((result) => {
+                res.status(201).send({ success: true });
+            }).catch((error) => {
+                console.log(error);
+                res.status(500).send({ success: false, error: "Internal server error" });
+            });
+        } else {
+            res.status(404).send({ success: false, error: "User not found" });
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send({ success: false, error: "Internal server error" });
+    });
+});
+
+/*
 POST: /auth/forgot-password
 Send an email for password reset when a user forgets it
 */
