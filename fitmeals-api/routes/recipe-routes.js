@@ -367,10 +367,10 @@ router.post('/', multipartMiddleware, async (req, res) => {
 });
 
 /*
-PATCH: /recipes/:id
+PUT: /recipes/:id
 Edit an existing FitMeals Recipe
 */
-router.patch('/:id', multipartMiddleware, async (req, res) => {
+router.put('/:id', multipartMiddleware, async (req, res) => {
     // Check for a valid mongoose connection
     if (mongoose.connection.readyState != 1) {
         console.log('Issue with mongoose connection');
