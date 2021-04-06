@@ -40,7 +40,7 @@ export type Macros = {
 }
 
 export type Recipe = {
-    id: number,
+    id: string,
     author: string,
     authorId: string,
     authorAvatar?: string,
