@@ -318,7 +318,7 @@ router.post('/', multipartMiddleware, async (req, res) => {
                     subtitle: req.body.subtitle,
                     description: req.body.description,
                     time: req.body.time,
-                    calories: req.body.calories,
+                    calories: req.body.calories ? Number(req.body.calories) : 0,
                     approved: false,
                     date: Date.now(),
                     ingredients: req.body.ingredients ? JSON.parse(req.body.ingredients) : [],
