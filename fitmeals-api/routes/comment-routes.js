@@ -9,7 +9,7 @@ const { ObjectID } = require('mongodb')
 const log = console.log;
 
 /*
-Post: /recipes/:id/comment
+Post: /comments/recipes/:id
 Posts a new comment to a recipe
 */
 router.post("/recipes/:id", async (req, res) => {
@@ -42,6 +42,50 @@ router.post("/recipes/:id", async (req, res) => {
         const recipe = await Recipe.findOneAndUpdate({ _id: recipeId }, { $push: { comments: comment } }, { new: true, useFindAndModify: false })
         const newComment = recipe.comments[recipe.comments.length - 1]
         res.send(newComment)
+    } catch (error) {
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+})
+
+/*
+Delete: comments/recipes/:id/comments/:commentId
+Deletes a comment from a recipe
+*/
+router.delete("/recipes/:id/comments/:commentId", async (req, res) => {
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    const recipeId = req.params.id
+    const commentId = req.params.commentId
+    if (!ObjectID.isValid(recipeId) || !ObjectID.isValid(commentId)) {
+        res.status(404).send('A comment with that id could not be found')
+        return;
+    }
+    try {
+        if (!req.headers.authorization) {
+            res.status(403).send('Unauthorized')
+            return
+        }
+        const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        if (!requestUser) {
+            res.status(403).send('Unauthorized')
+            return
+        }
+        const recipe = await Recipe.findById(recipeId)
+        const comment = recipe.comments.find(comment => comment._id == commentId)
+        if(!comment){
+            res.status(404).send('A comment with that id could not be found')
+            return;
+        }
+        if(comment.user !== requestUser._id && !requestUser.isAdmin){
+            res.status(403).send('Unauthorized')
+            return
+        }
+        const newRecipe = await Recipe.findOneAndUpdate({ _id: recipeId }, { $pull: { comments: {_id: commentId} } }, { new: true, useFindAndModify: false })
+        res.sendStatus(200)
     } catch (error) {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;

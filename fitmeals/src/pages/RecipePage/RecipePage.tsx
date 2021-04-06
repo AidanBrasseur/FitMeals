@@ -168,6 +168,18 @@ function RecipePage() {
             console.log(error)
         })
     }
+    const confirmDeleteComment = (comment: CommentType) => {
+        axios.delete(HOST + 'comments/recipes/' + recipeId + '/comments/' + comment.id, {
+            headers:{
+                authorization: sessionContext["user"]?.authToken
+            }
+        }).then(response => {
+            let newCommentList = commentList.filter((temp) => temp.id !== comment.id)
+            setCommentList(newCommentList)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
 
 
     return (
@@ -357,7 +369,20 @@ function RecipePage() {
                                     <List
                                         dataSource={commentList}
                                         renderItem={comment => (
-                                            <List.Item>
+                                            <List.Item
+                                            extra={
+                                                (sessionContext.user?.username === comment?.username || sessionContext.user?.isAdmin) ? 
+                                                    <Popconfirm
+                                                    style={{top: 0}}
+                                                     placement="leftBottom"
+                                                    title="Are you sure to delete this comment?"
+                                                    onConfirm={() => confirmDeleteComment(comment)}
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                  >
+                                                 <FaTrashAlt ></FaTrashAlt> 
+                                                  </Popconfirm> : <div></div>
+                                            }>
                                                 <CommentItem comment={comment}></CommentItem>
                                             </List.Item>
                                         )}

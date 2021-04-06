@@ -1,7 +1,8 @@
 import { LikeFilled, LikeOutlined } from "@ant-design/icons";
-import { Comment, Tooltip } from 'antd';
+import { Comment, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios';
 import React, { createElement, useState } from 'react';
+import { FaTrashAlt } from "react-icons/fa";
 import { useHistory } from "react-router-dom";
 import { HOST } from '../../config';
 import { useSessionContext } from "../../contexts/SessionContext";
@@ -66,12 +67,16 @@ function CommentItem({ comment }: CommentProps) {
         </Tooltip>
     ]);}
 
+    
+
     return (
+       
         <Comment
         actions={actions(comment)}
         author={comment.username}
         content={comment.content}
         avatar={comment.avatar} />
+       
     )
 }
 export default CommentItem;

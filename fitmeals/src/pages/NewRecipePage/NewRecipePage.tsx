@@ -13,6 +13,7 @@ import axios from 'axios';
 import { HOST } from '../../config';
 
 import Footer from '../../components/Footer/Footer';
+import TextArea from 'antd/lib/input/TextArea';
 function NewRecipePage() {
   const { Dragger } = Upload;
   const { Option } = Select;

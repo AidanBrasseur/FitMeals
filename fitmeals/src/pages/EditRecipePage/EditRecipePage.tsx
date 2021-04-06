@@ -88,7 +88,6 @@ useEffect(() => {
     values.subtitle = 'test';
     values.time = '20-30min';
     values.calories = 400;
-    values.id = sessionContext.underReviewRecipes.length + 1;
     values.macros = recipe?.macros;
     values.comments = [];
     let newRecipe = values as Recipe;
