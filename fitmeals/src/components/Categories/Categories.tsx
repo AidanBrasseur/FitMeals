@@ -12,6 +12,11 @@ import { ReactComponent as PizzaSvg } from '../../assets/pizza-1.svg';
 import { ReactComponent as SmoothieSvg } from '../../assets/smoothie.svg';
 import { ReactComponent as SoupSvg } from '../../assets/soup.svg';
 import { ReactComponent as SushiSvg } from '../../assets/sushi.svg';
+import { ReactComponent as BeefSvg } from '../../assets/steak.svg';
+import { ReactComponent as ChickenSvg } from '../../assets/chicken.svg';
+import { ReactComponent as VegetarianSvg } from '../../assets/avocado.svg';
+import { ReactComponent as PorkSvg } from '../../assets/pork.svg';
+import { ReactComponent as OtherSvg } from '../../assets/other.svg';
 import { HOST } from '../../config';
 import CategoryCard from '../CategoryCard/CategoryCard';
 import './styles.css';
@@ -34,6 +39,11 @@ const remainingCategories = [
   { name: 'Smoothies', icon: SmoothieSvg, count: 0 } as category,
   { name: 'Dessert', icon: DessertSvg, count: 0 } as category,
   { name: 'Soup', icon: SoupSvg, count: 0 } as category,
+  { name: 'Beef', icon: BeefSvg, count: 0 } as category,
+  { name: 'Chicken', icon: ChickenSvg, count: 0 } as category,
+  { name: 'Pork', icon: PorkSvg, count: 0 } as category,
+  { name: 'Vegetarian', icon: VegetarianSvg, count: 0 } as category,
+  { name: 'Other', icon: OtherSvg, count: 0 } as category,
 ]
 type CategoriesProps = {
   setCategoryQuery?: (categoryQuery: string[] | undefined) => void
