@@ -1,4 +1,4 @@
-import { BookOutlined, SecurityScanOutlined, UserOutlined } from '@ant-design/icons';
+import { BookOutlined, SecurityScanOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Input, Layout, Menu, Space } from 'antd';
 import Search from 'antd/lib/transfer/search';
 import React from 'react';
@@ -30,6 +30,9 @@ function Header({setSearchQuery}: HeaderProps) {
         {sessionContext.user?.isAdmin ? <Menu.Item>
           <Link to="/admin-panel" ><SecurityScanOutlined />Admin Page</Link>
         </Menu.Item> : null}
+        <Menu.Item>
+          <Link to="/account-settings" ><SettingOutlined />Account Settings</Link>
+        </Menu.Item>
         <Menu.Item>
           <Link to="/login" ><Button onClick={() => localStorage.clear()}style={{width: '100%'}}>Logout</Button></Link>
         </Menu.Item>
