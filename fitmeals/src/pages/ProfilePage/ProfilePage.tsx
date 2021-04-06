@@ -35,9 +35,9 @@ function ProfilePage() {
       if (error.response.status == 404) {
         alert("User not found");
         return <Redirect to={from} />;
-    } else {
+      } else {
         alert("Sorry, FitMeals was unable to process your request. Please try again.")
-    }
+      }
     });
   }
 
