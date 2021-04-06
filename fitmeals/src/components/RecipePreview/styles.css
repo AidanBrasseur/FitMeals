@@ -45,12 +45,12 @@
      height: 100%;
  }
 
- .category{
+ .previewCategory{
     color: grey;
     font-size: 15px;
  }
 
- .title {
+ .previewTitle {
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 2px;
