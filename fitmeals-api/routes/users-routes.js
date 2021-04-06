@@ -7,6 +7,7 @@ const config = require('../config');
 // Get the Mongoose instance and models
 const { mongoose } = require('../db/mongoose');
 const { User } = require('../models/user');
+const { Recipe } = require('../models/recipe');
 
 // Upload image libraries and middleware
 const multipart = require('connect-multiparty');
@@ -35,15 +36,26 @@ router.get("/:username", (req, res) => {
     // Returning the user info
     User.findOne({ username: req.params.username }).then((requestedUser) => {
         if (requestedUser) {
-            res.send({
-                success: true,
-                user: {
-                    username: requestedUser.username,
-                    fullname: requestedUser.fullname,
-                    rating: requestedUser.rating,
-                    image: requestedUser.image.url
-                }
-            });
+
+            Recipe.find({user: requestedUser._id}).select("-description -__v -ingredients -instructions -comments -macros").then((recipes)=> {
+                let sum = 0
+                let numRatings = 0
+                recipes.forEach((recipe) => {
+                    recipe.ratings.forEach((element) => {
+                        sum = sum + element.rating
+                        numRatings = numRatings + 1})
+                })
+              
+                res.send({
+                    success: true,
+                    user: {
+                        username: requestedUser.username,
+                        fullname: requestedUser.fullname,
+                        rating: numRatings === 0 ? 0 : sum / numRatings,
+                        image: requestedUser.image.url
+                    }
+                });
+            })
         } else {
             res.status(404).send({ success: false, error: "User not found" });
         }
