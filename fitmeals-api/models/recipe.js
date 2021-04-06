@@ -29,6 +29,11 @@ const CommentSchema = new mongoose.Schema({
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
+const RatingSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    rating: Number
+});
+
 const MacroSchema = new mongoose.Schema({
     protein: Number,
     carbs: Number,
@@ -37,7 +42,7 @@ const MacroSchema = new mongoose.Schema({
 
 const RecipeSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    rating: Number,
+    ratings: [RatingSchema],
     title: String,
     subtitle: String,
     description: String,

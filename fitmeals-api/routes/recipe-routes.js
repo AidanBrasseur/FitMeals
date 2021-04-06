@@ -61,7 +61,16 @@ router.get("/", async (req, res) => {
             const user = await User.findById(recipe.user)
             return !user.isBanned
         })
-        res.send(recipes)
+        let newRecipes = recipes.map((recipe) => {
+            let recipeObj = recipe.toObject()
+            let sum  = 0
+            recipeObj.ratings.forEach((element) => sum = sum + element.rating)
+            let rating = sum / recipeObj.ratings.length
+            recipeObj.rating = rating
+            recipeObj.ratings = undefined
+            return recipeObj
+        })
+        res.send(newRecipes)
     } catch (error) {
         console.log(error)
         res.status(500).send({ success: false, error: "Internal server error" });
@@ -115,7 +124,17 @@ router.get("/saved", async (req, res) => {
             const user = await User.findById(recipe.user)
             return !user.isBanned
         })
-        res.send(recipes)
+ 
+        let newRecipes = recipes.map((recipe) => {
+            let recipeObj = recipe.toObject()
+            let sum  = 0
+            recipeObj.ratings.forEach((element) => sum = sum + element.rating)
+            let rating = sum / recipeObj.ratings.length
+            recipeObj.rating = rating
+            recipeObj.ratings = undefined
+            return recipeObj
+        })
+        res.send(newRecipes)
     } catch (error) {
         console.log(error)
         res.status(500).send({ success: false, error: "Internal server error" });
@@ -210,8 +229,24 @@ router.get("/:id", async (req, res) => {
             }
         };
         let recipeObj = recipe.toObject()
+        let sum = 0
+        let userRating = 0
+        if(requestUser){
+            const recipeRating = recipeObj.ratings.find((r) => {
+                return r.user.toString() == requestUser._id.toString()})
+
+            if(recipeRating){
+                userRating = recipeRating.rating
+            }
+        }
+        recipeObj.ratings.forEach((element) => sum = sum + element.rating)
+        let rating = sum / recipeObj.ratings.length
+       
+        recipeObj.rating = rating
+        recipeObj.userRating = userRating
         recipeObj.comments = fullComments
         recipeObj.isSaved = isSaved
+        recipeObj.ratings = undefined
         res.send(recipeObj)
     } catch (error) {
         console.log(error)
@@ -286,8 +321,16 @@ router.get("/users/:id", async (req, res) => {
             search = { score: { $meta: "textScore" } }
         }
         let recipes = await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
-        console.log(recipes)
-        res.send(recipes)
+        let newRecipes = recipes.map((recipe) => {
+            let recipeObj = recipe.toObject()
+            let sum  = 0
+            recipeObj.ratings.forEach((element) => sum = sum + element.rating)
+            let rating = sum / recipeObj.ratings.length
+            recipeObj.rating = rating
+            recipeObj.ratings = undefined
+            return recipeObj
+        })
+        res.send(newRecipes)
     } catch (error) {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
@@ -459,6 +502,59 @@ router.post("/unsave/:recipeid", (req, res) => {
     } else {
         res.status(401).send({ success: false, error: "Unauthorized" });
     }
+});
+
+
+/*
+POST: /recipes/rating/:id
+Rate the recipe with the given ID
+*/
+router.post("/rating/:id", async (req, res) => {
+    // Check for a valid mongoose connection
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    const recipeId = req.params.id
+    const rating = req.body?.data.rating
+    if (!ObjectID.isValid(recipeId)) {
+        res.status(404).send('A recipe with that id could not be found')
+        return;
+    }
+
+    try {
+        if (!req.headers.authorization) {
+            res.status(403).send('You must be logged in to rate a recipe')
+            return
+        }
+        const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        if (!requestUser) {
+            res.status(403).send('You must be logged in to rate a recipe')
+            return
+        }
+
+        let modification = {}
+        let ratingObj = {
+            rating: rating,
+            user: requestUser._id
+        }
+        if (req.body.data.rating) {
+            modification.$addToSet = { 'ratings': ratingObj }
+        }
+        else {
+            modification.$pull = { 'ratings': {user: requestUser._id} }
+        }
+        const recipe = await Recipe.findOneAndUpdate({ _id: recipeId }, {$pull: {'ratings': {user: requestUser._id}}}, { useFindAndModify: false })
+        const newRecipe = await Recipe.findOneAndUpdate({ _id: recipeId }, modification, { useFindAndModify: false })
+        res.status(200).send({rating: ratingObj})
+        return;
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    
 });
 
 /*
