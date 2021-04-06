@@ -35,8 +35,8 @@ function RecipePreview({recipe} : RecipePreviewProps ) {
                        </div>}
                     </div>
                     <Col className='infoCol'>
-                        <p className='category'>{categories[0]}</p>
-                        <p className='title'>{title}</p>
+                        <p className='previewCategory'>{categories[0]}</p>
+                        <p className='previewTitle'>{title}</p>
                         <p className='previewSubtitle'>{subtitle}</p>
                         <Row style={{ justifyContent: 'space-between' }}>
                             <p>{time}</p>
