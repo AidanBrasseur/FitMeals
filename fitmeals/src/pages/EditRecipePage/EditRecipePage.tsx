@@ -63,7 +63,7 @@ function EditRecipePage() {
                 subtitle: r.subtitle,
                 rating: r.rating,
                 ingredients: ingredients,
-                image: "https://universityhealthnews.com/media/ispizzahealthy.jpg",
+                image: r.image.url,
                 instructions: instructions,
                 comments: r.comments as CommentType[],
                 macros: macros,

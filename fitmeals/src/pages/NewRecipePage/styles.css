@@ -51,6 +51,11 @@
     object-fit: cover;
 }
 
-.macroInputs .macroCol{
+
+.macroInputs .macroCol .ant-input-number{
     margin-right: 2%;
+    width: 15vw;
+    min-width: 100px;
+    max-width: 200px;
+    margin-right: 10px;
 }
