@@ -16,6 +16,12 @@ interface stateType {
 
 function EditRecipePage() {
   const { TextArea } = Input;
+  const [instsructImages, setInstsructImages] = useState<InstructImage[]>([])
+  type InstructImage = {
+    key: number,
+    image: string,
+    file: File
+  }
   const history = useHistory();
   const { state } = useLocation<stateType>();
   const recipeId = state.recipeId
@@ -42,13 +48,16 @@ function EditRecipePage() {
     }).then(response => {
         const r = response.data
        console.log(r)
+       
             const categories = r.categories.map((cat: any) => {
                 return cat.name
             })
             const instructions = r.instructions.map((i: any) => {
-                return i.instruction
+                return {desc: i.instruction, image: i.image, wasInitial: true}
             })
+            console.log(instructions)
             const ingredients = r.ingredients as Ingredient[]
+            console.log(ingredients)
             const macros = r.macros as Macros
             const detailRecipe = {
                 id: r._id,
@@ -265,34 +274,88 @@ useEffect(() => {
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map((field, index) => (
-                      <Form.Item
-                        required={false}
-                        key={field.key}
-                      >
-                        <Row style={{ paddingBottom: 30 }} >
-                          <Col style={{ display: "flex", justifyContent: "center" }} span={2}>
-                            <Avatar>{index + 1}</Avatar>
-                          </Col>
-                          <Col span={12}>
-                            <Form.Item {...field} >
-                              <TextArea placeholder="Enter your instruction" rows={4} bordered={false} style={{ fontSize: 16 }}></TextArea>
+                      <Row style={{ paddingBottom: 30 }} >
+                        <Col style={{ display: "flex", justifyContent: "center" }} span={2}>
+                          <Avatar>{index + 1}</Avatar>
+                        </Col>
+                        <Col span={12} >
+
+                          <Form.Item
+                            required={false}
+                            key={field.key}
+                          >
+                            <Row>
+                              <Col span={18}>
+                                <Form.Item {...field} name={[field.name, 'desc']} fieldKey={[field.fieldKey, 'desc']} rules={[{ required: true, message: 'Missing' }]}>
+                                  <TextArea rows={4} bordered={false} style={{ fontSize: 16 }} placeholder="Enter your instruction"></TextArea>
+                                </Form.Item>
+                              </Col>
+
+
+                              <Col style={{ marginLeft: 10, paddingTop: 5 }}>
+                                {fields.length > 1 ? (
+
+                                  <MinusCircleOutlined
+                                    className="dynamic-delete-button"
+                                    onClick={() => remove(field.name)}
+                                  />
+
+                                ) : null}
+                              </Col>
+                            </Row>
+
+                          </Form.Item>
+                        </Col>
+                        <Col>
+
+                          {/* <TextArea rows={4} bordered={false} style={{ fontSize: 16 }} placeholder="Enter your instruction"></TextArea> */}
+                          <ImgCrop aspect={3 / 2} rotate>
+                            <Form.Item {...field} name={[field.name, 'image']} fieldKey={[field.fieldKey, 'image']}>
+                              <Dragger beforeUpload={file => {
+                                console.log('Adding image index')
+                                console.log(index)
+                                console.log('done dit boissss')
+                                form.getFieldValue('instructions')[index].wasInitial = false
+                                form.getFieldValue('instructions')[index].image = file
+
+                                console.log(form.getFieldValue('instructions')[index])
+                                setInstsructImages([
+                                  ...instsructImages,
+                                  {
+                                    key: field.fieldKey,
+                                    image: URL.createObjectURL(file),
+                                    file: file,
+                                  }
+                                ])
+                                // URL.createObjectURL(file)
+                                console.log(instsructImages)
+                                // Prevent upload
+                                return false;
+                              }} style={{ minWidth: "30vw" }} multiple={false} showUploadList={false}>
+                                {/* {({ getFieldValue }) =>
+                                  getFieldValue('gender') === 'other' ? (
+                                    <Form.Item name="customizeGender" label="Customize Gender" rules={[{ required: true }]}>
+                                      <Input />
+                                    </Form.Item>
+                                  ) : null
+                                } */}
+                                { 
+                                  form.getFieldValue('instructions')[index] && form.getFieldValue('instructions')[index].image ? <img className='uploadImagePreviewInstructions' src={
+                                  form.getFieldValue('instructions')[index].wasInitial ? form.getFieldValue('instructions')[index].image.url : URL.createObjectURL(form.getFieldValue('instructions')[index].image.file)} /> :
+                                  <div>
+                                    <div className="imagePickerIcon">
+                                      <UploadOutlined />
+                                    </div>
+                                    <p className="uploadTitle">Upload image</p>
+                                    <p style={{ margin: '10px' }}>Click or drag an image to this area to upload</p>
+                                  </div>}
+                              </Dragger>
                             </Form.Item>
-                          </Col>
-                          <Col style={{ marginLeft: 10, paddingTop: 5 }}>
-                            {fields.length > 1 ? (
-
-                              <MinusCircleOutlined
-                                className="dynamic-delete-button"
-                                onClick={() => remove(field.name)}
-                              />
-
-                            ) : null}
-                          </Col>
-
-                        </Row>
+                          </ImgCrop>
 
 
-                      </Form.Item>
+                        </Col>
+                      </Row>
                     ))}
                     <Form.Item>
                       <Button
