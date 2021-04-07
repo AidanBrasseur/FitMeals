@@ -200,8 +200,8 @@ router.get("/:id", async (req, res) => {
             res.status(404).send("A recipe with that id was not found")
             return
         }
-        if(!recipe.isApproved){
-            if(!requestUser.isAdmin && requestUser._id.toString() !== recipe.user.toString()){
+        if(!recipe.approved){
+            if(!requestUser?.isAdmin && requestUser?._id.toString() !== recipe.user.toString()){
                 res.status(403).send('This recipe has not been approved')
                 return 
             }
