@@ -30,7 +30,7 @@ function CheckAuthRoute({ component: Component, ...rest }: any) {
                     authToken: res.authToken,
                     username: res.username,
                     isAdmin: res.isAdmin,
-                    image: res.image.url
+                    image: res.image?.url
                 } as User;
                 user = newUser
                 setSessionState({ ...sessionState, user });
