@@ -61,6 +61,7 @@ function NewRecipePage() {
     // let userRecipes = [recipe, ...sessionContext.userRecipes]
     // updateSessionContext({ ...sessionContext, underReviewRecipes: underReviewRecipes, userRecipes: userRecipes })
     // success();
+    setLoading(true)
     const formData = new FormData();
     // alert.show('clicked')
     if (values.title == undefined || values.title == '') {
@@ -68,6 +69,8 @@ function NewRecipePage() {
       Modal.error({
         content: "Please provide a title"
       })
+      setLoading(false)
+
       return;
     }
     if (values.description == undefined || values.description == '') {
@@ -75,6 +78,8 @@ function NewRecipePage() {
       Modal.error({
         content: "Please provide a description"
       })
+      setLoading(false)
+
       return;
     }
     formData.append('title', values.title)
@@ -95,6 +100,8 @@ function NewRecipePage() {
       Modal.error({
         content: "Please provide at least one ingredient"
       })
+      setLoading(false)
+
       return;
     }
     formData.append('ingredients', JSON.stringify(values.ingredients))
@@ -103,6 +110,8 @@ function NewRecipePage() {
       Modal.error({
         content: "Please provide at least one instruction step"
       })
+      setLoading(false)
+
       return;
     }
     const instructionsForm = values.instructions.map((item: { desc: string, image: any }, index: number) => {
@@ -138,6 +147,8 @@ function NewRecipePage() {
       Modal.error({
         content: "Please provide a main image"
       })
+      setLoading(false)
+
       return;
     }
 
@@ -157,8 +168,12 @@ function NewRecipePage() {
       Modal.error({
         content: "Something went wrong please try again"
       })
+      setLoading(false)
+
       return;
     }
+    setLoading(false)
+
 
 
 
