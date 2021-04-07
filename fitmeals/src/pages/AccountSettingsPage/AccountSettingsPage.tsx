@@ -7,6 +7,7 @@ import Feed from '../../components/Feed/Feed';
 import Header from '../../components/Header/Header';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { HOST } from '../../config';
+import { User } from '../../types';
 
 import './styles.css';
 import Footer from '../../components/Footer/Footer';
@@ -20,6 +21,7 @@ function AccountSettingsPage() {
   // Edit modals
   const [isNameModalVisible, setIsNameModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
+  const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
 
   // Call the change full name API
   const changeName = (values: any) => {
@@ -30,6 +32,16 @@ function AccountSettingsPage() {
         authorization: sessionContext.user?.authToken
       }
     }).then(response => {
+      let user = {
+        id: sessionContext.user?.id,
+        name: values.fullname,
+        email: sessionContext.user?.email,
+        authToken: sessionContext.user?.authToken,
+        username: sessionContext.user?.username,
+        isAdmin: sessionContext.user?.isAdmin,
+        image: sessionContext.user?.image
+      } as User;
+      updateSessionContext({ ...sessionContext, user });
       setIsNameModalVisible(false);      
       alert("Full name successfully changed!");
     }).catch((error) => {
@@ -50,11 +62,39 @@ function AccountSettingsPage() {
         authorization: sessionContext.user?.authToken
       }
     }).then(response => {
+      let user = {
+        id: sessionContext.user?.id,
+        name: sessionContext.user?.name,
+        email: values.email,
+        authToken: sessionContext.user?.authToken,
+        username: sessionContext.user?.username,
+        isAdmin: sessionContext.user?.isAdmin,
+        image: sessionContext.user?.image
+      } as User;
+      updateSessionContext({ ...sessionContext, user });
       setIsEmailModalVisible(false);      
       alert("Email successfully changed!");
     }).catch((error) => {
       if (error.response.status == 404) {
         alert("User not found");
+      } else {
+        alert("Sorry, FitMeals was unable to process your request. Please try again.")
+      }
+    });
+  }
+
+  // Call the change password API
+  const changePassword = (values: any) => {
+    axios.patch(HOST + "auth/change-password", null, {
+      headers: {
+        authorization: btoa(sessionContext.user?.authToken + ":" + values.oldPassword + ":" + values.newPassword)
+      }
+    }).then(response => {
+      setIsPasswordModalVisible(false);
+      alert("Password successfully changed!");
+    }).catch((error) => {
+      if (error.response.status == 404) {
+        alert("Incorrect password, please try again.");
       } else {
         alert("Sorry, FitMeals was unable to process your request. Please try again.")
       }
@@ -109,7 +149,35 @@ function AccountSettingsPage() {
             </Form.Item>
           </Form>
         </Modal>
-        <div className="title">
+        <Modal
+          title="Change Password"
+          visible={isPasswordModalVisible}
+          onCancel={() => { setIsPasswordModalVisible(false) }}
+          footer={[
+            <Button key="cancel" onClick={() => {setIsPasswordModalVisible(false)}}>
+              Cancel
+            </Button>,
+            <Button form="passwordForm" key="submit" htmlType="submit">
+              Submit
+            </Button>
+          ]}
+        >
+          <Form name="passwordForm" onFinish={changePassword}>
+            <Form.Item
+              label="Old Password"
+              name="oldPassword"
+            >
+              <Input.Password />
+            </Form.Item>
+            <Form.Item
+              label="New Password"
+              name="newPassword"
+            >
+              <Input.Password />
+            </Form.Item>
+          </Form>
+        </Modal>
+        <div className="accountInfoTitle">
           Account Settings
         </div>
         <div className="allAccountInfo">
@@ -132,7 +200,7 @@ function AccountSettingsPage() {
             <div className="infoText">{sessionContext.user?.email}</div>
           </div>
           <div className="changePassword">
-            <Button type="link"><LockOutlined />Change Password</Button>
+            <Button type="link" onClick={() => {setIsPasswordModalVisible(true)}}><LockOutlined />Change Password</Button>
           </div>
         </div>
       </Layout.Content>
