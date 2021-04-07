@@ -444,13 +444,13 @@ router.put('/:id', multipartMiddleware, async (req, res) => {
                         result.comments = req.body.comments ? JSON.parse(req.body.comments) : [];
                         result.macros = req.body.macros ? JSON.parse(req.body.macros) : {}
                         // Uploading the main image
-                        cloudinary.uploader.upload(req.files.image.path, (cloudinaryResult) => {
-                            result.image = {
-                                url: cloudinaryResult.url,
-                                cloudinaryID: cloudinaryResult.public_id,
-                                created_at: new Date()
-                            }
-                        });
+                        const resultImage1 = await cloudinary.uploader.upload(req.files.image.path); 
+                        result.image = {
+                            url: resultImage1.url,
+                            cloudinaryID: resultImage1.public_id,
+                            created_at: new Date()
+                        }
+                       
                         // Getting the instructions and their images
                         let instructionsList = req.body.instructions ? JSON.parse(req.body.instructions) : [];
                         for (var i = 0; i < instructionsList.length; i++) {
