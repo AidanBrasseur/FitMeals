@@ -67,7 +67,7 @@ function RecipePage() {
                 time: r.time,
                 calories: r.calories,
                 subtitle: r.subtitle,
-                rating: r.rating,
+                rating: Math.round((r.rating + Number.EPSILON) * 100) / 100 ,
                 ingredients: ingredients,
                 image: r.image.url,
                 instructions: instructions,
@@ -108,9 +108,9 @@ function RecipePage() {
             return
         } 
         axios.post(HOST + 'comments/recipes/' + recipe?.id, {
-            data: {
-                comment: content
-            },
+           
+            comment: content
+           
         },{ headers:{
             authorization: sessionContext["user"]?.authToken
         }}).then(response => {
@@ -196,9 +196,9 @@ function RecipePage() {
             return
         } 
         axios.post(HOST + 'recipes/rating/' + recipe?.id , {
-            data:{
-                rating: value
-            }
+            
+            rating: value
+            
         },{
             headers:{
                 authorization: sessionContext["user"]?.authToken

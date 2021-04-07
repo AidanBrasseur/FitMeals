@@ -17,9 +17,6 @@ function CommentItem({ comment }: CommentProps) {
     const currentHistory = useHistory();
     const onLike = (comment: CommentType) => {
         axios.post(HOST + 'comments/' + comment.id + "/like", {
-            data: {
-                like: true
-            }
         }, {
             headers:{
                 authorization: sessionContext["user"]?.authToken
@@ -34,10 +31,7 @@ function CommentItem({ comment }: CommentProps) {
         currentHistory.push(`/profile/${username}`, {hardcode: true});
     }
     const onDislike = (comment: CommentType) => {
-        axios.post(HOST + 'comments/' + comment.id + "/like", {
-            data: {
-                like: false
-            }
+        axios.post(HOST + 'comments/' + comment.id + "/unlike", {
         }, {
             headers:{
                 authorization: sessionContext["user"]?.authToken

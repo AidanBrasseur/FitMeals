@@ -85,10 +85,10 @@ function Categories({setCategoryQuery}: CategoriesProps) {
       console.log(response.data)
       remainingCategories.map(cat => {
         cat.count = result[cat.name] ?  result[cat.name] : 0
+        return cat
       })
       setCategories(newCounts)
   }).catch((error) => {
-      console.log(error)
   })
   }
   const addCategoryToList = (category: string) => {
