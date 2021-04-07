@@ -555,7 +555,7 @@ router.post("/unsave/:recipeid", (req, res) => {
                     if (recipe) {
                         // Removing the specified saved recipe
                         for (i = 0; i < user.savedRecipes.length; i++) {
-                            if (user.savedRecipes[i].recipeId === req.params.recipeid) {
+                            if (user.savedRecipes[i].recipeId.toString() === req.params.recipeid) {
                                 user.savedRecipes.splice(i, 1);
                                 break;
                             }

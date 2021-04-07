@@ -1,4 +1,4 @@
-import Icon, { ArrowLeftOutlined, CloseOutlined, QuestionOutlined, StarOutlined } from '@ant-design/icons';
+import Icon, { ArrowLeftOutlined, ClockCircleOutlined, CloseOutlined, QuestionOutlined, StarOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Col, ConfigProvider, Form, Image, Input, Layout, List, Popconfirm, Rate, Row, Select, Space, Statistic, Steps, Tag, Typography, Upload } from 'antd';
 import axios from 'axios';
 import React, { createElement, useEffect, useState } from 'react';
@@ -51,6 +51,7 @@ function RecipePage() {
                 return { instruction: i.instruction, image: i.image?.url }
             })
             const ingredients = r.ingredients as Ingredient[]
+           
             const macros = {
                 protein: r.macros.protein,
                 carbs: r.macros.carbs,
@@ -267,13 +268,17 @@ function RecipePage() {
                                     <Col span={6}>
                                         {userRating !== undefined && approved && <Rate defaultValue={userRating} onChange={rateRecipe} />}
                                     </Col>
+                                    <Col style={{marginRight: 5}} >
+                                      <Space direction='horizontal'><ClockCircleOutlined style={{ color: 'black', fontSize: 20, marginTop: 4 }}></ClockCircleOutlined>{`${recipe?.time}`}</Space>
+                                    </Col>
                                     <Col>
                                         {approved == false ? <Space direction='horizontal'><QuestionOutlined style={{ color: 'red', fontSize: 30 }}></QuestionOutlined>{"This recipe is currently under review"}</Space> : approved === null ?
                                             <Space direction='horizontal'><CloseOutlined style={{ color: 'red', fontSize: 30 }}></CloseOutlined>{"This recipe has been rejected"}</Space> :
                                             <span className="saveButton" onClick={toggleSave}>
-                                                {createElement((saved) ? FaBookmark : FaRegBookmark)}
+                                                {saved ? <FaBookmark style={{marginTop: 5}}/> : <FaRegBookmark style={{marginTop: 5}}></FaRegBookmark>}
                                             </span>}
                                     </Col>
+                                   
                                 </Row>
                             </Col>
                             <Col className="recipeCats" >
@@ -315,13 +320,19 @@ function RecipePage() {
 
                         </Row>
                         <Row justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
-                            <Col  offset={1} style={{ marginBottom: 15 }}>
+                            <Col  offset={1} style={{ marginBottom: 15, width: '45%' }}>
 
                                 {recipe?.ingredients.map((item: any, index: number) =>
                                     <Row key={index} style={{ marginBottom: 10 }}>
-                                        <Checkbox>
-                                            <Text style={{ fontSize: 20 }}>{`${item.quantiy ? item.quantity : ""} ${item.unit ? item.unit : ""} ${item.name ? item.name : ""}`}</Text>
+                                        <Col span={2}>
+                                        <Checkbox style={{marginTop: 4}}>
                                         </Checkbox>
+                                        </Col>
+                                        <Col span={18} style={{margin: 0, paddingTop: 0, fontSize: 20}} >
+                                        {`${item.quantity ? item.quantity : ""} ${item.unit ? item.unit : ""} ${item.name ? item.name : ""}`}
+                                            {/* <Text style={{ fontSize: 20, margin: 0, paddingTop: 0 }}>{`${item.quantity ? item.quantity : ""} ${item.unit ? item.unit : ""} ${item.name ? item.name : ""}`}</Text> */}
+                                            </Col>  
+                                    
                                     </Row>
 
                                 )}
