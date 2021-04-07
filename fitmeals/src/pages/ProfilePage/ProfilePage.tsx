@@ -72,7 +72,7 @@ function ProfilePage() {
                   <div className="userRating">
                     <Row style={{ paddingTop: 5, paddingBottom: 5, paddingLeft: 5, paddingRight: 5 }} justify='space-around' align='middle'>
                       <StarOutlined style={{ color: 'white', fontSize: 20 }} />
-                      <div style={{ color: 'white' }}>Average rating of {rating}</div>
+                      <div style={{ color: 'white' }}>Average rating of {rating ? Math.round((Number(rating) + Number.EPSILON) * 100) / 100 : 0}</div>
                     </Row>
                   </div>
                   { sessionContext["user"]?.isAdmin && state &&
