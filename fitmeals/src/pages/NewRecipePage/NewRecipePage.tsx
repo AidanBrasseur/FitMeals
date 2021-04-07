@@ -34,7 +34,7 @@ function NewRecipePage() {
   const [instsructImages, setInstsructImages] = useState<InstructImage[]>([])
   const [sessionContext, updateSessionContext] = useSessionContext();
 
-  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup"])
+  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup", 'Chicken', "Beef", "Rice"])
   const [loading, setLoading] = useState(false);
   const children: any = [];
   const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
@@ -306,7 +306,13 @@ function NewRecipePage() {
                               <Select placeholder="Unit">
                                 <Option value="g">g</Option>
                                 <Option value="kg">kg</Option>
-                              </Select>
+                                <Option value="tbs">tbs</Option>
+                                <Option value="tsps">tsps</Option>
+                                <Option value="cups">cups</Option>
+                                <Option value="litres">litres</Option>
+                                <Option value="ounces">ounces</Option>
+
+                              </Select> 
                             </Form.Item>
                           </Col>
                           <Col style={{ marginLeft: 10, paddingTop: 5 }}>
@@ -336,7 +342,7 @@ function NewRecipePage() {
                   </>
                 )}
               </Form.List>
-              <h1 className="subtitle">Macros</h1>
+              <h1 className="subtitle">Macros per serving</h1>
               <div className="macroInputs">
                 <Row>
                   <Col className="macroCol" >

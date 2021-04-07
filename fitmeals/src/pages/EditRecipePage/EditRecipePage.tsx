@@ -30,7 +30,7 @@ function EditRecipePage() {
   const { Dragger } = Upload;
   const { Option } = Select;
   const [image, setImage] = useState<string | null>(null);
-  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup"])
+  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup", 'Chicken', "Beef", "Rice"])
   const [loading, setLoading] = useState(false);
   const children: any = [];
   const [recipe, setRecipe] = useState<Recipe | undefined>();
@@ -440,8 +440,14 @@ function EditRecipePage() {
                           <Col style={{ marginLeft: 10 }} span={3}>
                             <Form.Item {...field} name={[field.name, 'unit']} fieldKey={[field.fieldKey, 'unit']}>
                               <Select placeholder="Unit">
-                                <Option value="g">g</Option>
+                              <Option value="g">g</Option>
                                 <Option value="kg">kg</Option>
+                                <Option value="tbs">tbs</Option>
+                                <Option value="tsps">tsps</Option>
+                                <Option value="cups">cups</Option>
+                                <Option value="litres">litres</Option>
+                                
+                                <Option value="ounces">ounces</Option>
                               </Select>
                             </Form.Item>
                           </Col>
@@ -473,7 +479,7 @@ function EditRecipePage() {
                 )}
 
               </Form.List>
-              <h1 className="subtitle">Macros</h1>
+              <h1 className="subtitle">Macros per serving</h1>
               <div className="macroInputs">
                 <Row>
                   <Col className="macroCol" >
