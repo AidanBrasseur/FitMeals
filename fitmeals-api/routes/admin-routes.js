@@ -188,7 +188,6 @@ router.get("/recipes", async (req, res) => {
     }
     const searchQuery = req.query.searchQuery
     const categoryQuery = req.query.categoryQuery
-    console.log(categoryQuery)
     try {
         let match = { approved: false }
         if (searchQuery) {
