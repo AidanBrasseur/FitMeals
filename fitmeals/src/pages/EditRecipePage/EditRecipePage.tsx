@@ -1,5 +1,5 @@
 import { CheckOutlined, CloseOutlined, MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Modal, Result, Row, Select, Spin, Upload } from 'antd';
+import { Avatar, Button, Col, Form, Input, InputNumber, Layout, Modal, Result, Row, Select, Spin, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
@@ -58,6 +58,7 @@ function EditRecipePage() {
             console.log(instructions)
             const ingredients = r.ingredients as Ingredient[]
             console.log(ingredients)
+            console.log(r.subtitle)
             const macros = r.macros as Macros
             const detailRecipe = {
                 id: r._id,
@@ -164,6 +165,11 @@ useEffect(() => {
                 "categories": recipe?.categories,
                 "ingredients": recipe?.ingredients,
                 "instructions": recipe?.instructions,
+                "macroCarbs": recipe?.macros?.carbs,
+                "macroFats": recipe?.macros?.fats,
+                "macroProtein": recipe?.macros?.protein,
+                "macroCalories": recipe?.calories,
+                "subtitle": recipe?.subtitle,
               }}>
 
               <Row align='middle'>
@@ -188,7 +194,9 @@ useEffect(() => {
                   </div>
                 </Col>
               </Row>
-
+              <Form.Item name="subtitle">
+                <Input placeholder="Your Recipe's Subtitle" bordered={false} style={{ fontSize: 24 }}></Input>
+              </Form.Item>
 
               <Form.Item name="description">
                 <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
@@ -267,7 +275,33 @@ useEffect(() => {
                     </Form.Item>
                   </>
                 )}
+                
               </Form.List>
+              <h1 className="subtitle">Macros</h1>
+              <div className="macroInputs">
+                <Row>
+                  <Col className="macroCol" >
+                    <Form.Item name="macroCalories" >
+                      <InputNumber placeholder="Total Calories"></InputNumber>
+                    </Form.Item>
+                  </Col>
+                  <Col className="macroCol">
+                    <Form.Item name="macroProtein">
+                      <InputNumber placeholder="Number of Grams - Protein"></InputNumber>
+                    </Form.Item>
+                  </Col>
+                  <Col className="macroCol">
+                    <Form.Item name="macroCarbs">
+                      <InputNumber placeholder="Number of Grams - Carbs"></InputNumber>
+                    </Form.Item>
+                  </Col>
+                  <Col className="macroCol">
+                    <Form.Item name="macroFats">
+                      <InputNumber placeholder="Number of Grams - Fats"></InputNumber>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </div>
               <h1 className="subtitle">Instructions</h1>
               <Form.List name="instructions"
               >

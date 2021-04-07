@@ -78,6 +78,7 @@ function NewRecipePage() {
       return;
     }
     formData.append('title', values.title)
+    formData.append('subtitle', values.subtitle)
     if (values.categories != undefined) {
       const categories = values.categories.map((item: string) => {
         return { name: item }
@@ -189,7 +190,7 @@ function NewRecipePage() {
                 </Col>
                 <Col span={8} push={2}>
                   <div className="selectCategory">
-                    <Form.Item name="categories">
+                    <Form.Item name="categories" rules={[{ required: true, message: 'Missing' }]}>
                       <Select
                         mode="multiple"
                         allowClear
@@ -359,7 +360,7 @@ function NewRecipePage() {
                             <Row>
                               <Col span={18}>
                                 <Form.Item {...field} name={[field.name, 'desc']} fieldKey={[field.fieldKey, 'desc']} rules={[{ required: true, message: 'Missing' }]}>
-                                  <TextArea rows={4} bordered={false} style={{ fontSize: 16 }} placeholder="Enter your instruction"></TextArea>
+                                  <TextArea rows={4} bordered={false} style={{ fontSize:18 }} placeholder="Enter your instruction"></TextArea>
                                 </Form.Item>
                               </Col>
 
