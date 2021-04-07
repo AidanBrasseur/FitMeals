@@ -1,8 +1,8 @@
-import { UserOutlined, StarOutlined } from '@ant-design/icons';
+import { UserOutlined, StarOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Upload, Image } from 'antd';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useLocation, Redirect } from 'react-router-dom';
+import { useLocation, Redirect, useHistory } from 'react-router-dom';
 import Feed from '../../components/Feed/Feed';
 import Header from '../../components/Header/Header';
 import { useSessionContext } from '../../contexts/SessionContext';
@@ -23,6 +23,7 @@ function ProfilePage() {
   const [rating, setRating] = useState<string | undefined>();
   const [profilePic, setProfilePic] = useState<string | undefined>();
   const { from } = state || { from: { pathname: "/" } };
+  const currentHistory = useHistory();
 
   // Getting the user info for the profile
   const fetchUserInfo = () => {
@@ -50,8 +51,17 @@ function ProfilePage() {
       <Header setSearchQuery={setSearchQuery}/>
       <Layout.Content>
         <div className='profile'>
+        <div className="goBackIconProfileContainer">
+        <ArrowLeftOutlined onClick={() => currentHistory.goBack()} className="goBackIconProfile"></ArrowLeftOutlined>
+        </div>
           <div className='banner'>
+         
+       
+            
+            
+            
             <Row className="userInfoRow" align='middle'>
+           
               <Col span={8} >
                 <Image className="profilePic" width={'22vw'} height={'22vw'} preview={false} src={profilePic} />
               </Col>
