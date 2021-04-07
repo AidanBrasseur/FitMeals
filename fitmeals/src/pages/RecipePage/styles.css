@@ -178,6 +178,10 @@
     border-radius: 50%;
     object-fit: 'cover'; 
 }
+.pieChart{
+    margin-top: -55px;
+    justify-content: center;
+}
 
 .instructionsDiv .ant-image  .ant-image-img{
     width: 100%;
