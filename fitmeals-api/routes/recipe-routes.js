@@ -374,13 +374,12 @@ router.post('/', multipartMiddleware, async (req, res) => {
                     macros: req.body.macros ? JSON.parse(req.body.macros) : {}
                 })
                 // Uploading the main image
-                cloudinary.uploader.upload(req.files.image.path, (result) => {
-                    recipe.image = {
-                        url: result.url,
-                        cloudinaryID: result.public_id,
-                        created_at: new Date()
-                    }
-                });
+                const resultImage1 = await cloudinary.uploader.upload(req.files.image.path);
+                recipe.image = {
+                    url: resultImage1.url,
+                    cloudinaryID: resultImage1.public_id,
+                    created_at: new Date()
+                }
                 // Getting the instructions and their images
                 let instructionsList = req.body.instructions ? JSON.parse(req.body.instructions) : [];
                 for (var i = 0; i < instructionsList.length; i++) {
