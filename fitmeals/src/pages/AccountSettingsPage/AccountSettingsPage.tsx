@@ -1,5 +1,6 @@
-import { UserOutlined, StarOutlined, LockOutlined, EditOutlined } from '@ant-design/icons';
+import { UserOutlined, StarOutlined, LockOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Upload, Image, Modal } from 'antd';
+import ImgCrop from 'antd-img-crop';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useLocation, Redirect } from 'react-router-dom';
@@ -14,14 +15,53 @@ import Footer from '../../components/Footer/Footer';
 
 function AccountSettingsPage() {
   const { TextArea } = Input;
+  const { Dragger } = Upload;
   const [searchQuery, setSearchQuery] = useState<string | undefined>()
   const [sessionContext, updateSessionContext] = useSessionContext();
   const { state }: any = useLocation();
 
+  type MainImage = {
+    url: string,
+    file: File
+  }
+  const [image, setImage] = useState<MainImage | null>(null);
+
   // Edit modals
+  const [isPicModalVisible, setIsPicModalVisible] = useState(false);
   const [isNameModalVisible, setIsNameModalVisible] = useState(false);
   const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
   const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
+
+  // Call the change pic API
+  const changePic = async () => {
+    if (image != undefined) {
+      const formData = new FormData();
+      let blob = await fetch(image?.url).then(r => r.blob());
+      formData.append('image', blob);
+      axios.patch(HOST + "users/update-pic/" + sessionContext.user?.username, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'authorization': sessionContext["user"]?.authToken
+        }
+      }).then(response => {
+        let user = {
+          id: sessionContext.user?.id,
+          name: sessionContext.user?.name,
+          email: sessionContext.user?.email,
+          authToken: sessionContext.user?.authToken,
+          username: sessionContext.user?.username,
+          isAdmin: sessionContext.user?.isAdmin,
+          image: response.data.image
+        } as User;
+        updateSessionContext({ ...sessionContext, user });
+        setImage(null);
+        setIsPicModalVisible(false);
+        alert("Profile picture successfully changed!");
+      }).catch((error) => {
+        alert("Sorry, FitMeals was unable to process your request. Please try again.")
+      })
+    }
+  }
 
   // Call the change full name API
   const changeName = (values: any) => {
@@ -106,6 +146,41 @@ function AccountSettingsPage() {
       <Header setSearchQuery={setSearchQuery} />
       <Layout.Content>
         <Modal
+          title="Change Profile Picture"
+          visible={isPicModalVisible}
+          onCancel={() => { setIsPicModalVisible(false) }}
+          footer={[
+            <Button key="cancel" onClick={() => { setIsPicModalVisible(false); setImage(null); }}>
+              Cancel
+            </Button>,
+            <Button onClick={changePic}>
+              Submit
+            </Button>
+          ]}
+        >
+          <div className="profilePicPicker">
+            <ImgCrop aspect={3 / 2} rotate>
+              <Dragger beforeUpload={file => {
+                setImage({
+                  url: URL.createObjectURL(file),
+                  file: file
+                })
+                // Prevent upload
+                return false;
+              }} multiple={false} showUploadList={false}>
+                {image ? <img className='uploadProfilePicPreview' src={image.url} /> :
+                  <div>
+                    <div className="imagePickerIcon">
+                      <UploadOutlined />
+                    </div>
+                    <p className="uploadTitle">Upload a new profile picture!</p>
+                    <p>Click or drag an image to this area to upload</p>
+                  </div>}
+              </Dragger>
+            </ImgCrop>
+          </div>
+        </Modal>
+        <Modal
           title="Change Full Name"
           visible={isNameModalVisible}
           onCancel={() => { setIsNameModalVisible(false) }}
@@ -182,7 +257,7 @@ function AccountSettingsPage() {
         </div>
         <div className="allAccountInfo">
           <div className="info">
-            <div className="infoSubtitle">Profile Picture<Button type="link"><EditOutlined /></Button></div>
+            <div className="infoSubtitle">Profile Picture<Button type="link" onClick={() => {setIsPicModalVisible(true)}}><EditOutlined /></Button></div>
             <div className="profilePicDiv">
               <Image className="profilePic" width={'10vw'} height={'10vw'} preview={false} src={sessionContext.user?.image} />
             </div>
