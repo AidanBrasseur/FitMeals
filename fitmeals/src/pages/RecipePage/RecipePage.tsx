@@ -59,7 +59,7 @@ function RecipePage() {
                 id: r._id,
                 author: r.user.fullname,
                 authorId: r.user._id,
-                authorAvatar: r.user.image.url,
+                authorAvatar: r.user.image?.url,
                 authorUsername: r.user.username,
                 title: r.title,
                 categories: categories,
@@ -72,7 +72,7 @@ function RecipePage() {
                 image: r.image.url,
                 instructions: instructions,
                 comments: r.comments.map((comment: any) => {
-                    comment.avatar = comment.avatar.url
+                    comment.avatar = comment.avatar?.url
                     return comment
                 }) as CommentType[],
                 macros: macros,
