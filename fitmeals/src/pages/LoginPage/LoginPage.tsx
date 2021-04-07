@@ -39,10 +39,9 @@ function LoginPage() {
                 authToken: res.authToken,
                 username: res.username,
                 isAdmin: res.isAdmin,
-                image: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"
+                image: res.image.url
             } as User;
-            updateSessionContext({ ...sessionContext, user});
-         
+            updateSessionContext({ ...sessionContext, user});         
             if(values.remember){
                 localStorage.setItem('authToken', res.authToken);
             }
