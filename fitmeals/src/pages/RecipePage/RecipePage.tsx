@@ -1,4 +1,4 @@
-import Icon, { ArrowLeftOutlined, StarOutlined } from '@ant-design/icons';
+import Icon, { ArrowLeftOutlined, CloseOutlined, QuestionOutlined, StarOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Col, ConfigProvider, Form, Image, Input, Layout, List, Popconfirm, Rate, Row, Select, Space, Steps, Tag, Typography, Upload } from 'antd';
 import axios from 'axios';
 import React, { createElement, useEffect, useState } from 'react';
@@ -33,6 +33,7 @@ function RecipePage() {
     const [sessionContext, updateSessionContext] = useSessionContext();
     const [saved, setSaved] = useState(false);
     const [userRating, setUserRating] = useState<number | undefined>(undefined);
+    const [approved, setApproved] = useState<boolean | null>(true);
    
     
     const getRecipe = () => {
@@ -77,6 +78,7 @@ function RecipePage() {
                 macros: macros,
             } as Recipe
             console.log(r)
+            setApproved(r.approved)
             setSaved(r.isSaved)
             setUserRating(r.userRating)
             setCommentList([...(detailRecipe?.comments as CommentType[])])
@@ -251,24 +253,24 @@ function RecipePage() {
                                     </Col>
                                     <Col style={{ marginRight: 10 }}>
 
-                                        <div className='recipeRatingDiv'>
+                                    {approved && <div className='recipeRatingDiv'>
                                             <Row style={{ paddingLeft: 3, paddingRight: 3 }} justify='space-around' align='middle'>
                                                 <StarOutlined style={{ color: 'white', fontSize: 15 }} />
                                                 <div style={{ color: 'white' }}>{recipe?.rating}</div>
                                             </Row>
-                                        </div>
+                                        </div>}
                                     </Col>
 
                                     <Col span={6}>
-                                        {userRating !== undefined && <Rate defaultValue={userRating} onChange={rateRecipe}/>}
+                                        {userRating !== undefined && approved && <Rate defaultValue={userRating} onChange={rateRecipe}/>}
                                     </Col>
                                     <Col>
-                                        <span className="saveButton" onClick={toggleSave}>
+                                    {approved == false ? <Space direction='horizontal'><QuestionOutlined style={{color: 'red', fontSize: 30}}></QuestionOutlined>{"This recipe is currently under review"}</Space> : approved === null ? 
+                                    <Space direction='horizontal'><CloseOutlined style={{color: 'red', fontSize: 30}}></CloseOutlined>{"This recipe has been rejected"}</Space> : 
+                                    <span className="saveButton" onClick={toggleSave}>
                                             {createElement((saved) ? FaBookmark : FaRegBookmark)}
-                                        </span>
+                                        </span>}
                                     </Col>
-
-
                                 </Row>
                             </Col>
                             <Col className="recipeCats" >

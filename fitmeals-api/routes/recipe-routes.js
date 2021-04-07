@@ -193,14 +193,18 @@ router.get("/:id", async (req, res) => {
         if (req.headers.authorization) {
             requestUser = await User.findOne({ authToken: req.headers.authorization })
         }
-        let match = { approved: true, _id: req.params.id }
-        if(requestUser?.isAdmin){
+       
             match = {_id: req.params.id }
-        }
         const recipe = await Recipe.findOne(match, "-__v")
         if (!recipe) {
             res.status(404).send("A recipe with that id was not found")
             return
+        }
+        if(!recipe.isApproved){
+            if(!requestUser.isAdmin && requestUser._id.toString() !== recipe.user.toString()){
+                res.status(403).send('This recipe has not been approved')
+                return 
+            }
         }
         let isSaved = false
         if (requestUser) {
@@ -303,7 +307,7 @@ router.get("/users/:id", async (req, res) => {
         if (searchQuery) {
             match.$text = { $search: searchQuery }
         }
-        if (userId != user._id) {
+        if (userId != user._id.toString()) {
             match.approved = true
         }
         if (categoryQuery) {
