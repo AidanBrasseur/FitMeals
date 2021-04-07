@@ -400,14 +400,15 @@ function RecipePage() {
                                             extra={
                                                 (sessionContext.user?.username === comment?.username || sessionContext.user?.isAdmin) ? 
                                                     <Popconfirm
-                                                    style={{top: 0}}
+                                                   
                                                      placement="leftBottom"
+                                                  
                                                     title="Are you sure to delete this comment?"
                                                     onConfirm={() => confirmDeleteComment(comment)}
                                                     okText="Yes"
                                                     cancelText="No"
                                                   >
-                                                 <FaTrashAlt ></FaTrashAlt> 
+                                                 <FaTrashAlt  style={{cursor: 'pointer'}}></FaTrashAlt> 
                                                   </Popconfirm> : <div></div>
                                             }>
                                                 <CommentItem comment={comment}></CommentItem>

@@ -18,7 +18,6 @@ function Header({setSearchQuery}: HeaderProps) {
       }
     }
     const onBlur = (e : any) => {
-      console.log()
       if(e.target?.attributes.value.nodeValue === ""){
         if(setSearchQuery){
           setSearchQuery(undefined)
