@@ -5,6 +5,9 @@ import { useSessionContext } from '../../contexts/SessionContext';
 import { User } from '../../types';
 import axios from 'axios';
 import { HOST } from '../../config';
+import bagelHeroImage from '../../assets/images/bagelHeroImage.jpg';
+import eggHeroImage from '../../assets/images/eggImage.jpg';
+import smoothieHeroImage from '../../assets/images/smoothieHeroImage.jpg';
 import './styles.css';
 
 function RegisterPage() {
@@ -80,15 +83,19 @@ function RegisterPage() {
                     </div>
                 </div>
                 <div className='imageRegisterDiv'>
-                    <Carousel swipeToSlide draggable adaptiveHeight={false} variableWidth={false} >
+                <Carousel swipeToSlide draggable  adaptiveHeight={false} variableWidth={false} autoplay autoplaySpeed={4000}>
                         <Image
-                            src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
+                            src={eggHeroImage}
                             preview={false}
                             style={{ objectFit: 'cover' }}
-
                         ></Image>
-                        <Image
-                            src="https://media1.popsugar-assets.com/files/thumbor/q_eu4G_Yfvd1qUU7rkJYpC9Qalk/0x532:1560x2092/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2019/11/18/102/n/1922729/2010a3325dd3450317e273.27544324_/i/healthy-meal-prep-dinner-recipes.jpg"
+                         <Image
+                            src={smoothieHeroImage}
+                            preview={false}
+                            style={{ objectFit: 'cover' }}
+                        ></Image>
+                         <Image
+                            src={bagelHeroImage}
                             preview={false}
                             style={{ objectFit: 'cover' }}
                         ></Image>

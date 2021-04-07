@@ -1,0 +1,50 @@
+.title{
+    width: 100%;
+    height: fit-content;
+    background-color: #032D23;
+    font-family: "Playfair Display";
+    font-size: 50px;
+    color: white;
+    margin-top: 4%;
+    padding: 2%;
+    text-align: center;
+}
+
+.allAccountInfo{
+    margin-top: 2%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 2%;
+}
+
+.info{
+    margin-bottom: 1%;
+}
+
+.infoSubtitle{
+    font-size: 35px;
+    font-weight: bold;    
+}
+
+.infoSubtitle .ant-btn{
+    font-size: 20px;
+}
+
+.infoText {
+    font-size: 20px;
+}
+
+.changePassword{
+    margin-top: 5%;
+}
+
+.changePassword .ant-btn{
+    padding: 0%;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+.profilePicDiv{
+    margin-top: 1%;
+}

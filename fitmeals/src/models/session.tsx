@@ -1,4 +1,4 @@
-import { User, Recipe, Ingredient, Comment } from '../types';
+import { User } from '../types';
 export interface Session {
   user?: User,
 }

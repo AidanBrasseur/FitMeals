@@ -5,7 +5,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSessionContext } from '../../contexts/SessionContext';
 import './styles.css';
-import { ReactComponent as logoSVG } from '../../assets/logo.svg';
+import { ReactComponent as logoSVG } from '../../assets/svg/logo.svg';
 // type HeaderProps = {
 //   setSearchQuery?: (searchQuery: string | undefined) => void
 // } 

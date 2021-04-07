@@ -32,6 +32,7 @@ function RecipePage() {
     const currentHistory = useHistory();
     const [sessionContext, updateSessionContext] = useSessionContext();
     const [saved, setSaved] = useState(false);
+    const [userRating, setUserRating] = useState<number | undefined>(undefined);
    
     
     const getRecipe = () => {
@@ -75,7 +76,9 @@ function RecipePage() {
                 }) as CommentType[],
                 macros: macros,
             } as Recipe
+            console.log(r)
             setSaved(r.isSaved)
+            setUserRating(r.userRating)
             setCommentList([...(detailRecipe?.comments as CommentType[])])
             setRecipe(detailRecipe)              
         }).catch((error) => {
@@ -98,6 +101,10 @@ function RecipePage() {
         }
     };
     const postComment = (content: string)=> {
+        if (!("user" in sessionContext)){
+            currentHistory.push('/login');
+            return
+        } 
         axios.post(HOST + 'comments/recipes/' + recipe?.id, {
             data: {
                 comment: content
@@ -181,6 +188,26 @@ function RecipePage() {
         })
     }
 
+    const rateRecipe = (value: number) => {
+        if (!("user" in sessionContext)){
+            currentHistory.push('/login');
+            return
+        } 
+        axios.post(HOST + 'recipes/rating/' + recipe?.id , {
+            data:{
+                rating: value
+            }
+        },{
+            headers:{
+                authorization: sessionContext["user"]?.authToken
+            }
+        }).then(response => {
+            setUserRating(response.data.rating)
+        }).catch((error) => {
+            console.log(error)
+        })
+
+    }   
 
     return (
         <Layout>
@@ -233,7 +260,7 @@ function RecipePage() {
                                     </Col>
 
                                     <Col span={6}>
-                                        <Rate defaultValue={0} />
+                                        {userRating !== undefined && <Rate defaultValue={userRating} onChange={rateRecipe}/>}
                                     </Col>
                                     <Col>
                                         <span className="saveButton" onClick={toggleSave}>

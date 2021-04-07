@@ -1,4 +1,4 @@
-import { BookOutlined, SecurityScanOutlined, UserOutlined } from '@ant-design/icons';
+import { BookOutlined, SecurityScanOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Input, Layout, Menu, Space } from 'antd';
 import Search from 'antd/lib/transfer/search';
 import React from 'react';
@@ -17,6 +17,14 @@ function Header({setSearchQuery}: HeaderProps) {
         console.log(value)
       }
     }
+    const onBlur = (e : any) => {
+      console.log()
+      if(e.target?.attributes.value.nodeValue === ""){
+        if(setSearchQuery){
+          setSearchQuery(undefined)
+        }
+      } 
+    }
     const [sessionContext, updateSessionContext] = useSessionContext();
 
     const menu = sessionContext.user ? (
@@ -30,6 +38,9 @@ function Header({setSearchQuery}: HeaderProps) {
         {sessionContext.user?.isAdmin ? <Menu.Item>
           <Link to="/admin-panel" ><SecurityScanOutlined />Admin Page</Link>
         </Menu.Item> : null}
+        <Menu.Item>
+          <Link to="/account-settings" ><SettingOutlined />Account Settings</Link>
+        </Menu.Item>
         <Menu.Item>
           <Link to="/login" ><Button onClick={() => localStorage.clear()}style={{width: '100%'}}>Logout</Button></Link>
         </Menu.Item>
@@ -46,7 +57,7 @@ function Header({setSearchQuery}: HeaderProps) {
         <Link to='/'><div className="textLogo">FitMeals</div></Link>
         <Space size={50} className="menu" direction="horizontal" align='center'>
           { setSearchQuery && <div className='search'>
-            <Input.Search allowClear placeholder="Search Recipes" onSearch={onSearch} size='large' />
+            <Input.Search allowClear placeholder="Search Recipes" onBlur={onBlur} onSearch={onSearch} size='large' />
           </div>}
           <Dropdown overlay={menu} placement="bottomCenter" className='dropdown'>
             <Space size={20} direction='horizontal' className='userRow' align='center'>
