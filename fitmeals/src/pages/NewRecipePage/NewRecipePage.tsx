@@ -41,7 +41,11 @@ function NewRecipePage() {
   categories.forEach(category => {
     children.push(<Option value={category} key={category}>{category}</Option>);
   });
-
+  const onFinishFailed = (errorInfo: any) => {
+    Modal.error({
+      content: 'Please fill out all required fields'
+    })
+  }
   const onFinish = async (values: any) => {
     console.log('Received values of form:', values);
     // setLoading(true)
@@ -196,7 +200,7 @@ function NewRecipePage() {
         </div>
           <div className="newRecipe">
           
-            <Form onFinish={onFinish} form={form}>
+            <Form onFinish={onFinish} form={form} onFinishFailed={onFinishFailed}>
               <Row align='middle'>
                 <Col span={16}>
                   <Form.Item name="title" required={true}>
@@ -336,21 +340,28 @@ function NewRecipePage() {
               <div className="macroInputs">
                 <Row>
                   <Col className="macroCol" >
+                    <h3 className='mac' >Calories</h3>
                     <Form.Item name="macroCalories" >
                       <InputNumber placeholder="Total Calories"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
+                  <h3 className='mac' >Protein</h3>
+
                     <Form.Item name="macroProtein">
                       <InputNumber placeholder="Number of Grams - Protein"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
+                  <h3 className='mac' >Carbs</h3>
+
                     <Form.Item name="macroCarbs">
                       <InputNumber placeholder="Number of Grams - Carbs"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
+                  <h3 className='mac' >Fats</h3>
+
                     <Form.Item name="macroFats">
                       <InputNumber placeholder="Number of Grams - Fats"></InputNumber>
                     </Form.Item>

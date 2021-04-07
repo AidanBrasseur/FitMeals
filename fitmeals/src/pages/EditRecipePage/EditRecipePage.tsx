@@ -113,6 +113,11 @@ function EditRecipePage() {
   useEffect(() => {
     getRecipe();
   }, []);
+  const onFinishFailed = (errorInfo: any) => {
+    Modal.error({
+      content: 'Please fill out all required fields'
+    })
+  }
   const onFinish = async (values: any) => {
     console.log('Received values of form:', values);
 
@@ -325,7 +330,7 @@ function EditRecipePage() {
 
         <Spin style={{ height: '100%', position: 'fixed', top: '25%' }} size="large" spinning={loading}>
           <div className="newRecipeEdit">
-            {recipe && <Form form={form} onFinish={onFinish}
+            {recipe && <Form form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}
               initialValues={{
                 "title": recipe?.title,
                 "description": recipe?.description,
@@ -472,21 +477,29 @@ function EditRecipePage() {
               <div className="macroInputs">
                 <Row>
                   <Col className="macroCol" >
+                  <h3 className='mac' >Calories</h3>
+
                     <Form.Item name="macroCalories" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Total Calories"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
+                  <h3 className='mac' >Protein</h3>
+
                     <Form.Item name="macroProtein" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Protein"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
+                  <h3 className='mac' >Carbs</h3>
+
                     <Form.Item name="macroCarbs" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Carbs"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
+                  <h3 className='mac' >Fats</h3>
+
                     <Form.Item name="macroFats" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Fats"></InputNumber>
                     </Form.Item>
