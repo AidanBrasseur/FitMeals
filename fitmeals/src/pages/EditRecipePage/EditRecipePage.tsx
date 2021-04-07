@@ -23,6 +23,8 @@ function EditRecipePage() {
     file: File
   }
   const history = useHistory();
+  const [initialTime, setInitialTime] = useState<number>(0);
+  const [initialTimeUnit, setInitialTimeUnit] = useState<string>('minutes');
   const { state } = useLocation<stateType>();
   const recipeId = state.recipeId
   const { Dragger } = Upload;
@@ -42,81 +44,246 @@ function EditRecipePage() {
   const [reject, setReject] = useState(false);
   const getRecipe = () => {
     axios.get(HOST + 'recipes/' + recipeId, {
-        headers:{
-            authorization: sessionContext["user"]?.authToken
-        }
+      headers: {
+        authorization: sessionContext["user"]?.authToken
+      }
     }).then(response => {
-        const r = response.data
-       console.log(r)
-       
-            const categories = r.categories.map((cat: any) => {
-                return cat.name
-            })
-            const instructions = r.instructions.map((i: any) => {
-                return {desc: i.instruction, image: i.image, wasInitial: true}
-            })
-            console.log(instructions)
-            const ingredients = r.ingredients as Ingredient[]
-            console.log(ingredients)
-            console.log(r.subtitle)
-            const macros = r.macros as Macros
-            const detailRecipe = {
-                id: r._id,
-                author: r.user.fullname,
-                authorId: r.user._id,
-                // authorAvatar: r.user.image,
-                title: r.title,
-                categories: categories,
-                description: r.description,
-                time: r.time,
-                calories: r.calories,
-                subtitle: r.subtitle,
-                rating: r.rating,
-                ingredients: ingredients,
-                image: r.image.url,
-                instructions: instructions,
-                comments: r.comments as CommentType[],
-                macros: macros,
-            } as Recipe
-            setImage(detailRecipe.image)
-            setRecipe(detailRecipe)
-           
-           
+      const r = response.data
+      console.log(r)
+
+      const categories = r.categories.map((cat: any) => {
+        return cat.name
+      })
+      const instructions = r.instructions.map((i: any) => {
+        return { desc: i.instruction, image: i.image, wasInitial: true }
+      })
+      if (r.time != undefined) {
+        let timeunit;
+        let time;
+        if (r.time[r.time.length - 2] == 'r') {
+          timeunit = 'hours'
+
+        }
+        else {
+          timeunit = 'minutes'
+        }
+
+        time = r.time.split(' ')
+        time = time[0]
+        time = Number(time)
+        console.log(timeunit)
+
+        setInitialTime(time);
+        setInitialTimeUnit(timeunit);
+      }
+
+
+
+      console.log(instructions)
+      const ingredients = r.ingredients as Ingredient[]
+      console.log(ingredients)
+      console.log(r.subtitle)
+      const macros = r.macros as Macros
+      const detailRecipe = {
+        id: r._id,
+        author: r.user.fullname,
+        authorId: r.user._id,
+        // authorAvatar: r.user.image,
+        title: r.title,
+        categories: categories,
+        description: r.description,
+        time: r.time,
+        calories: r.calories,
+        subtitle: r.subtitle,
+        rating: r.rating,
+        ingredients: ingredients,
+        image: r.image.url,
+        instructions: instructions,
+        comments: r.comments as CommentType[],
+        macros: macros,
+      } as Recipe
+      setImage(detailRecipe.image)
+      setRecipe(detailRecipe)
+
+
     }).catch((error) => {
-        console.log(error)
+      console.log(error)
     })
-}
-useEffect(() => {
+  }
+  useEffect(() => {
     getRecipe();
-}, []);
+  }, []);
   const onFinish = async (values: any) => {
     console.log('Received values of form:', values);
 
     //Temporary will need more input fields
-    values.image = image;
-    //Temporary will need more input fields
-    values.subtitle = 'test';
-    values.time = '20-30min';
-    values.calories = 400;
-    values.macros = recipe?.macros;
-    values.comments = [];
+    // values.image = image;
+    // //Temporary will need more input fields
+    // values.subtitle = 'test';
+    // values.time = '20-30min';
+    // values.calories = 400;
+    // values.macros = recipe?.macros;
+    // values.comments = [];
     let newRecipe = values as Recipe;
 
     setLoading(true)
-    if (approve) {
-     
+    // if (approve) {
+
+    // }
+    // else {
+
+    // }
+    // await delay(1000);
+    const formData = new FormData();
+    // alert.show('clicked')
+    if (values.title == undefined || values.title == '') {
+      // alert.show('Please provide a title')
+      Modal.error({
+        content: "Please provide a title"
+      })
+      setLoading(false);
+
+      return;
     }
-    else {
+    if (values.description == undefined || values.description == '') {
+      // alert.show('Please provide a title')
+      Modal.error({
+        content: "Please provide a description"
+      })
+      setLoading(false);
+
+      return;
+    }
+    formData.append('title', values.title)
+    formData.append('subtitle', values.subtitle)
+    if (values.categories != undefined) {
+      const categories = values.categories.map((item: string) => {
+        return { name: item }
+      })
+      formData.append('categories', JSON.stringify(categories))
+    }
+    if (values.time != undefined) {
+      formData.append('time', values.time + ' ' + values.timeUnit)
+    }
+
+    formData.append('description', values.description)
+    if (values.ingredients == undefined || values.ingredients.length == 0) {
+      // alert.show('Please provide a title')
+      Modal.error({
+        content: "Please provide at least one ingredient"
+      })
+      setLoading(false);
+
+      return;
+    }
+    formData.append('ingredients', JSON.stringify(values.ingredients))
+    if (values.instructions == undefined || values.instructions.length == 0) {
+      // alert.show('Please provide a title')
+      Modal.error({
+        content: "Please provide at least one instruction step"
+      })
+      setLoading(false);
+
+      return;
+    }
+    const instructionsForm = values.instructions.map((item: { desc: string, image: any }, index: number) => {
+      return { order: index + 1, instruction: item.desc }
+    })
+    console.log(values.instructions);
+
+    for (let i = 0; i < values.instructions.length; i++) {
+      if (values.instructions[i] != undefined && values.instructions[i].image != undefined) {
+        if (values.instructions[i].wasInitial){
+          const url = values.instructions[i].image.url
+          let blob = await fetch(url).then(r => r.blob());
+          formData.append(`image_instruction${i + 1}`, blob)
+        }
+        else if (values.instructions[i].image.file != undefined){
+          const file = values.instructions[i].image.file;
+          formData.append(`image_instruction${i + 1}`, file)
+        }
+
+      }
       
     }
-    await delay(1000);
-    setLoading(false);
+    console.log(values.instructions)
+    // form.getFieldValue('instructions')[index] && form.getFieldValue('instructions')[index].image ? <img className='uploadImagePreviewInstructions' src={
+    //   form.getFieldValue('instructions')[index].wasInitial ? form.getFieldValue('instructions')[index].image.url : URL.createObjectURL(form.getFieldValue('instructions')[index].image.file)} /> :
+
+    formData.append('instructions', JSON.stringify(instructionsForm))
+    if (values.macroCalories != undefined) {
+      formData.append('calories', values.macroCalories)
+
+    }
+    formData.append('macros', JSON.stringify({
+      protein: Number(values.macroProtein),
+      carbs: Number(values.macroCarbs),
+      fats: Number(values.macroFats)
+    }))
+    if (image != undefined) {
+      let blob = await fetch(image).then(r => r.blob());
+      formData.append('image', blob)
+    }
+    else {
+      Modal.error({
+        content: "Please provide a main image"
+      })
+      setLoading(false);
+
+      return;
+    }
+    
+    if (reject) {
+      axios.patch(HOST + 'admin/reject-recipe/' + recipe?.id, {}, {
+        headers: {
+          authorization: sessionContext["user"]?.authToken
+        }
+      }).then(response => {
+        setReject(true)
+        success("Successfully rejected recipe");
+        setLoading(false);
+
+        return;
+      }).catch((error) => {
+        console.log(error)
+        setLoading(false);
+        Modal.error({
+          content: "Something went wrong please try again"
+        })
+        return;
+
+      })
+    }
+
+    if (approve) {
+      formData.append('approved', '1')
+      try {
+        const res = await axios.put(HOST + 'recipes/' + recipe?.id, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'authorization': sessionContext["user"]?.authToken
+          }
+        })
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+        Modal.error({
+          content: "Something went wrong please try again"
+        })
+        setLoading(false);
+  
+        return;
+      }
+    }
+
+  
     if (approve) {
       success("Successfully updated and approved recipe");
     }
-    if (reject) {
-      success("Successfully rejected recipe");
-    }
+    
+    setLoading(false);
+    return;
+
   };
 
   function success(text: string) {
@@ -152,13 +319,13 @@ useEffect(() => {
 
 
   return (
-     <Layout>
+    <Layout>
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
 
         <Spin style={{ height: '100%', position: 'fixed', top: '25%' }} size="large" spinning={loading}>
           <div className="newRecipeEdit">
-          {recipe && <Form form={form} onFinish={onFinish}
+            {recipe && <Form form={form} onFinish={onFinish}
               initialValues={{
                 "title": recipe?.title,
                 "description": recipe?.description,
@@ -170,6 +337,8 @@ useEffect(() => {
                 "macroProtein": recipe?.macros?.protein,
                 "macroCalories": recipe?.calories,
                 "subtitle": recipe?.subtitle,
+                'time': initialTime,
+                'timeUnit': initialTimeUnit,
               }}>
 
               <Row align='middle'>
@@ -201,8 +370,30 @@ useEffect(() => {
               <Form.Item name="description">
                 <TextArea placeholder="Your Recipe's Description" rows={3} bordered={false} style={{ fontSize: 20 }}></TextArea>
               </Form.Item>
+              <Row>
+
+
+                <Col>
+                  <Form.Item name="time" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
+                    <InputNumber style={{ maxWidth: '150px', width: '10vw' }} placeholder="Total time"></InputNumber>
+                  </Form.Item>
+                </Col>
+                <Col>
+                  <Form.Item name="timeUnit" initialValue="minutes">
+
+                    <Select defaultValue='minutes'>
+                      <Option value="hours">Hours</Option>
+                      <Option value="minutes">Minutes</Option>
+                    </Select>
+
+                  </Form.Item>
+                </Col>
+
+
+
+              </Row>
               <div className="imagePicker">
-                <ImgCrop quality={1} aspect={3/2} rotate>
+                <ImgCrop quality={1} aspect={3 / 2} rotate>
                   <Dragger beforeUpload={file => {
                     setImage(URL.createObjectURL(file))
 
@@ -275,7 +466,7 @@ useEffect(() => {
                     </Form.Item>
                   </>
                 )}
-                
+
               </Form.List>
               <h1 className="subtitle">Macros</h1>
               <div className="macroInputs">
@@ -321,7 +512,7 @@ useEffect(() => {
                             <Row>
                               <Col span={18}>
                                 <Form.Item {...field} name={[field.name, 'desc']} fieldKey={[field.fieldKey, 'desc']} rules={[{ required: true, message: 'Missing' }]}>
-                                  <TextArea rows={4} bordered={false} style={{ fontSize: 16 }} placeholder="Enter your instruction"></TextArea>
+                                  <TextArea rows={4} bordered={false} style={{ fontSize: 18 }} placeholder="Enter your instruction"></TextArea>
                                 </Form.Item>
                               </Col>
 
@@ -373,16 +564,16 @@ useEffect(() => {
                                     </Form.Item>
                                   ) : null
                                 } */}
-                                { 
+                                {
                                   form.getFieldValue('instructions')[index] && form.getFieldValue('instructions')[index].image ? <img className='uploadImagePreviewInstructions' src={
-                                  form.getFieldValue('instructions')[index].wasInitial ? form.getFieldValue('instructions')[index].image.url : URL.createObjectURL(form.getFieldValue('instructions')[index].image.file)} /> :
-                                  <div>
-                                    <div className="imagePickerIcon">
-                                      <UploadOutlined />
-                                    </div>
-                                    <p className="uploadTitle">Upload image</p>
-                                    <p style={{ margin: '10px' }}>Click or drag an image to this area to upload</p>
-                                  </div>}
+                                    form.getFieldValue('instructions')[index].wasInitial ? form.getFieldValue('instructions')[index].image.url : URL.createObjectURL(form.getFieldValue('instructions')[index].image.file)} /> :
+                                    <div>
+                                      <div className="imagePickerIcon">
+                                        <UploadOutlined />
+                                      </div>
+                                      <p className="uploadTitle">Upload image</p>
+                                      <p style={{ margin: '10px' }}>Click or drag an image to this area to upload</p>
+                                    </div>}
                               </Dragger>
                             </Form.Item>
                           </ImgCrop>
