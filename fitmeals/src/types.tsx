@@ -38,7 +38,10 @@ export type Macros = {
     carbs: number,
     fats: number
 }
-
+export type Instruction = {
+    instruction: string,
+    image: string,
+}
 export type Recipe = {
     id: string,
     author: string,
@@ -54,7 +57,7 @@ export type Recipe = {
     rating?: number,
     ingredients: Ingredient[],
     image: string,
-    instructions: string[],
+    instructions: Instruction[],
     comments: Comment[],
     macros: Macros,
 }
