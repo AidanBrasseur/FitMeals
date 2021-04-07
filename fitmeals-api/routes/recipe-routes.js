@@ -200,8 +200,8 @@ router.get("/:id", async (req, res) => {
             res.status(404).send("A recipe with that id was not found")
             return
         }
-        if(!recipe.isApproved){
-            if(!requestUser.isAdmin && requestUser._id.toString() !== recipe.user.toString()){
+        if(!recipe.approved){
+            if(!requestUser?.isAdmin && requestUser?._id.toString() !== recipe.user.toString()){
                 res.status(403).send('This recipe has not been approved')
                 return 
             }
@@ -598,7 +598,11 @@ router.post("/rating/:id", async (req, res) => {
         return;
     }
     const recipeId = req.params.id
-    const rating = req.body?.data.rating
+    const rating = req.body?.rating
+    if(rating &&  (rating < 0 || 5 < rating)){
+        res.status(400).send('Invalid rating. Must be between 0 and 5')
+        return;
+    }
     if (!ObjectID.isValid(recipeId)) {
         res.status(404).send('A recipe with that id could not be found')
         return;
@@ -620,7 +624,7 @@ router.post("/rating/:id", async (req, res) => {
             rating: rating,
             user: requestUser._id
         }
-        if (req.body.data.rating) {
+        if (rating) {
             modification.$addToSet = { 'ratings': ratingObj }
         }
         else {

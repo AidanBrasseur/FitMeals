@@ -23,7 +23,7 @@ router.post("/recipes/:id", async (req, res) => {
         res.status(404).send('A recipe with that id could not be found')
         return;
     }
-    const commentContent = req.body.data.comment
+    const commentContent = req.body.comment
     try {
         if (!req.headers.authorization) {
             res.status(403).send('You must be logged in to comment')
@@ -94,7 +94,7 @@ router.delete("/recipes/:id/comments/:commentId", async (req, res) => {
 
 /*
 Post: /comments/:id/like
-Adds or removes like from comment
+Adds like to comment
 */
 router.post("/:id/like", async (req, res) => {
     if (mongoose.connection.readyState != 1) {
@@ -120,12 +120,9 @@ router.post("/:id/like", async (req, res) => {
         }
 
         let modification = {}
-        if (req.body.data.like) {
-            modification.$addToSet = { 'comments.$.likes': requestUser._id }
-        }
-        else {
-            modification.$pull = { 'comments.$.likes': requestUser._id }
-        }
+       
+        modification.$addToSet = { 'comments.$.likes': requestUser._id }
+       
 
         const recipe = await Recipe.findOneAndUpdate({ comments: { $elemMatch: { _id: commentId } } }, modification, { useFindAndModify: false })
         res.sendStatus(200)
@@ -136,6 +133,48 @@ router.post("/:id/like", async (req, res) => {
         return;
     }
 })
+
+/*
+Post: /comments/:id/unlike
+Removes like from comment
+*/
+router.post("/:id/unlike", async (req, res) => {
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+    const commentId = req.params.id
+    if (!ObjectID.isValid(commentId)) {
+        res.status(404).send('A comment with that id could not be found')
+        return;
+    }
+
+    try {
+        if (!req.headers.authorization) {
+            res.status(403).send('You must be logged in to like a comment')
+            return
+        }
+        const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        if (!requestUser) {
+            res.status(403).send('You must be logged in to like a comment')
+            return
+        }
+
+        let modification = {}
+        modification.$pull = { 'comments.$.likes': requestUser._id }
+        
+        const recipe = await Recipe.findOneAndUpdate({ comments: { $elemMatch: { _id: commentId } } }, modification, { useFindAndModify: false })
+        res.sendStatus(200)
+        return;
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+})
+
+
 
 
 
