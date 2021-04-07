@@ -94,6 +94,10 @@ router.get("/saved", async (req, res) => {
             return
         }
         const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        if(!requestUser){
+            res.status(404).send('This user could not be found')
+            return
+        }
         const searchQuery = req.query.searchQuery
         const categoryQuery = req.query.categoryQuery
         const idList = requestUser.savedRecipes.map((elem) => {

@@ -235,9 +235,9 @@ function RecipePage() {
                     </Row>
                     <Space direction="vertical" size={"large"} style={{ width: '100%' }} align='center'>
 
-                        <Row align='middle' justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
+                        <Row align='middle' justify='space-between' style={{ width: '55vw', maxWidth: 2000,  minWidth: 600}}>
 
-                            <Col span={16}>
+                            <Col>
                                 <Row align="middle">
                                     <Col >
                                         <Title style={{ fontSize: 48, fontWeight: "bold", marginBottom: 0 }}>{recipe?.title}</Title>
@@ -265,10 +265,10 @@ function RecipePage() {
                                         </div>}
                                     </Col>
 
-                                    <Col span={6}>
+                                    <Col >
                                         {userRating !== undefined && approved && <Rate defaultValue={userRating} onChange={rateRecipe} />}
                                     </Col>
-                                    <Col style={{marginRight: 5}} >
+                                    <Col style={{marginLeft: 20, marginRight: 5}} >
                                       <Space direction='horizontal'><ClockCircleOutlined style={{ color: 'black', fontSize: 20, marginTop: 4 }}></ClockCircleOutlined>{`${recipe?.time}`}</Space>
                                     </Col>
                                     <Col>
@@ -293,7 +293,7 @@ function RecipePage() {
                             </Col>
 
                         </Row>
-                        <Row align="middle" style={{ width: '55vw', maxWidth: 1000 }}>
+                        <Row align="middle" style={{ width: '55vw', maxWidth: 2000,  minWidth: 600}}>
                             <Col  >
                                 <Text className="recipeDescription" style={{ fontSize: 20, color: "black" }} type="secondary">{recipe?.description}</Text>
                             </Col>
@@ -305,6 +305,7 @@ function RecipePage() {
                                         <Image
                                             height={'27vw'}
                                             width={'55vw'}
+                                         
                                             src={recipe?.image}
                                         />
                                     </div>
@@ -313,13 +314,13 @@ function RecipePage() {
                         </Row>
 
 
-                        <Row align='middle' justify='start' style={{ width: '55vw', maxWidth: 1000 }}>
+                        <Row align='middle' justify='start' style={{ width: '55vw', maxWidth: 2000,  minWidth: 600}}>
                             <Col >
                                 <h1 className="subtitle">Ingredients</h1>
                             </Col>
 
                         </Row>
-                        <Row justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
+                        <Row justify='space-between' style={{ width: '55vw', maxWidth: 2000,  minWidth: 600}}>
                             <Col  offset={1} style={{ marginBottom: 15, width: '45%' }}>
 
                                 {recipe?.ingredients.map((item: any, index: number) =>
@@ -380,14 +381,14 @@ function RecipePage() {
                                 </Col>}
 
                         </Row>
-                        <Row align='middle' justify='start' style={{ width: '55vw', maxWidth: 1000 }}>
+                        <Row align='middle' justify='start' style={{ width: '55vw', maxWidth: 2000,  minWidth: 600}}>
                             <Col >
                                 <h1 className="subtitle">Instructions</h1>
                             </Col>
 
                         </Row>
 
-                        <Row justify='space-between' style={{ width: '55vw', maxWidth: 1000 }}>
+                        <Row justify='space-between'style={{ width: '55vw', maxWidth: 2000,  minWidth: 600}}>
                             <Col offset={1} span={24}>
                                 <div className="instructionsDiv">
                                     <Steps direction="vertical">
@@ -412,7 +413,7 @@ function RecipePage() {
                             </Col>
                         </Row>
 
-                        <Row align='middle' justify='start' style={{ width: '55vw', maxWidth: 1000 }}>
+                        <Row align='middle' justify='start' style={{ width: '55vw', maxWidth: 2000,  minWidth: 600}}>
                             <Col span={24}>
                                 <h1 className="subtitle">Comments</h1>
                                 <Form onFinish={onFinish} name="commentForm" className="commentForm">
