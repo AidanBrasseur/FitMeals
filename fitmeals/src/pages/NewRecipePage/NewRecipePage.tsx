@@ -166,7 +166,7 @@ function NewRecipePage() {
   function success() {
     Modal.success({
       content: 'Your recipe was sent to the admins for review',
-      onOk() { history.goBack() }
+      onOk() { currentHistory.goBack() }
     });
   }
 
