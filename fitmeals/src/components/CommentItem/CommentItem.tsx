@@ -1,5 +1,5 @@
 import { LikeFilled, LikeOutlined } from "@ant-design/icons";
-import { Comment, Popconfirm, Tooltip } from 'antd';
+import { Avatar, Comment, Popconfirm, Tooltip } from 'antd';
 import axios from 'axios';
 import React, { createElement, useState } from 'react';
 import { FaTrashAlt } from "react-icons/fa";
@@ -29,6 +29,9 @@ function CommentItem({ comment }: CommentProps) {
         }).catch((error) => {
             console.log(error)
         })
+    }
+    const goToProfile = (username: string | undefined ) => {
+        currentHistory.push(`/profile/${username}`, {hardcode: true});
     }
     const onDislike = (comment: CommentType) => {
         axios.post(HOST + 'comments/' + comment.id + "/like", {
@@ -75,7 +78,9 @@ function CommentItem({ comment }: CommentProps) {
         actions={actions(comment)}
         author={comment.username}
         content={comment.content}
-        avatar={comment.avatar} />
+        avatar={
+            <img onClick={() => goToProfile(comment.username)} src={comment.avatar}/>
+        }/>
        
     )
 }

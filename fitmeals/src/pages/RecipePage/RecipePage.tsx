@@ -161,8 +161,8 @@ function RecipePage() {
         })
     }
 
-    const goToProfile = () => {
-        currentHistory.push(`/profile/${recipe?.authorUsername}`, {hardcode: true});
+    const goToProfile = (username: string | undefined ) => {
+        currentHistory.push(`/profile/${username}`, {hardcode: true});
     }
     const confirmDelete = () => {
         axios.delete(HOST + 'recipes/' + recipe?.id, {
@@ -242,7 +242,7 @@ function RecipePage() {
                                     <Col style={{ marginRight: 10 }}>
                                       
                                         <div className="recipePageProfilePic">
-                                            <Image onClick={goToProfile} preview={false} src={recipe?.authorAvatar} />
+                                            <Image onClick={() => goToProfile(recipe?.authorUsername)} preview={false} src={recipe?.authorAvatar} />
                                         </div>
                                        
                                     </Col>
