@@ -34,7 +34,8 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "publishToHeroku": "cd ../ && git subtree push --prefix fitmeals heroku-frontend main"
   },
   "eslintConfig": {
     "extends": [
