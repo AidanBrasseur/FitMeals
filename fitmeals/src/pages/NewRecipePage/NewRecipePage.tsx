@@ -105,16 +105,21 @@ function NewRecipePage() {
       })
       return;
     }
-    const instructionsForm = await Promise.all(values.instructions.map(async (item: {desc: string, image: any}, index: number) => {
-      if (item.image != undefined){
-        const file = item.image.file;
-        let blob = await fetch(file).then(r => r.blob());
-        formData.append(`image_instruction${index + 1}`, blob)
-
-      }
+    const instructionsForm = values.instructions.map((item: { desc: string, image: any }, index: number) => {
       return { order: index + 1, instruction: item.desc }
-    }))
-    console.log(instructionsForm)
+    })
+    console.log(values.instructions);
+    
+    for (let i=0; i<values.instructions.length; i++){
+      if (values.instructions[i] != undefined && values.instructions[i].image != undefined) {
+        const file = values.instructions[i].image.file;
+        // let blob = await fetch(file).then(r => r.blob());
+        formData.append(`image_instruction${i + 1}`, file)
+        console.log(values.instructions[i].image.file)
+       
+      }
+    }    
+    
     formData.append('instructions', JSON.stringify(instructionsForm))
     if (values.macroCalories != undefined) {
       formData.append('calories', values.macroCalories)
@@ -136,7 +141,7 @@ function NewRecipePage() {
       return;
     }
 
-  
+
     try {
       const res = await axios.post(HOST + 'recipes/', formData, {
         headers: {
@@ -162,7 +167,7 @@ function NewRecipePage() {
   function success() {
     Modal.success({
       content: 'Your recipe was sent to the admins for review',
-      // onOk() { history.goBack() }
+      onOk() { history.goBack() }
     });
   }
 
@@ -207,8 +212,8 @@ function NewRecipePage() {
 
 
                 <Col>
-                  <Form.Item name="time" rules={[{ required: true,  message: 'Missing' }, {type: 'number', message: 'Please input a number'}]}>
-                    <InputNumber  style={{ maxWidth: '150px', width: '10vw' }} placeholder="Total time"></InputNumber>
+                  <Form.Item name="time" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
+                    <InputNumber style={{ maxWidth: '150px', width: '10vw' }} placeholder="Total time"></InputNumber>
                   </Form.Item>
                 </Col>
                 <Col>
@@ -259,14 +264,18 @@ function NewRecipePage() {
                         key={field.key}
                       >
                         <Row>
-                          <Col span={6}>
-                            <Form.Item {...field} name={[field.name, 'name']} fieldKey={[field.fieldKey, 'name']} rules={[{ required: true,  message: 'Missing' }]}>
-                              <Input placeholder="Name of Ingredient"></Input>
+                          <Col >
+                            <Form.Item {...field} name={[field.name, 'name']} fieldKey={[field.fieldKey, 'name']} rules={[{ required: true, message: 'Missing' }]}>
+                              <Input style={{
+                                width: '20vw',
+                                minWidth: '100px',
+                                maxWidth: '400px'
+                              }} placeholder="Name of Ingredient"></Input>
                             </Form.Item>
                           </Col>
-                          <Col style={{ marginLeft: 10 }} span={3}>
-                            <Form.Item {...field} name={[field.name, 'quantity']} fieldKey={[field.fieldKey, 'quantity']} rules ={[{type: 'number', message: 'Please input a number'}]} >
-                              <Input placeholder="Quantity"></Input>
+                          <Col style={{ marginLeft: 10 }} >
+                            <Form.Item {...field} name={[field.name, 'quantity']} fieldKey={[field.fieldKey, 'quantity']} rules={[{ type: 'number', message: 'Please input a number' }]} >
+                              <InputNumber placeholder="Quantity"></InputNumber>
                             </Form.Item>
                           </Col>
                           <Col style={{ marginLeft: 10 }} span={3}>
@@ -307,12 +316,12 @@ function NewRecipePage() {
               <h1 className="subtitle">Macros</h1>
               <div className="macroInputs">
                 <Row>
-                  <Col  className="macroCol" >
+                  <Col className="macroCol" >
                     <Form.Item name="macroCalories" >
                       <InputNumber placeholder="Total Calories"></InputNumber>
                     </Form.Item>
                   </Col>
-                  <Col  className="macroCol">
+                  <Col className="macroCol">
                     <Form.Item name="macroProtein">
                       <InputNumber placeholder="Number of Grams - Protein"></InputNumber>
                     </Form.Item>
@@ -346,7 +355,7 @@ function NewRecipePage() {
                           >
                             <Row>
                               <Col span={18}>
-                                <Form.Item {...field} name={[field.name, 'desc']} fieldKey={[field.fieldKey, 'desc']} rules={[{ required: true,  message: 'Missing' }]}>
+                                <Form.Item {...field} name={[field.name, 'desc']} fieldKey={[field.fieldKey, 'desc']} rules={[{ required: true, message: 'Missing' }]}>
                                   <TextArea rows={4} bordered={false} style={{ fontSize: 16 }} placeholder="Enter your instruction"></TextArea>
                                 </Form.Item>
                               </Col>
@@ -440,7 +449,7 @@ function NewRecipePage() {
         </Spin>
       </Layout.Content>
       <Footer></Footer>
-    </Layout>
+    </Layout >
   );
 
 }
