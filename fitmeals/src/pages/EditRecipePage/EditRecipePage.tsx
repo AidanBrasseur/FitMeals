@@ -472,22 +472,22 @@ function EditRecipePage() {
               <div className="macroInputs">
                 <Row>
                   <Col className="macroCol" >
-                    <Form.Item name="macroCalories" >
+                    <Form.Item name="macroCalories" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Total Calories"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
-                    <Form.Item name="macroProtein">
+                    <Form.Item name="macroProtein" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Protein"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
-                    <Form.Item name="macroCarbs">
+                    <Form.Item name="macroCarbs" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Carbs"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
-                    <Form.Item name="macroFats">
+                    <Form.Item name="macroFats" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Fats"></InputNumber>
                     </Form.Item>
                   </Col>
