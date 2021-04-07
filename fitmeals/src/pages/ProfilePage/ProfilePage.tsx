@@ -34,10 +34,10 @@ function ProfilePage() {
       setProfilePic(res.image);
     }).catch((error) => {
       if (error.response.status == 404) {
-        alert("User not found");
-        return <Redirect to={from} />;
+        currentHistory.push("/");
       } else {
         alert("Sorry, FitMeals was unable to process your request. Please try again.")
+        currentHistory.push("/");
       }
     });
   }
