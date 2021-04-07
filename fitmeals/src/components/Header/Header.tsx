@@ -17,6 +17,14 @@ function Header({setSearchQuery}: HeaderProps) {
         console.log(value)
       }
     }
+    const onBlur = (e : any) => {
+      console.log()
+      if(e.target?.attributes.value.nodeValue === ""){
+        if(setSearchQuery){
+          setSearchQuery(undefined)
+        }
+      } 
+    }
     const [sessionContext, updateSessionContext] = useSessionContext();
 
     const menu = sessionContext.user ? (
@@ -49,7 +57,7 @@ function Header({setSearchQuery}: HeaderProps) {
         <Link to='/'><div className="textLogo">FitMeals</div></Link>
         <Space size={50} className="menu" direction="horizontal" align='center'>
           { setSearchQuery && <div className='search'>
-            <Input.Search allowClear placeholder="Search Recipes" onSearch={onSearch} size='large' />
+            <Input.Search allowClear placeholder="Search Recipes" onBlur={onBlur} onSearch={onSearch} size='large' />
           </div>}
           <Dropdown overlay={menu} placement="bottomCenter" className='dropdown'>
             <Space size={20} direction='horizontal' className='userRow' align='center'>
