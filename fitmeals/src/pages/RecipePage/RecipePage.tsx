@@ -317,7 +317,7 @@ function RecipePage() {
                                 {recipe?.ingredients.map((item : any, index: number) =>
                                     <Row key={index} style={{ marginBottom: 10 }}>
                                         <Checkbox>
-                                            <Text style={{ fontSize: 20 }}>{`${item.quantity} ${item.unit} ${item.name}`}</Text>
+                                            <Text style={{ fontSize: 20 }}>{`${item.quantiy ? item.quantity : ""} ${item.unit ? item.unit : ""} ${item.name ? item.name : ""}`}</Text>
                                         </Checkbox>
                                     </Row>
 
