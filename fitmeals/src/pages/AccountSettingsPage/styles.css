@@ -48,3 +48,22 @@
 .profilePicDiv{
     margin-top: 1%;
 }
+
+.profilePicPicker{
+    font-family:'Segoe UI';
+    margin: 2%;
+}
+
+.uploadProfilePicPreview {
+    width: 100%;
+    border-radius: 25px 25px 25px 25px;
+}
+
+.imagePickerIcon{
+    font-size: 32px;
+}
+
+.uploadTitle{
+    font-size: 24px;
+    font-weight: bold;
+}
