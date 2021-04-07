@@ -10,7 +10,7 @@ import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import { HOST } from '../../config';
 import { useSessionContext } from '../../contexts/SessionContext';
-import { Comment as CommentType, Ingredient, Macros, Recipe } from '../../types';
+import { Comment as CommentType, Ingredient, Instruction, Macros, Recipe } from '../../types';
 import './styles.css';
 interface stateType {
     recipe: string
@@ -46,7 +46,7 @@ function RecipePage() {
                 return cat.name
             })
             const instructions = r.instructions.map((i: any) => {
-                return i.instruction
+                return {instruction: i.instruction, image: i.image?.url}
             })
             const ingredients = r.ingredients as Ingredient[]
             const macros = {
@@ -161,8 +161,8 @@ function RecipePage() {
         })
     }
 
-    const goToProfile = () => {
-        currentHistory.push(`/profile/${recipe?.authorUsername}`, {hardcode: true});
+    const goToProfile = (username: string | undefined ) => {
+        currentHistory.push(`/profile/${username}`, {hardcode: true});
     }
     const confirmDelete = () => {
         axios.delete(HOST + 'recipes/' + recipe?.id, {
@@ -242,7 +242,7 @@ function RecipePage() {
                                     <Col style={{ marginRight: 10 }}>
                                       
                                         <div className="recipePageProfilePic">
-                                            <Image onClick={goToProfile} preview={false} src={recipe?.authorAvatar} />
+                                            <Image onClick={() => goToProfile(recipe?.authorUsername)} preview={false} src={recipe?.authorAvatar} />
                                         </div>
                                        
                                     </Col>
@@ -365,8 +365,18 @@ function RecipePage() {
                             <Col offset={1} span={24}>
                                 <div className="instructionsDiv">
                                     <Steps direction="vertical">
-                                        {recipe?.instructions.map((instruction: string, index: number) =>
-                                            <Step key={index} title={`Step ${index + 1}`} status="process" description={instruction} />
+                                        {recipe?.instructions.map((instruction: Instruction, index: number) =>
+                                           
+                                            <Step key={index} title={`Step ${index + 1}`} status="process" description={ <Space direction='vertical'>
+                                            <div>{instruction.instruction}</div>
+                                            {instruction.image &&  <Image
+                                        height={'15vw'}
+                                        width={'45vw'}
+                                        style={{objectFit: 'cover'}}
+                                        src={instruction.image}
+                                    />}
+                                        </Space>}  />
+                                           
                                         )}
                                     </Steps>
                                 </div>

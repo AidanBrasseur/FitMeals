@@ -1,4 +1,4 @@
-import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { Avatar, Button, Col, Form, Input, Layout, Modal, Row, Select, Spin, Upload, InputNumber } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React, { useState } from 'react';
@@ -30,13 +30,12 @@ function NewRecipePage() {
     file: File
   }
   const [form] = Form.useForm()
-
+  const currentHistory = useHistory();
   const [instsructImages, setInstsructImages] = useState<InstructImage[]>([])
   const [sessionContext, updateSessionContext] = useSessionContext();
 
   const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup"])
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
   const children: any = [];
   const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
   categories.forEach(category => {
@@ -176,7 +175,11 @@ function NewRecipePage() {
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
         <Spin style={{ height: '100%', position: 'fixed', top: '25%' }} size="large" spinning={loading}>
+          <div className="goBackIconNewRecipeContainer">
+        <ArrowLeftOutlined onClick={() => currentHistory.goBack()} className="goBackIconNewRecipe"></ArrowLeftOutlined>
+        </div>
           <div className="newRecipe">
+          
             <Form onFinish={onFinish} form={form}>
               <Row align='middle'>
                 <Col span={16}>

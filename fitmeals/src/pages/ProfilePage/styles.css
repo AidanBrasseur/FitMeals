@@ -20,6 +20,19 @@
     width: 100%;
    
 }
+.goBackIconProfile{
+    cursor: pointer;
+    font-size: 30px;
+  
+}
+.goBackIconProfileContainer{
+    position: absolute;
+    top: 75px;
+    margin-top: 15px;
+    left: 45px;
+    color: lightgray;
+}
+
 
 .name{
     font-size: 60px;
