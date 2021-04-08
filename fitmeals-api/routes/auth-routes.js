@@ -31,10 +31,20 @@ router.post("/register", (req, res) => {
         return;
     }
 
-    // Getting the encoded username/password info and hashing the password
+    // Getting the encoded username/password info and checking validity
     const decoded = Buffer.from(req.headers.authorization, 'base64').toString('ascii');
+    if ((decoded.match(/:/g) || []).length > 1) {
+        res.status(400).send({ success: false, error: "Bad request - Invalid username or password" });
+        return;
+    }
     const newUsername = decoded.substring(0, decoded.indexOf(":"));
     const textPassword = decoded.substring(decoded.indexOf(":") + 1, decoded.length);
+
+    // Making sure there weren't any extra colons
+    if (textPassword.includes(":")) {
+        res.status(400).send({ success: false, error: "Bad request: Invalid username or password" });
+        return;
+    }
 
     // Registering the user if there is no duplicate username or email (first checking username)
     User.findOne({ username: newUsername }).then((user) => {
@@ -49,7 +59,6 @@ router.post("/register", (req, res) => {
                     // Generating an auth token and password hash
                     const newAuthToken = uuidv4();
                     const hash = bcrypt.hashSync(textPassword, 10);
-
                     // Create a new user to be posted to the DB
                     let user = new User({
                         username: newUsername,
@@ -95,8 +104,12 @@ router.post("/login", (req, res) => {
         return;
     }
 
-    // Getting the encoded username/password info and hashing the password
+    // Getting the encoded username/password info and checking validity
     const decoded = Buffer.from(req.headers.authorization, 'base64').toString('ascii');
+    if ((decoded.match(/:/g) || []).length > 1) {
+        res.status(400).send({ success: false, error: "Bad request - Invalid username or password" });
+        return;
+    }
     const inputUsername = decoded.substring(0, decoded.indexOf(":"));
     const textPassword = decoded.substring(decoded.indexOf(":") + 1, decoded.length);
 
@@ -192,8 +205,12 @@ router.patch("/change-password", (req, res) => {
         return;
     }
 
-    // Getting the encoded authToken/username/password info and hashing the password
+    // Getting the encoded authToken/username/password info and checking validity
     const decoded = Buffer.from(req.headers.authorization, 'base64').toString('ascii');
+    if ((decoded.match(/:/g) || []).length > 2) {
+        res.status(400).send({ success: false, error: "Bad request - Invalid username or password" });
+        return;
+    }
     const userAuthToken = decoded.substring(0, decoded.indexOf(":"));
     const decoded2 = decoded.substring(decoded.indexOf(":") + 1, decoded.length);
     const oldPassword = decoded2.substring(0, decoded2.indexOf(":"));
