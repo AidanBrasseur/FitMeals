@@ -1,0 +1,25 @@
+.resetPasswordDiv{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    background-color: white;
+    font-family: "helvetica";
+}
+
+.resetPasswordForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+}
+
+.mainResetPasswordForm{
+    margin: auto;
+    font-family: "helvetica";
+    width: 90%;
+}
