@@ -30,7 +30,7 @@ function EditRecipePage() {
   const { Dragger } = Upload;
   const { Option } = Select;
   const [image, setImage] = useState<string | null>(null);
-  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup", 'Chicken', "Beef", "Rice"])
+  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup", 'Chicken', "Beef", "Pork", "Vegetarian", "Burgers", "Other"])
   const [loading, setLoading] = useState(false);
   const children: any = [];
   const [recipe, setRecipe] = useState<Recipe | undefined>();

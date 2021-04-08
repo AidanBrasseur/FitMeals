@@ -1,5 +1,5 @@
 import { UserOutlined, StarOutlined, LockOutlined, EditOutlined, UploadOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Upload, Image, Modal } from 'antd';
+import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Upload, Image, Modal, message } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
@@ -56,7 +56,7 @@ function AccountSettingsPage() {
         updateSessionContext({ ...sessionContext, user });
         setImage(null);
         setIsPicModalVisible(false);
-        alert("Profile picture successfully changed!");
+        message.success("Profile picture successfully changed!");
       }).catch((error) => {
         alert("Sorry, FitMeals was unable to process your request. Please try again.")
       })
@@ -82,8 +82,8 @@ function AccountSettingsPage() {
         image: sessionContext.user?.image
       } as User;
       updateSessionContext({ ...sessionContext, user });
-      setIsNameModalVisible(false);      
-      alert("Full name successfully changed!");
+      setIsNameModalVisible(false);  
+      message.success("Full name successfully changed!");    
     }).catch((error) => {
       if (error.response.status == 404) {
         alert("User not found");
@@ -112,8 +112,8 @@ function AccountSettingsPage() {
         image: sessionContext.user?.image
       } as User;
       updateSessionContext({ ...sessionContext, user });
-      setIsEmailModalVisible(false);      
-      alert("Email successfully changed!");
+      setIsEmailModalVisible(false);     
+      message.success("Email successfully changed!");     
     }).catch((error) => {
       if (error.response.status == 404) {
         alert("User not found");
@@ -131,7 +131,7 @@ function AccountSettingsPage() {
       }
     }).then(response => {
       setIsPasswordModalVisible(false);
-      alert("Password successfully changed!");
+      message.success("Password successfully changed!");     
     }).catch((error) => {
       if (error.response.status == 404) {
         alert("Incorrect password, please try again.");
@@ -146,6 +146,7 @@ function AccountSettingsPage() {
       <Header setSearchQuery={setSearchQuery} />
       <Layout.Content>
         <Modal
+         centered
           title="Change Profile Picture"
           visible={isPicModalVisible}
           onCancel={() => { setIsPicModalVisible(false) }}
@@ -159,7 +160,7 @@ function AccountSettingsPage() {
           ]}
         >
           <div className="profilePicPicker">
-            <ImgCrop aspect={3 / 2} rotate>
+            <ImgCrop aspect={1} rotate>
               <Dragger beforeUpload={file => {
                 setImage({
                   url: URL.createObjectURL(file),
@@ -183,6 +184,7 @@ function AccountSettingsPage() {
         <Modal
           title="Change Full Name"
           visible={isNameModalVisible}
+          centered
           onCancel={() => { setIsNameModalVisible(false) }}
           footer={[
             <Button key="cancel" onClick={() => {setIsNameModalVisible(false)}}>
@@ -204,6 +206,7 @@ function AccountSettingsPage() {
         </Modal>
         <Modal
           title="Change Email"
+          centered
           visible={isEmailModalVisible}
           onCancel={() => { setIsEmailModalVisible(false) }}
           footer={[

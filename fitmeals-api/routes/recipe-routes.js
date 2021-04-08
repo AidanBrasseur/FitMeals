@@ -644,6 +644,13 @@ router.post("/save/:recipeid", (req, res) => {
                 // Find the recipe and add it to the user's saved recipes collection
                 Recipe.findOne({ _id: req.params.recipeid }).then((recipe) => {
                     if (recipe) {
+                        // Check if the recipe is already saved
+                        for (var i = 0; i < user.savedRecipes.length; i++) {
+                            if (user.savedRecipes[i].recipeId == req.params.recipeid) {
+                                res.status(409).send({ success: false, error: "Recipe already saved" });
+                                return;
+                            }
+                        }
                         user.savedRecipes.push({ recipeId: recipe._id });
                         user.save().then(() => {
                             res.send({ success: true });
@@ -765,7 +772,11 @@ router.post("/rating/:id", async (req, res) => {
         else {
             modification.$pull = { 'ratings': { user: requestUser._id } }
         }
-        const recipe = await Recipe.findOneAndUpdate({ _id: recipeId }, { $pull: { 'ratings': { user: requestUser._id } } }, { useFindAndModify: false })
+        const recipe = await Recipe.findOneAndUpdate({ _id: recipeId }, {$pull: {'ratings': {user: requestUser._id}}}, { useFindAndModify: false })
+        if(!recipe){
+            res.status(404).send('A recipe with that id could not be found')
+            return;
+        }
         const newRecipe = await Recipe.findOneAndUpdate({ _id: recipeId }, modification, { useFindAndModify: false })
         res.status(200).send({ rating: ratingObj })
         return;
@@ -794,7 +805,15 @@ router.delete("/:id", async (req, res) => {
             return;
         }
         const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        if(!requestUser){
+            res.status(404).send('This user could not be found')
+            return
+        }
         const recipe = await Recipe.findOne({ _id: recipeId })
+        if(!recipe){
+            res.status(404).send('A recipe with that id could not be found')
+            return;
+        }
         const recipeUserId = recipe.user
         if (requestUser.isAdmin || requestUser._id == recipeUserId) {
             const deleted = await Recipe.findByIdAndDelete(recipeId)
@@ -829,12 +848,15 @@ router.get("/saved", async (req, res) => {
             return
         }
         const requestUser = await User.findOne({ authToken: req.headers.authorization })
+        if(!requestUser){
+            res.status(404).send('This user could not be found')
+            return
+        }
         const searchQuery = req.body.searchQuery
         const categoryQuery = req.body.categoryQuery
         const idList = requestUser.savedRecipes.map((elem) => {
             return elem.recipeId
         })
-        console.log(idList)
 
         let match = { _id: { $in: [...idList] } }
         if (searchQuery) {
@@ -858,7 +880,6 @@ router.get("/saved", async (req, res) => {
             search = { score: { $meta: "textScore" } }
         }
         let recipes = await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
-        console.log(recipes)
         res.send(recipes)
     } catch (error) {
         res.status(500).send({ success: false, error: "Internal server error" });
