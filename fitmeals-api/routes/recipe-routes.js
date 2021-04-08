@@ -513,6 +513,13 @@ router.post("/save/:recipeid", (req, res) => {
                 // Find the recipe and add it to the user's saved recipes collection
                 Recipe.findOne({ _id: req.params.recipeid }).then((recipe) => {
                     if (recipe) {
+                        // Check if the recipe is already saved
+                        for (var i = 0; i < user.savedRecipes.length; i++) {
+                            if (user.savedRecipes[i].recipeId == req.params.recipeid) {
+                                res.status(409).send({ success: false, error: "Recipe already saved" });
+                                return;
+                            }
+                        }
                         user.savedRecipes.push({ recipeId: recipe._id });
                         user.save().then(() => {
                             res.send({ success: true });
