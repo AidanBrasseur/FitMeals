@@ -24,6 +24,10 @@ router.post("/recipes/:id", async (req, res) => {
         return;
     }
     const commentContent = req.body.comment
+    if(!commentContent || commentContent === ""){
+        res.status(400).send("You must submit some content with a comment")
+        return;
+    }
     try {
         if (!req.headers.authorization) {
             res.status(403).send('You must be logged in to comment')
@@ -40,6 +44,10 @@ router.post("/recipes/:id", async (req, res) => {
             likes: [],
         })
         const recipe = await Recipe.findOneAndUpdate({ _id: recipeId }, { $push: { comments: comment } }, { new: true, useFindAndModify: false })
+        if(!recipe){
+            res.status(404).send('A recipe with that id could not be found')
+            return;
+        }
         const newComment = recipe.comments[recipe.comments.length - 1]
         res.send(newComment)
     } catch (error) {
@@ -75,6 +83,10 @@ router.delete("/recipes/:id/comments/:commentId", async (req, res) => {
             return
         }
         const recipe = await Recipe.findById(recipeId)
+        if(!recipe){
+            res.status(404).send('A recipe with that id could not be found')
+            return;
+        }
         const comment = recipe.comments.find(comment => comment._id == commentId)
         if(!comment){
             res.status(404).send('A comment with that id could not be found')
@@ -125,6 +137,10 @@ router.post("/:id/like", async (req, res) => {
        
 
         const recipe = await Recipe.findOneAndUpdate({ comments: { $elemMatch: { _id: commentId } } }, modification, { useFindAndModify: false })
+        if(!recipe){
+            res.status(404).send('A comment with that id could not be found')
+            return;
+        }
         res.sendStatus(200)
         return;
     } catch (error) {
@@ -165,6 +181,10 @@ router.post("/:id/unlike", async (req, res) => {
         modification.$pull = { 'comments.$.likes': requestUser._id }
         
         const recipe = await Recipe.findOneAndUpdate({ comments: { $elemMatch: { _id: commentId } } }, modification, { useFindAndModify: false })
+        if(!recipe){
+            res.status(404).send('A comment with that id could not be found')
+            return;
+        }
         res.sendStatus(200)
         return;
     } catch (error) {

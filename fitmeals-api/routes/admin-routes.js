@@ -186,6 +186,19 @@ router.get("/recipes", async (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
+    if (!req.headers.authorization) {
+        res.status(403).send('Unauthorized to view this information')
+        return
+    }
+    const requestUser = await User.findOne({ authToken: req.headers.authorization })
+    if(!requestUser){
+        res.status(404).send('This user could not be found')
+        return
+    }
+    if(!requestUser.isAdmin){
+        res.status(401).send("Unauthorized to view these recipes")
+        return
+    }
     const searchQuery = req.query.searchQuery
     const categoryQuery = req.query.categoryQuery
     try {
