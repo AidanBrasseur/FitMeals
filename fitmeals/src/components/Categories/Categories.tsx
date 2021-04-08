@@ -140,7 +140,7 @@ function Categories({setCategoryQuery}: CategoriesProps) {
           <Button type="text" onClick={loadMoreCategories} style={{ color: 'white' }}>View All Categories</Button>
         </div> : <div className='viewCategoriesTitle'><Button style={{ color: 'white' }} type="text" onClick={hideCategories}>Hide Categories</Button> </div>}
         <div className="categoryTitle">
-          <div onClick={goToNewRecipe} style={{ color: "white", fontSize: 26 }}>Or <span className="underlineLink">Add a New Recipe</span></div>
+          <div onClick={goToNewRecipe} style={{ color: "white", fontSize: 26, cursor: 'pointer' }}>Or <span className="underlineLink">Add a New Recipe</span></div>
         </div>
       </Space>
     </div>

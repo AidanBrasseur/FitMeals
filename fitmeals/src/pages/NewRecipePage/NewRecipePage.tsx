@@ -34,7 +34,7 @@ function NewRecipePage() {
   const [instsructImages, setInstsructImages] = useState<InstructImage[]>([])
   const [sessionContext, updateSessionContext] = useSessionContext();
 
-  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup", 'Chicken', "Beef", "Rice"])
+  const [categories, setCategories] = useState<string[]>(["Pizza", "Fish", "Smoothies", "Pasta", "Dessert", "Salads", "Vegan", "Sushi", "Soup", 'Chicken', "Beef", "Pork", "Vegetarian", "Burgers", "Other"])
   const [loading, setLoading] = useState(false);
   const children: any = [];
   const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
