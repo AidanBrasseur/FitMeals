@@ -145,9 +145,20 @@
 
 .slick-active ~ .slick-slide img {
 	margin-left: 0;
-   
 }
 
- 
+.forgotPasswordDiv .ant-input {
+     font-size: 20px;
+     padding: 2%;
+}
+
+.forgotPasswordDiv .ant-btn {
+    margin-top: 3%;
+    font-size: 20px;
+    width: 100%;
+    padding-bottom: 7%;
+    padding-top: 1%;
+    font-weight: bold;
+}
 
  

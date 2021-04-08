@@ -1,10 +1,14 @@
 // Creating the router
 const router = require('express').Router();
 
+// Config file
+const config = require('../config');
+
 // Get the Mongoose instance and models
 const { mongoose } = require('../db/mongoose');
 const { User } = require('../models/user');
 const { Auth } = require('../models/auth');
+const { ResetPasswordToken } = require('../models/resetPasswordToken');
 
 // Additional library requirements
 const { v4: uuidv4 } = require('uuid');
@@ -266,8 +270,23 @@ router.post("/forgot-password", (req, res) => {
         if ("username" in req.body) {
             User.findOne({ username: req.body.username }).then((user) => {
                 if (user) {
-                    sendForgotPasswordEmail(emailInfo.emailName, emailInfo.emailPassword, user.email);
-                    res.send({ success: true });
+                    // Generate token
+                    let tempToken = uuidv4();
+                    let currentTime = new Date();
+                    sendForgotPasswordEmail(emailInfo.emailName, emailInfo.emailPassword, user.email, tempToken);
+                    // Create a temporary token entry in DB for resetting the password
+                    let token = new ResetPasswordToken({
+                        user: user._id,
+                        token: tempToken,
+                        expires: new Date(currentTime.getTime() + 600000)
+                    });
+                    // Saving the user to the DB
+                    token.save().then((result) => {
+                        res.send({ success: true });
+                    }).catch((error) => {
+                        console.log(error);
+                        res.status(500).send({ success: false, error: "Internal server error" });
+                    });                    
                 } else {
                     res.status(404).send({ success: false, error: "User not found" });
                     return;
@@ -290,8 +309,58 @@ router.post("/forgot-password", (req, res) => {
     });
 });
 
+/*
+POST: /forgot-password/reset
+Reset a forgotten password
+*/
+router.post("/forgot-password/reset", (req, res) => {
+    // Check for a valid mongoose connection
+    if (mongoose.connection.readyState != 1) {
+        log('Issue with mongoose connection');
+        res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+
+    // Getting the encoded temp token and new password are in the correct format
+    const decoded = Buffer.from(req.headers.authorization, 'base64').toString('ascii');
+    if ((decoded.match(/:/g) || []).length > 1) {
+        res.status(400).send({ success: false, error: "Bad request" });
+        return;
+    }
+    const tempToken = decoded.substring(0, decoded.indexOf(":"));
+    const newPassword = decoded.substring(decoded.indexOf(":") + 1, decoded.length);
+
+    // Try to find the correct temp token
+    ResetPasswordToken.findOne({ token: tempToken }).then((result) => {
+        // Checking if a token was found
+        if (result == null) {
+            res.status(404).send({ success: false, error: "Invalid token" });
+            return;
+        }
+        // Checking if the token is expired
+        if (new Date() - result.expires > 600000) {
+            res.status(403).send({ success: false, error: "Token expired" });
+        } else {
+            // Updating the user's password
+            User.findByIdAndUpdate(result.user, { password: bcrypt.hashSync(newPassword, 10) }, { useFindAndModify: false }).then((user => {
+                if (user) {
+                    res.send({ success: true });
+                } else {
+                    res.send({ success: true });
+                }
+            })).catch((error) => {
+                console.log(error);
+                res.status(500).send({ success: false, error: "Internal server error" });
+            })
+        }
+    }).catch((error) => {
+        console.log(error);
+        res.status(500).send({ success: false, error: "Internal server error" });
+    });
+});
+
 // Helper function: Send forgot password email
-function sendForgotPasswordEmail(emailName, password, recipient) {
+function sendForgotPasswordEmail(emailName, password, recipient, token) {
     // Creating the email transporter 
     let transporter = nodemailer.createTransport({
         host: "smtp-mail.outlook.com",
@@ -318,7 +387,7 @@ function sendForgotPasswordEmail(emailName, password, recipient) {
         <b>Hello!</b><br>
         <br>
         You're getting this email because we received a request to reset the password of your account. To reset your password, click the link below:<br><br>
-        <a href="https://www.google.com/">Click here to reset your password.</a><br><br>
+        <a href="${config.fitmealsHost.url + "reset-password/" + token}">Click here to reset your password.</a><br><br>
         If you did not request a password reset, please ignore this email.<br><br>
         <b>The FitMeals Team</b>
         `

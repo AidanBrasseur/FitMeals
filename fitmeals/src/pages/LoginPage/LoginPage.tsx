@@ -21,7 +21,6 @@ function LoginPage() {
     const [forgotVisible, setForgotVisible] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
     const [forgotUsername, setForgotUsername] = useState("");
-    const [digits, setDigits] = useState([0,0,0,0])
     function login(values: any) {
         localStorage.clear()
         // Sending a login request to the server
@@ -58,11 +57,19 @@ function LoginPage() {
         return <Redirect to={from} />;
     }
     const sendForgotEmail= () => {
-        setEmailSent(true);
-        console.log(forgotUsername)
-    }
-    const confirmCode = () => {
-        console.log(digits)
+        // Sending a reset password request to the server
+        if (forgotUsername.length > 0) {
+            axios.post(HOST + "auth/forgot-password/", {
+                username: forgotUsername
+            }).then(response => {
+                alert("We've recieved your reset password request. Please check your email for further instructions.");
+                setForgotUsername("");
+                setForgotVisible(false);
+            }).catch((error) => {
+                alert("Sorry, FitMeals was unable to process your request. Please try again.")
+            })
+            setEmailSent(true);
+        }       
     }
     return (
         <Layout>
@@ -112,41 +119,18 @@ function LoginPage() {
                             </Form.Item>
                         </Form>
                         <Modal
-                        title="Forgot Password?"
-                        centered
-                        visible={forgotVisible}
-                        onOk={() => setForgotVisible(false)}
-                        onCancel={() => setForgotVisible(false)}
+                            title="Forgot Password?"
+                            centered
+                            visible={forgotVisible}
+                            onOk={() => setForgotVisible(false)}
+                            onCancel={() => setForgotVisible(false)}
                         >
-                            <Space direction='vertical' style={{width: '100%'}} >
-                        <Input placeholder="Input your username" prefix={<UserOutlined />} onChange={(event) => setForgotUsername(event.target.value)}/>
-                        <Button style={{width: '100%'}} onClick={sendForgotEmail}>Send Email</Button>
-                        {emailSent && <div><p>Enter the 4 digit code sent to your email</p>
-                        <Space direction='horizontal' style={{width: '100%', alignItems: 'center', alignContent: 'center', alignSelf: 'center', justifyContent: 'center'}}>
-                        <InputNumber min={0} max={9} defaultValue={0}  onChange={(value : any) => {
-                            let newDigits = [...digits]
-                            newDigits[0] = value
-                            setDigits(newDigits)
-                        }}/>
-                         <InputNumber min={0} max={9} defaultValue={0}  onChange={(value : any) => {
-                            let newDigits = [...digits]
-                            newDigits[1] = value
-                            setDigits(newDigits)
-                        }}/>
-                        <InputNumber min={0} max={9} defaultValue={0}  onChange={(value : any) => {
-                            let newDigits = [...digits]
-                            newDigits[2] = value
-                            setDigits(newDigits)
-                        }}/>
-                         <InputNumber min={0} max={9} defaultValue={0}  onChange={(value : any) => {
-                            let newDigits = [...digits]
-                            newDigits[3] = value
-                            setDigits(newDigits)
-                        }}/>
-                        </Space>
-                        <Button style={{width: '100%', marginTop: '10px'}} onClick={confirmCode}>Confirm code</Button>
-                        </div>}
-                        </Space>
+                            <Space direction='vertical' style={{ width: '100%' }} >
+                                <div className="forgotPasswordDiv">
+                                    <Input placeholder="Input your username" prefix={<UserOutlined />} onChange={(event) => setForgotUsername(event.target.value)} />
+                                    <Button onClick={sendForgotEmail}>Send Email</Button>
+                                </div>                                                 
+                            </Space>
                         </Modal>
                     </div>
                 </div>
