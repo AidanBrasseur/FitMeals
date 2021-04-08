@@ -563,6 +563,11 @@ router.put('/:id', multipartMiddleware, async (req, res) => {
                     return;
                 }
 
+                if (!user.isAdmin) {
+                    res.status(401).send({ success: false, error: "User is not an Admin" })
+                    return;
+                }
+
 
                 Recipe.findById(req.params.id).then(async (result) => {
                     if (result) {
@@ -740,7 +745,7 @@ router.post("/rating/:id", async (req, res) => {
         return;
     }
     const recipeId = req.params.id
-    const rating = req.body ?.rating
+    const rating = req.body?.rating
     if (rating && (rating < 0 || 5 < rating)) {
         res.status(400).send('Invalid rating. Must be between 0 and 5')
         return;
