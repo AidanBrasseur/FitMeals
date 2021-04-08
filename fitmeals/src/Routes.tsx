@@ -12,6 +12,7 @@ import SavedRecipesPage from './pages/SavedRecipesPage/SavedRecipesPage';
 import RecipePage from './pages/RecipePage/RecipePage'
 import EditRecipePage from './pages/EditRecipePage/EditRecipePage';
 import AccountSettingsPage from './pages/AccountSettingsPage/AccountSettingsPage';
+import ResetPasswordPage from './pages/ResetPasswordPage/ResetPasswordPage';
 
 function Routes() {
   
@@ -35,6 +36,7 @@ function Routes() {
         <ProtectedRoute path='/saved-recipes' component={SavedRecipesPage} />
         <ProtectedRoute path='/edit-recipe' component={EditRecipePage} />
         <ProtectedRoute path='/account-settings' component={AccountSettingsPage} />
+        <Route path='/reset-password' component={ResetPasswordPage} />
       </Switch>
      
     </div>

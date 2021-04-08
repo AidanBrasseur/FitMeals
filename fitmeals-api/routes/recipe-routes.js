@@ -25,7 +25,7 @@ const log = console.log;
 
 /*
 Get: /recipes
-Gets currently approved recipe preview 
+Gets currently approved recipe preview
 */
 router.get("/", async (req, res) => {
     if (mongoose.connection.readyState != 1) {
@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
-   
+
     const searchQuery = req.query.searchQuery
     let categoryQuery = []
     if( req.query.categoryQuery && !Array.isArray(req.query.categoryQuery)){
@@ -75,7 +75,7 @@ router.get("/", async (req, res) => {
         })
         let newRecipes = recipes.map((recipe) => {
             let recipeObj = recipe.toObject()
-            let sum  = 0
+            let sum = 0
             recipeObj.ratings.forEach((element) => sum = sum + element.rating)
             let rating = sum / recipeObj.ratings.length
             recipeObj.rating = rating
@@ -106,7 +106,7 @@ router.get("/saved", async (req, res) => {
             return
         }
         const requestUser = await User.findOne({ authToken: req.headers.authorization })
-        if(!requestUser){
+        if (!requestUser) {
             res.status(404).send('This user could not be found')
             return
         }
@@ -152,10 +152,10 @@ router.get("/saved", async (req, res) => {
             const user = await User.findById(recipe.user)
             return !user.isBanned
         })
- 
+
         let newRecipes = recipes.map((recipe) => {
             let recipeObj = recipe.toObject()
-            let sum  = 0
+            let sum = 0
             recipeObj.ratings.forEach((element) => sum = sum + element.rating)
             let rating = sum / recipeObj.ratings.length
             recipeObj.rating = rating
@@ -197,7 +197,7 @@ router.get("/categories", async (req, res) => {
         }
         ]
         const categoryCounts = await Recipe.aggregate(categoryOperators)
-       
+
         res.send(categoryCounts)
     } catch (error) {
         console.log(error)
@@ -221,17 +221,17 @@ router.get("/:id", async (req, res) => {
         if (req.headers.authorization) {
             requestUser = await User.findOne({ authToken: req.headers.authorization })
         }
-       
-            match = {_id: req.params.id }
+
+        match = { _id: req.params.id }
         const recipe = await Recipe.findOne(match, "-__v")
         if (!recipe) {
             res.status(404).send("A recipe with that id was not found")
             return
         }
-        if(!recipe.approved){
-            if(!requestUser?.isAdmin && requestUser?._id.toString() !== recipe.user.toString()){
+        if (!recipe.approved) {
+            if (!requestUser ?.isAdmin && requestUser ?._id.toString() !== recipe.user.toString()) {
                 res.status(403).send('This recipe has not been approved')
-                return 
+                return
             }
         }
         let isSaved = false
@@ -263,17 +263,18 @@ router.get("/:id", async (req, res) => {
         let recipeObj = recipe.toObject()
         let sum = 0
         let userRating = 0
-        if(requestUser){
+        if (requestUser) {
             const recipeRating = recipeObj.ratings.find((r) => {
-                return r.user.toString() == requestUser._id.toString()})
+                return r.user.toString() == requestUser._id.toString()
+            })
 
-            if(recipeRating){
+            if (recipeRating) {
                 userRating = recipeRating.rating
             }
         }
         recipeObj.ratings.forEach((element) => sum = sum + element.rating)
         let rating = sum / recipeObj.ratings.length
-       
+
         recipeObj.rating = rating
         recipeObj.userRating = userRating
         recipeObj.comments = fullComments
@@ -316,7 +317,7 @@ router.get("/users/:id", async (req, res) => {
             }
         }
         if (user.isBanned) {
-            if (!requestUser?.isAdmin) {
+            if (!requestUser ?.isAdmin) {
                 res.status(403).send('This user account has been banned')
                 return
             }
@@ -367,7 +368,7 @@ router.get("/users/:id", async (req, res) => {
         let recipes = await Recipe.find(match, search).select("-description -__v -ingredients -instructions -comments -macros").sort(sort)
         let newRecipes = recipes.map((recipe) => {
             let recipeObj = recipe.toObject()
-            let sum  = 0
+            let sum = 0
             recipeObj.ratings.forEach((element) => sum = sum + element.rating)
             let rating = sum / recipeObj.ratings.length
             recipeObj.rating = rating
@@ -398,6 +399,11 @@ router.post('/', multipartMiddleware, async (req, res) => {
         User.findOne({ authToken: req.headers.authorization, isBanned: false }).then(async (user) => {
             if (user) {
                 // Creating the recipe
+                const validation = validateRecipe(req, false);
+                if (validation.success == false) {
+                    res.status(400).send(validation)
+                    return;
+                }
                 const recipe = new Recipe({
                     user: user._id,
                     rating: 0.0,
@@ -414,6 +420,11 @@ router.post('/', multipartMiddleware, async (req, res) => {
                     macros: req.body.macros ? JSON.parse(req.body.macros) : {}
                 })
                 // Uploading the main image
+                if (!req.files || !req.files.image) {
+                    res.status(400).send({ success: false, error: "Please provide a main image" });
+                    return;
+
+                }
                 const resultImage1 = await cloudinary.uploader.upload(req.files.image.path);
                 recipe.image = {
                     url: resultImage1.url,
@@ -424,7 +435,7 @@ router.post('/', multipartMiddleware, async (req, res) => {
                 let instructionsList = req.body.instructions ? JSON.parse(req.body.instructions) : [];
                 for (var i = 0; i < instructionsList.length; i++) {
                     let index = instructionsList[i].order;
-                    // Checking if the instruction has an image and uploading it                   
+                    // Checking if the instruction has an image and uploading it
                     if (req.files.hasOwnProperty(`image_instruction${index}`)) {
                         const result = await cloudinary.uploader.upload(req.files[`image_instruction${index}`].path);
                         instructionsList[i].image = {
@@ -456,6 +467,118 @@ router.post('/', multipartMiddleware, async (req, res) => {
 PUT: /recipes/:id
 Edit an existing FitMeals Recipe
 */
+
+const validateRecipe = (req, isForApproval) => {
+    if (!req.body.title || req.body.title == '') {
+
+        return { success: false, error: "No title provided" };
+    }
+    if (!req.body.subtitle || req.body.subtitle == '') {
+
+        return { success: false, error: "No subtitle provided" };
+    }
+    if (!req.body.description || req.body.description == '') {
+
+        return { success: false, error: "No description provided" };
+    }
+    if (!req.body.time || req.body.time == '') {
+
+        return { success: false, error: "No time provided" };
+    }
+    const timeParts = req.body.time.toLowerCase().split(' ');
+    if (timeParts.length != 2 || isNaN(timeParts[0]) || (timeParts[1] != 'minutes' && timeParts[1] != 'hours')) {
+        console.log(timeParts)
+        return { success: false, error: "format for time is: \"number \'minutes/hours\'\"" };
+    }
+
+    if (!req.body.instructions) {
+
+        return { success: false, error: "No instructions provided" };
+    }
+    const instructions = JSON.parse(req.body.instructions)
+    if (!Array.isArray(instructions) || instructions.length == 0) {
+
+        return { success: false, error: "No instructions provided" };
+    }
+
+    for (let i = 0; i < instructions.length; i++) {
+        if (!instructions[i].instruction) {
+            return { success: false, error: "You must provide a instruction for every instruction" };
+        }
+    }
+
+
+    if (!req.body.ingredients) {
+        return { success: false, error: "No ingredients provided" };
+    }
+    const ingredients = JSON.parse(req.body.ingredients)
+    if (!Array.isArray(ingredients) || ingredients.length == 0) {
+        return { success: false, error: "No ingredients provided" };
+    }
+
+    for (let i = 0; i < ingredients.length; i++) {
+        if (!ingredients[i].name) {
+            return { success: false, error: "You must provide a name for every ingredient" };
+        }
+    }
+    if (!req.body.categories) {
+        return { success: false, error: "No categories provided" };
+    }
+    const categories = JSON.parse(req.body.categories)
+    if (!Array.isArray(categories) || categories.length == 0) {
+        return { success: false, error: "No categories provided" };
+    }
+
+    if (isForApproval) {
+        if (!req.body.macros) {
+            return { success: false, error: "No macros provided" };
+        }
+
+        const macros = JSON.parse(req.body.macros)
+
+
+            if (!macros.protein || isNaN(macros.protein)) {
+                return { success: false, error: "You must provide protein and it must be a number" };
+            }
+            if (!macros.carbs || isNaN(macros.carbs)) {
+                return { success: false, error: "You must provide carbs and it must be a number" };
+            }
+            if (!macros.fats || isNaN(macros.fats)) {
+                return { success: false, error: "You must provide fats and it must be a number" };
+            }
+
+
+        if (!req.body.calories || isNaN(req.body.calories)) {
+            return { success: false, error: "calories must be a number" };
+        }
+    }
+    else {
+        if (req.body.macros) {
+            const macros = JSON.parse(req.body.macros)
+
+
+            if (macros.protein && isNaN(macros.protein)) {
+                return { success: false, error: "Protein must be a number" };
+            }
+            if (macros.carbs && isNaN(macros.carbs)) {
+                return { success: false, error: "Carbs must be a number" };
+            }
+            if (macros.fats && isNaN(macros.fats)) {
+                return { success: false, error: "Fats must be a number" };
+            }
+
+        }
+
+        if (req.body.calories && isNaN(req.body.calories)) {
+            return { success: false, error: "calories must be a number" };
+        }
+
+
+    }
+
+
+    return { success: true, error: null }
+}
 router.put('/:id', multipartMiddleware, async (req, res) => {
     // Check for a valid mongoose connection
     if (mongoose.connection.readyState != 1) {
@@ -468,7 +591,20 @@ router.put('/:id', multipartMiddleware, async (req, res) => {
     if (req.headers.authorization) {
         User.findOne({ authToken: req.headers.authorization, isBanned: false }).then(async (user) => {
             if (user) {
+                //Validating
                 // Updating the recipe
+                const validation = validateRecipe(req, true);
+                if (validation.success == false) {
+                    res.status(400).send(validation)
+                    return;
+                }
+
+                if (!user.isAdmin) {
+                    res.status(401).send({ success: false, error: "User is not an Admin" })
+                    return;
+                }
+
+
                 Recipe.findById(req.params.id).then(async (result) => {
                     if (result) {
                         // Changing the recipe's info
@@ -484,18 +620,18 @@ router.put('/:id', multipartMiddleware, async (req, res) => {
                         result.comments = req.body.comments ? JSON.parse(req.body.comments) : [];
                         result.macros = req.body.macros ? JSON.parse(req.body.macros) : {}
                         // Uploading the main image
-                        const resultImage1 = await cloudinary.uploader.upload(req.files.image.path); 
+                        const resultImage1 = await cloudinary.uploader.upload(req.files.image.path);
                         result.image = {
                             url: resultImage1.url,
                             cloudinaryID: resultImage1.public_id,
                             created_at: new Date()
                         }
-                       
+
                         // Getting the instructions and their images
                         let instructionsList = req.body.instructions ? JSON.parse(req.body.instructions) : [];
                         for (var i = 0; i < instructionsList.length; i++) {
                             let index = instructionsList[i].order;
-                            // Checking if the instruction has an image and uploading it                   
+                            // Checking if the instruction has an image and uploading it
                             if (req.files.hasOwnProperty(`image_instruction${index}`)) {
                                 const result = await cloudinary.uploader.upload(req.files[`image_instruction${index}`].path);
                                 instructionsList[i].image = {
@@ -512,10 +648,10 @@ router.put('/:id', multipartMiddleware, async (req, res) => {
                         }).catch((error) => {
                             console.log(error);
                             res.status(500).send({ success: false, error: "Internal server error" });
-                        });                        
+                        });
                     } else {
                         res.status(404).send({ success: false, error: "Recipe not found" })
-                    }                                       
+                    }
                 }).catch((error) => {
                     console.log(error);
                     res.status(500).send({ success: false, error: "Internal server error" });
@@ -679,7 +815,7 @@ router.post("/rating/:id", async (req, res) => {
             modification.$addToSet = { 'ratings': ratingObj }
         }
         else {
-            modification.$pull = { 'ratings': {user: requestUser._id} }
+            modification.$pull = { 'ratings': { user: requestUser._id } }
         }
         const recipe = await Recipe.findOneAndUpdate({ _id: recipeId }, {$pull: {'ratings': {user: requestUser._id}}}, { useFindAndModify: false })
         if(!recipe){
@@ -687,14 +823,14 @@ router.post("/rating/:id", async (req, res) => {
             return;
         }
         const newRecipe = await Recipe.findOneAndUpdate({ _id: recipeId }, modification, { useFindAndModify: false })
-        res.status(200).send({rating: ratingObj})
+        res.status(200).send({ rating: ratingObj })
         return;
     } catch (error) {
         console.log(error)
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
-    
+
 });
 
 /*

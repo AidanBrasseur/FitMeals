@@ -31,7 +31,7 @@ function RegisterPage() {
             if (error.response.status == 409) {
                 alert("That username or email is already in use");
             } else {
-                alert("Sorry, FitMeals was unable to process your login request. Please try again.")
+                alert("Sorry, FitMeals was unable to process your request. Please try again.")
             }
         })
     }

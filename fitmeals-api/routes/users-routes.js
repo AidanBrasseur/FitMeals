@@ -36,7 +36,6 @@ router.get("/:username", (req, res) => {
     // Returning the user info
     User.findOne({ username: req.params.username }).then((requestedUser) => {
         if (requestedUser) {
-
             Recipe.find({user: requestedUser._id}).select("-description -__v -ingredients -instructions -comments -macros").then((recipes)=> {
                 let sum = 0
                 let numRatings = 0
@@ -44,8 +43,7 @@ router.get("/:username", (req, res) => {
                     recipe.ratings.forEach((element) => {
                         sum = sum + element.rating
                         numRatings = numRatings + 1})
-                })
-              
+                })             
                 res.send({
                     success: true,
                     user: {
@@ -122,6 +120,12 @@ router.patch("/update-pic/:username", multipartMiddleware, (req, res) => {
     if (mongoose.connection.readyState != 1) {
         log('Issue with mongoose connection');
         res.status(500).send({ success: false, error: "Internal server error" });
+        return;
+    }
+
+    // Checking if a file was attached
+    if (!req.files) {
+        res.status(400).send({ success: false, error: "Bad request" });
         return;
     }
 
