@@ -1,5 +1,5 @@
 import Icon, { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Carousel, Checkbox, Form, Image, Input, InputNumber, Layout, Modal, Space, Typography } from 'antd';
+import { Button, Carousel, Checkbox, Form, Image, Input, InputNumber, Layout, Modal, Result, Space, Typography } from 'antd';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link, Redirect, useLocation } from 'react-router-dom';
@@ -19,7 +19,10 @@ function LoginPage() {
     const { from } = state || { from: { pathname: "/" } };
     const [redirectToReferrer, setRedirectToReferrer] = useState(false);
     const [forgotVisible, setForgotVisible] = useState(false);
+    const [invalidVisible, setInvalidVisible] = useState(false);
+    const [errorVisible, setErrorVisible] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
+    const [emailSentVisible, setEmailSentVisible] = useState(false);
     const [forgotUsername, setForgotUsername] = useState("");
     function login(values: any) {
         localStorage.clear()
@@ -47,9 +50,9 @@ function LoginPage() {
             setRedirectToReferrer(true);
         }).catch((error) => {
             if (error.response.status == 404) {
-                alert("Invalid username or password");
+                setInvalidVisible(true);
             } else {
-                alert("Sorry, FitMeals was unable to process your login request. Please try again.")
+                setErrorVisible(true);
             }
         });       
     }
@@ -62,11 +65,11 @@ function LoginPage() {
             axios.post(HOST + "auth/forgot-password/", {
                 username: forgotUsername
             }).then(response => {
-                alert("We've recieved your reset password request. Please check your email for further instructions.");
                 setForgotUsername("");
                 setForgotVisible(false);
+                setEmailSentVisible(true);
             }).catch((error) => {
-                alert("Sorry, FitMeals was unable to process your request. Please try again.")
+                setErrorVisible(true);
             })
             setEmailSent(true);
         }       
@@ -74,6 +77,39 @@ function LoginPage() {
     return (
         <Layout>
             <Layout.Content style={{ height: '100vh' }}>
+                <Modal
+                    visible={invalidVisible}
+                    centered
+                    onCancel={() => { setInvalidVisible(false) }}
+                    footer={ null }
+                >
+                    <Result
+                        status="warning"
+                        title="Invalid username or password. Please try again."
+                    />
+                </Modal>
+                <Modal
+                    visible={errorVisible}
+                    centered
+                    onCancel={() => { setErrorVisible(false) }}
+                    footer={ null }
+                >
+                    <Result
+                        status="error"
+                        title="Sorry, FitMeals was unable to process your request. Please try again."
+                    />
+                </Modal>
+                <Modal
+                    visible={emailSentVisible}
+                    centered
+                    onCancel={() => { setEmailSentVisible(false) }}
+                    footer={ null }
+                >
+                    <Result
+                        status="success"
+                        title="We've received your reset password request. Please check your email for further instructions."
+                    />
+                </Modal>
                 <div className='logo'>
                     <Icon component={logoSVG} style={{ fontSize: 125 }} />
                 </div>
