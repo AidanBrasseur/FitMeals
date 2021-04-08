@@ -70,7 +70,11 @@ router.post("/register", (req, res) => {
                         authToken: newAuthToken,
                         fullname: req.body.fullname,
                         email: req.body.email,
-                        image: null,
+                        image: {
+                            url: "https://res.cloudinary.com/dsra1nu4c/image/upload/v1617920616/abstract-green-gradient-bs_mtqkuk.jpg",
+                            cloudinaryID: "abstract-green-gradient-bs_mtqkuk",
+                            created_at: new Date()
+                        },
                         rating: 0.0,
                         savedRecipes: [],
                         isAdmin: false,
