@@ -20,6 +20,7 @@ function LoginPage() {
     const [redirectToReferrer, setRedirectToReferrer] = useState(false);
     const [forgotVisible, setForgotVisible] = useState(false);
     const [invalidVisible, setInvalidVisible] = useState(false);
+    const [invalidUserVisible, setInvalidUserVisible] = useState(false);
     const [errorVisible, setErrorVisible] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
     const [emailSentVisible, setEmailSentVisible] = useState(false);
@@ -69,7 +70,11 @@ function LoginPage() {
                 setForgotVisible(false);
                 setEmailSentVisible(true);
             }).catch((error) => {
-                setErrorVisible(true);
+                if (error.response.status == 404) {
+                    setInvalidUserVisible(true);
+                } else {
+                    setErrorVisible(true);
+                }
             })
             setEmailSent(true);
         }       
@@ -86,6 +91,17 @@ function LoginPage() {
                     <Result
                         status="warning"
                         title="Invalid username or password. Please try again."
+                    />
+                </Modal>
+                <Modal
+                    visible={invalidUserVisible}
+                    centered
+                    onCancel={() => { setInvalidUserVisible(false) }}
+                    footer={ null }
+                >
+                    <Result
+                        status="warning"
+                        title="User not found."
                     />
                 </Modal>
                 <Modal
