@@ -77,7 +77,7 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
 ## Login Credentials
 | User | Admin |
 |------|-------|
-| Email: user@user.com | Email: admin@admin.com |
+| Username: user | Username: user |
 | Password: user | Password: admin |
 
 ## Third Party Libraries
