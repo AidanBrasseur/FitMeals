@@ -130,6 +130,21 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
 | Username: user | Username: user |
 | Password: user | Password: admin |
 
+### Changes From Initial Proposal and Phase 1
+Our core vision for the application throughout this process has remained consistent, but there were a few additional features and changes we decided to implement for phase 2. 
+
+-   **Forgot Password:**  
+	If a user forgets their password, they now have the ability to request an email to be sent to them, providing a temporary link that allows them to change their password securely.
+    
+-   **Remember Login:**  
+	If the user selects the Remember Me checkbox when logging in, the website will keep the user logged in even if they refresh the page.
+	
+-   **Account Settings:**  
+We decided to add a dedicated account settings page which allows users to view their information, and change their profile image, full name, email, and password. 
+   
+-   **Removal of Third Party Nutrition API:**
+	We originally had plans to integrate a third party API that would estimate calories based on the ingredients that were input by the user. As we began development, we realized that using the API in this way would greatly limit our flexibility regarding ingredient input. We instead decided to allow the user to directly input nutrition info if so desired, and our expert nutritionist admins can override this nutrition info prior to approval.
+
 ## Third Party Libraries
 #### Frontend
 - React
