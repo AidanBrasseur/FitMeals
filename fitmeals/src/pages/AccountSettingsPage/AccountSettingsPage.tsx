@@ -58,7 +58,7 @@ function AccountSettingsPage() {
         setIsPicModalVisible(false);
         message.success("Profile picture successfully changed!");
       }).catch((error) => {
-        alert("Sorry, FitMeals was unable to process your request. Please try again.")
+        message.error("Sorry, FitMeals was unable to process your request. Please try again.");
       })
     }
   }
@@ -86,9 +86,9 @@ function AccountSettingsPage() {
       message.success("Full name successfully changed!");    
     }).catch((error) => {
       if (error.response.status == 404) {
-        alert("User not found");
+        message.error("Sorry, FitMeals was unable to process your request. Please try again.");
       } else {
-        alert("Sorry, FitMeals was unable to process your request. Please try again.")
+        message.error("Sorry, FitMeals was unable to process your request. Please try again.");
       }
     });
   }
@@ -116,9 +116,9 @@ function AccountSettingsPage() {
       message.success("Email successfully changed!");     
     }).catch((error) => {
       if (error.response.status == 404) {
-        alert("User not found");
+        message.error("Sorry, FitMeals was unable to process your request. Please try again.");
       } else {
-        alert("Sorry, FitMeals was unable to process your request. Please try again.")
+        message.error("Sorry, FitMeals was unable to process your request. Please try again.");
       }
     });
   }
@@ -134,9 +134,9 @@ function AccountSettingsPage() {
       message.success("Password successfully changed!");     
     }).catch((error) => {
       if (error.response.status == 404) {
-        alert("Incorrect password, please try again.");
+        message.error("Incorrect password. Please try again.");
       } else {
-        alert("Sorry, FitMeals was unable to process your request. Please try again.")
+        message.error("Sorry, FitMeals was unable to process your request. Please try again.");
       }
     });
   }
