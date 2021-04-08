@@ -22,16 +22,20 @@ function ProfilePage() {
   const [fullname, setFullname] = useState<string | undefined>();
   const [rating, setRating] = useState<string | undefined>();
   const [profilePic, setProfilePic] = useState<string | undefined>();
-  const { from } = state || { from: { pathname: "/" } };
+  const [userId, setUserId] = useState<string | undefined>();
+  const { from } = state || { from: { pathname: "/" } };;
+
   const currentHistory = useHistory();
 
   // Getting the user info for the profile
   const fetchUserInfo = () => {
     axios.get(HOST + 'users/' + username).then(response => {
       let res = response.data.user;
+    
       setFullname(res.fullname);
       setRating(res.rating);
       setProfilePic(res.image);
+      setUserId(res.id)
     }).catch((error) => {
       if (error.response.status == 404) {
         currentHistory.push("/");
@@ -44,7 +48,7 @@ function ProfilePage() {
 
   useEffect(() => {
     fetchUserInfo();
-  }, []);
+  }, [username]);
 
   return (
     <Layout style={{ backgroundColor: "white" }}>
@@ -55,11 +59,6 @@ function ProfilePage() {
         <ArrowLeftOutlined onClick={() => currentHistory.goBack()} className="goBackIconProfile"></ArrowLeftOutlined>
         </div>
           <div className='banner'>
-         
-       
-            
-            
-            
             <Row className="userInfoRow" align='middle'>
            
               <Col span={8} >
@@ -84,7 +83,7 @@ function ProfilePage() {
               </Col>
             </Row>
           </div>
-          <Feed title={"Recent Recipes"} userId={sessionContext["user"]?.id} searchQuery={searchQuery}></Feed>
+          {userId && <Feed key={userId} title={"Recent Recipes"} userId={userId} searchQuery={searchQuery}></Feed>}
         </div>
       </Layout.Content>
       <Footer></Footer>

@@ -200,7 +200,19 @@ router.get("/recipes", async (req, res) => {
         return
     }
     const searchQuery = req.query.searchQuery
-    const categoryQuery = req.query.categoryQuery
+    let categoryQuery = []
+    if( req.query.categoryQuery && !Array.isArray(req.query.categoryQuery)){
+        try{
+        categoryQuery = JSON.parse(req.query.categoryQuery.replace(/'/g, '"'));
+        }
+        catch(error){
+            res.status(400).send({success:false, error: "Please enter a valid category list"})
+            return
+        }
+    }
+    else{
+        categoryQuery = req.query.categoryQuery
+    }
     try {
         let match = { approved: false }
         if (searchQuery) {
