@@ -860,7 +860,7 @@ router.delete("/:id", async (req, res) => {
             return;
         }
         const recipeUserId = recipe.user
-        if (requestUser.isAdmin || requestUser._id == recipeUserId) {
+        if (requestUser.isAdmin || requestUser._id.toString() == recipeUserId.toString()) {
             const deleted = await Recipe.findByIdAndDelete(recipeId)
             res.sendStatus(200)
             return

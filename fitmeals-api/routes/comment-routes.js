@@ -92,7 +92,7 @@ router.delete("/recipes/:id/comments/:commentId", async (req, res) => {
             res.status(404).send('A comment with that id could not be found')
             return;
         }
-        if(comment.user !== requestUser._id && !requestUser.isAdmin){
+        if(comment.user.toString() !== requestUser._id.toString() && !requestUser.isAdmin){
             res.status(403).send('Unauthorized')
             return
         }
