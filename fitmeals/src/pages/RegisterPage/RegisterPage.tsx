@@ -15,8 +15,14 @@ function RegisterPage() {
     const [sessionContext, updateSessionContext] = useSessionContext();
     const history = useHistory()
     const [visible, setVisible] = useState(false)
+    const [invalidCharVisible, setInvalidCharVisible] = useState(false);
 
     function register(values: any) {
+        // Make sure there are no colons
+        if (values.username.includes(":") || values.password.includes(":")) {
+            setInvalidCharVisible(true);
+            return;
+        }
         // Sending a register request to the server
         axios.post(HOST + "auth/register", {
             "fullname": values.fullname,
@@ -39,6 +45,17 @@ function RegisterPage() {
     return (
         <Layout>
             <Layout.Content style={{ height: "100vh" }}>
+                <Modal
+                    visible={invalidCharVisible}
+                    centered
+                    onCancel={() => { setInvalidCharVisible(false) }}
+                    footer={null}
+                >
+                    <Result
+                        status="warning"
+                        title="Sorry, your username or password contains a forbidden character (':'). Please try again."
+                    />
+                </Modal>
                 <div className="registerDiv">
                     <Modal
                         visible={visible}
