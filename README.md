@@ -11,6 +11,37 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 ## Features of FitMeals
 FitMeals is a platform for users to access and post healthy recipes. Users have the ability to create recipes, comment on recipes, rate recipes and more...
 
+### Login and Registration Functionality
+
+#### Logging In to FitMeals
+- To login, navigate to the login page and enter your credentials
+  - If you wish to use a pre-existing account, see [Login Credentials](#login-credentials)
+- To remember your login information for future use, make sure the "Remember me" checkbox is ticked
+
+#### Reset Password
+- If you have forgot your password, you can click on the "Forgot password?" button on the login page
+- You will recieve an email with a link to FitMeals reset password page, where you can submit a new password
+  - Please note that you have only 10 minutes after the email is sent to reset your password before your link expires
+
+#### Creating a New Account
+- To create a new account, click the "Get Started" button on the login page
+- On the registration page, enter the required information and click the register button
+- If you navigated to this page accidentally, click the "Back" button at the top of the page
+
+### Admin Functionality
+These features are only available to admin users
+
+#### Approving/Rejecting Recipes
+- Navigate to the admin page
+  - Click on the profile icon in the top-right of the webpage, and select the "Admin Page"
+- Find the recipe you wish to approve/reject and click the corresponding button
+  - Green Checkmark: Approve
+  - Red 'X': Reject
+
+#### Ban Users
+- Admins have the ability to ban users by navigating to their profile and clicking the "Ban User" button
+  - As the button will require backend functionality, the button is available but has not functionality for Phase 1
+
 ### Viewing Recipes
 - On the home page, there is a list of featured recipes that the user can click on
 - Each recipe contains the author's information, recipe rating, picture, ingredients, instructions and comments
@@ -28,13 +59,6 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 - Navigate to the recipe you want to comment on
 - Scroll to the comments section at the bottom 
 - Type your comment in the text area and click the "Add Comment" button (you must be logged in)
-
-### Approving/Rejecting Recipes
-- Navigate to the admin page
-  - Click on the profile icon in the top-right of the webpage, and select the "Admin Page" (you must be logged in as an admin to see this)
-- Find the recipe you wish to approve/reject and click the corresponding button
-  - Green Checkmark: Approve
-  - Red 'X': Reject
 
 ### Editing Recipes
 - Admins have the option to edit existing recipes and change information as required
@@ -63,10 +87,6 @@ is not implemented for Phase 1
 ### Recipe Search
 - At the top of FitMeals, there is a search bar that will let the user search the website for recipes based on their input
 - We currently have the search bar, but we are planning on doing the search in our backend and therefore, this functionality is not implemented for Phase 1
-
-### Ban Users
-- Admins have the ability to ban users by navigating to their profile and clicking the "Ban User" button
-  - As the button will require backend functionality, the button is available but has not functionality for Phase 1
 
 ## Instructions
 FitMeals is powered by React and uses Yarn to manage dependencies and launch the application.
