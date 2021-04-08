@@ -19,9 +19,9 @@ function Footer() {
     
         <Link to='/'> <Icon component={logoSVG} style={{ fontSize: 110 }} /></Link>
         <Space direction="vertical" className="footerText" align='start'>
-        <Link to={{ pathname: `/profile/${sessionContext.user?.username}` }} style={{  color: 'white'}}>Profile Page</Link>
         <Link to='/new-recipe' style={{  color: 'white'}}>Create a Recipe</Link>
         <Link to='/saved-recipes' style={{  color: 'white'}}>Saved Recipes</Link>
+        <Link to='/account-settings' style={{  color: 'white'}}>Account Settings</Link>
         </Space>
         </Space>
       
