@@ -52,6 +52,7 @@ router.get("/:username", (req, res) => {
                         username: requestedUser.username,
                         fullname: requestedUser.fullname,
                         rating: numRatings === 0 ? 0 : sum / numRatings,
+                        id: requestedUser._id,
                         image: requestedUser.image?.url
                     }
                 });

@@ -33,9 +33,21 @@ router.get("/", async (req, res) => {
         res.status(500).send({ success: false, error: "Internal server error" });
         return;
     }
-    
+   
     const searchQuery = req.query.searchQuery
-    const categoryQuery = req.query.categoryQuery
+    let categoryQuery = []
+    if( req.query.categoryQuery && !Array.isArray(req.query.categoryQuery)){
+        try{
+        categoryQuery = JSON.parse(req.query.categoryQuery.replace(/'/g, '"'));
+        }
+        catch(error){
+            res.status(400).send({success:false, error: "Please enter a valid category list"})
+            return
+        }
+    }
+    else{
+        categoryQuery = req.query.categoryQuery
+    }
     try {
         let match = { approved: true }
         if (searchQuery) {
@@ -79,8 +91,8 @@ router.get("/", async (req, res) => {
 })
 
 /*
-Get: /recipes
-Gets currently approved recipe preview 
+Get: /recipes/saved
+Gets currently saved recipe previews for a user
 */
 router.get("/saved", async (req, res) => {
     if (mongoose.connection.readyState != 1) {
@@ -99,7 +111,19 @@ router.get("/saved", async (req, res) => {
             return
         }
         const searchQuery = req.query.searchQuery
-        const categoryQuery = req.query.categoryQuery
+        let categoryQuery = []
+    if( req.query.categoryQuery && !Array.isArray(req.query.categoryQuery)){
+        try{
+        categoryQuery = JSON.parse(req.query.categoryQuery.replace(/'/g, '"'));
+        }
+        catch(error){
+            res.status(400).send({success:false, error: "Please enter a valid category list"})
+            return
+        }
+    }
+    else{
+        categoryQuery = req.query.categoryQuery
+    }
         const idList = requestUser.savedRecipes.map((elem) => {
             return elem.recipeId
         })
@@ -302,7 +326,19 @@ router.get("/users/:id", async (req, res) => {
             }
         }
         const searchQuery = req.query.searchQuery
-        const categoryQuery = req.query.categoryQuery
+        let categoryQuery = []
+        if( req.query.categoryQuery && !Array.isArray(req.query.categoryQuery)){
+            try{
+            categoryQuery = JSON.parse(req.query.categoryQuery.replace(/'/g, '"'));
+            }
+            catch(error){
+                res.status(400).send({success:false, error: "Please enter a valid category list"})
+                return
+            }
+        }
+        else{
+            categoryQuery = req.query.categoryQuery
+        }
 
         let match = { user: userId }
         if (needApproval) {
@@ -610,8 +646,12 @@ router.post("/rating/:id", async (req, res) => {
     }
     const recipeId = req.params.id
     const rating = req.body?.rating
-    if(rating &&  (rating < 0 || 5 < rating)){
+    if(rating && (isNaN(rating) || (rating < 0 || 5 < rating))){
         res.status(400).send('Invalid rating. Must be between 0 and 5')
+        return;
+    }
+    if(rating === undefined){
+        res.status(400).send('Invalid rating.')
         return;
     }
     if (!ObjectID.isValid(recipeId)) {
