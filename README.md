@@ -13,13 +13,14 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 
 ### Login and Registration Functionality
 
-#### Logging In to FitMeals
-- To login, navigate to the login page and enter your credentials
+#### Logging In to FitMeals 
+- Navigate to the login page where you can enter your credentials
+  - Hover over the user icon the top right corner of the home page and click login 
   - If you wish to use a pre-existing account, see [Login Credentials](#login-credentials)
 - To remember your login information for future use, make sure the "Remember me" checkbox is ticked
 
 #### Reset Password
-- If you have forgot your password, you can click on the "Forgot password?" button on the login page
+- If you have forgotten your password, you can click on the "Forgot password?" button on the login page
 - You will recieve an email with a link to FitMeals reset password page, where you can submit a new password
   - Please note that you have only 10 minutes after the email is sent to reset your password before your link expires
 
@@ -27,6 +28,14 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 - To create a new account, click the "Get Started" button on the login page
 - On the registration page, enter the required information and click the register button
 - If you navigated to this page accidentally, click the "Back" button at the top of the page
+
+### Viewing Recipes
+- On the home page, there is a list of approved recipe previews that the user can click on. The preview shows the recipe's title, categories, subtitle, total time prep time, and calories per serving. 
+- Clicking on a recipe preview card will take you to a detailed recipe page. This page contains the author's full name, recipe rating, pictures, ingredients, instructions, macronutrient information, and comments
+- 
+  - To see the author's profile, click on their avatar at the top of the page
+  - To save the recipe, see [Saved Recipes Page](#saved-recipes-page)
+  - To comment, see [Posting Comments](#posting-comments)
 
 ### Admin Functionality
 These features are only available to admin users
@@ -42,12 +51,7 @@ These features are only available to admin users
 - Admins have the ability to ban users by navigating to their profile and clicking the "Ban User" button
   - As the button will require backend functionality, the button is available but has not functionality for Phase 1
 
-### Viewing Recipes
-- On the home page, there is a list of featured recipes that the user can click on
-- Each recipe contains the author's information, recipe rating, picture, ingredients, instructions and comments
-  - To see the author's profile, click on their avatar at the top of the page
-  - To save the recipe, see [Saved Recipes Page](#saved-recipes-page)
-  - To comment, see [Posting Comments](#posting-comments)
+
 
 ### Posting Recipes
 - Navigate to the new recipe page
