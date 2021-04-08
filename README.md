@@ -131,9 +131,20 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
 | Password: user | Password: admin |
 
 ## Third Party Libraries
+#### Frontend
 - React
 - Yarn
 - React Router DOM
 - Ant Design and Ant Design Icons
 - React Minimal Pie Chart
 - Framer Motion
+
+#### Backend
+- Express
+- Mongoose
+- CORS
+- UUIDv4
+- bcrypt
+- Nodemailer
+- Connect-Multiparty
+- Cloudinary
