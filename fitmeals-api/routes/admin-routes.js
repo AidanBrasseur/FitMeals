@@ -102,7 +102,7 @@ router.post("/ban", (req, res) => {
 PATCH: /admin/approve-recipe/:recipeid
 Approve the recipe with the specified id
 */
-router.patch("/approve-recipe/:recipeid", (req, res) => {
+router.patch("/approve-recipe/:recipeid", async (req, res) => {
     // Check for a valid mongoose connection
     if (mongoose.connection.readyState != 1) {
         log('Issue with mongoose connection');
@@ -112,9 +112,45 @@ router.patch("/approve-recipe/:recipeid", (req, res) => {
 
     // Check if the user sending the request is a valid admin
     if (req.headers.authorization) {
-        User.findOne({ authToken: req.headers.authorization }).then((user) => {
+        User.findOne({ authToken: req.headers.authorization }).then(async (user) => {
             // Promote if the requesting user is an admin
             if (user && user.isAdmin) {
+                try {
+                    const recipe = await Recipe.findById(req.params.recipeid)
+                    if (!recipe){
+                        res.status(404).send({ success: false, error: "Recipe not found" });
+                        return;
+                    }
+                    else{
+                        if (!recipe.macros) {
+                            return { success: false, error: "No macros provided" };
+                        }
+                
+                        const macros = JSON.parse(recipe.macros)
+                
+                
+                            if (!macros.protein || isNaN(macros.protein)) {
+                                return { success: false, error: "You must provide protein and it must be a number" };
+                            }
+                            if (!macros.carbs || isNaN(macros.carbs)) {
+                                return { success: false, error: "You must provide carbs and it must be a number" };
+                            }
+                            if (!macros.fats || isNaN(macros.fats)) {
+                                return { success: false, error: "You must provide fats and it must be a number" };
+                            }
+                
+                
+                        if (!recipe.calories || isNaN(recipe.calories)) {
+                            return { success: false, error: "calories must be a number" };
+                        }
+                    }
+
+                    
+                }
+                catch(error){
+
+                }
+
                 Recipe.findOneAndUpdate({ _id: req.params.recipeid }, { approved: true }, { useFindAndModify: false }).then((approvedRecipe) => {
                     if (approvedRecipe) {
                         res.send({ success: true });
