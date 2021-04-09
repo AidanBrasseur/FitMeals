@@ -130,24 +130,29 @@ router.patch("/approve-recipe/:recipeid", async (req, res) => {
                 
                 
                             if (!macros.protein || isNaN(macros.protein)) {
-                                return { success: false, error: "You must provide protein and it must be a number" };
+                                res.status(404).send({ success: false, error: "You must provide protein and it must be a number" });
+                                return;
                             }
                             if (!macros.carbs || isNaN(macros.carbs)) {
-                                return { success: false, error: "You must provide carbs and it must be a number" };
+                               res.status(404).send({ success: false, error: "You must provide carbs and it must be a number" });
+                               return;
                             }
                             if (!macros.fats || isNaN(macros.fats)) {
-                                return { success: false, error: "You must provide fats and it must be a number" };
+                                res.status(404).send({ success: false, error: "You must provide fats and it must be a number" });
+                                return;
                             }
                 
                 
                         if (!recipe.calories || isNaN(recipe.calories)) {
-                            return { success: false, error: "calories must be a number" };
+                            res.status(404).send({ success: false, error: "calories must be a number" });
+                            return;
                         }
                     }
 
                     
                 }
                 catch(error){
+                    res.status(500).send({ success: false, error: "Internal server error" });
 
                 }
 
