@@ -11,9 +11,9 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 6. [Third Party Libraries](#third-party-libraries)
 
 ## API Documentation
-Our API is hosted on heroku at the following url https://csc309-team14-fitmeals-api.herokuapp.com/
+Our API is hosted on Heroku at the following URL: https://csc309-team14-fitmeals-api.herokuapp.com/
 
-The full documentation for our API was created using PostMan and can be found at the following link: [API docs](https://documenter.getpostman.com/view/15303556/TzCTa5pU)
+The full documentation for our API was created using Postman and can be found at the following link: [API docs](https://documenter.getpostman.com/view/15303556/TzCTa5pU)
 
 ## Features of FitMeals
 FitMeals is a platform for users to access and post healthy recipes. Users have the ability to create recipes, comment on recipes, rate recipes and more...
