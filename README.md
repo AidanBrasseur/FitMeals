@@ -127,14 +127,14 @@ These features are only available to admin users. Admins have all the functional
 ### Online access
 FitMeals is currently being hosted on Heroku and can be accessed with the following URL: https://csc309-team14-fitmeals-website.herokuapp.com/
 
+**Note:**
+As FitMeals is currently under Heroku's free plan, the website may take a longer time than usual to load when it has not been accessed in a while.
+
 ### Offline access
 FitMeals is powered by React and uses Yarn to manage dependencies and launch the application.
 - Open the project and run `yarn install` to install all the required dependencies for the web application
 - Once you have completed installing all dependencies, run `yarn start` to bring up FitMeals in your browser
   - The application will run at http://localhost:3000 in your browser
-
-**Note:**
-As FitMeals is currently under Heroku's free plan, the website may take a longer time than usual to load when it has not been accessed in a while.
 
 ## API Documentation
 Our API is hosted on Heroku at the following URL: https://csc309-team14-fitmeals-api.herokuapp.com/
