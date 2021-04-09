@@ -170,6 +170,7 @@ We originally had plans to integrate a third-party API that would estimate calor
 - Ant Design and Ant Design Icons
 - React Minimal Pie Chart
 - Framer Motion
+- React Helmet
 
 #### Backend
 - Express
