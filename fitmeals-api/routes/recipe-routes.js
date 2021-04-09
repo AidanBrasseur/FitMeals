@@ -427,7 +427,7 @@ router.post('/', multipartMiddleware, async (req, res) => {
                 }
                 const resultImage1 = await cloudinary.uploader.upload(req.files.image.path);
                 recipe.image = {
-                    url: resultImage1.url,
+                    url: resultImage1.secure_url,
                     cloudinaryID: resultImage1.public_id,
                     created_at: new Date()
                 }
@@ -439,7 +439,7 @@ router.post('/', multipartMiddleware, async (req, res) => {
                     if (req.files.hasOwnProperty(`image_instruction${index}`)) {
                         const result = await cloudinary.uploader.upload(req.files[`image_instruction${index}`].path);
                         instructionsList[i].image = {
-                            url: result.url,
+                            url: result.secure_url,
                             cloudinaryID: result.public_id,
                             created_at: new Date()
                         }
@@ -622,7 +622,7 @@ router.put('/:id', multipartMiddleware, async (req, res) => {
                         // Uploading the main image
                         const resultImage1 = await cloudinary.uploader.upload(req.files.image.path);
                         result.image = {
-                            url: resultImage1.url,
+                            url: resultImage1.secure_url,
                             cloudinaryID: resultImage1.public_id,
                             created_at: new Date()
                         }
@@ -635,7 +635,7 @@ router.put('/:id', multipartMiddleware, async (req, res) => {
                             if (req.files.hasOwnProperty(`image_instruction${index}`)) {
                                 const result = await cloudinary.uploader.upload(req.files[`image_instruction${index}`].path);
                                 instructionsList[i].image = {
-                                    url: result.url,
+                                    url: result.secure_url,
                                     cloudinaryID: result.public_id,
                                     created_at: new Date()
                                 }

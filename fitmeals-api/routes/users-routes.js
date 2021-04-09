@@ -136,13 +136,13 @@ router.patch("/update-pic/:username", multipartMiddleware, (req, res) => {
                 // Uploading the picture to storage and updating the user's image property      
                 cloudinary.uploader.upload(req.files.image.path, (resultImage) => {
                     user.image = {
-                        url: resultImage.url,
+                        url: resultImage.secure_url,
                         cloudinaryID: resultImage.public_id,
                         created_at: new Date()
                     }
                     // Saving the user to the DB
                     user.save().then((result) => {
-                        res.send({ success: true, image: resultImage.url });
+                        res.send({ success: true, image: resultImage.secure_url });
                     }).catch((error) => {
                         console.log(error);
                         res.status(500).send({ success: false, error: "Internal server error" });
