@@ -4,16 +4,11 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 
 ## Table of Contents
 1. [Features of FitMeals](#features-of-fitmeals)
-2. [API Documentation](#api-documentation)
-3. [Instructions for Accessing FitMeals](#instructions-for-accessing-fitmeals)
+2. [Instructions for Accessing FitMeals](#instructions-for-accessing-fitmeals)
+3. [API Documentation](#api-documentation)
 4. [Login Credentials](#login-credentials)
 5. [Changes From Initial Proposal and Phase 1](#changes-from-initial-proposal-and-phase-1)
 6. [Third Party Libraries](#third-party-libraries)
-
-## API Documentation
-Our API is hosted on Heroku at the following URL: https://csc309-team14-fitmeals-api.herokuapp.com/
-
-The full documentation for our API was created using Postman and can be found at the following link: [API docs](https://documenter.getpostman.com/view/15303556/TzCTa5pU)
 
 ## Features of FitMeals
 FitMeals is a platform for users to access and post healthy recipes. Users have the ability to create recipes, comment on recipes, rate recipes and more...
@@ -51,8 +46,6 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
   - To view comments and submit your own, scroll to the bottom of the page below the instructions, see [Posting Comments](#posting-comments)
   - To rate the recipe, click on one of the 5 stars, see [Rating Recipes](#rating-recipes)
   - If the recipe is your own, you can delete it by clicking on the garbage can at the top right hand corner, see [Deleting Your Own Recipes](#deleting-your-own-recipes)
-
-
 
 ### Viewing a User's Profile
 - To view a user's profile, you can click on the user's icon. This icon can be found on a detailed recipe page at the top near the title, or you can click on any icon on the comments section of a detailed recipe page, which is located at the bottom of the page. 
@@ -125,25 +118,28 @@ These features are only available to admin users. Admins have all the functional
 #### Promote Users
 - Admins have the ability to promote regular users to admins by navigating to their profile and clicking the "Promote User" button
 
-
 #### Deleting Any Recipe as an Admin
 - Note: you must be logged in as an admin to access this feature. 
 - Admins can navigate to _any_ detailed recipe page and click on the garbage icon on the top right corner. This will delete the recipe forever. 
 
 ## Instructions for Accessing FitMeals
+
 ### Online access
 FitMeals is currently being hosted on Heroku and can be accessed with the following URL: https://csc309-team14-fitmeals-website.herokuapp.com/
 
-**Note:**
-As FitMeals is currently under Heroku's free plan, the website may take a longer time than usual to load when it has not been accessed in a while.
-
-
-## Instructions
 ### Offline access
 FitMeals is powered by React and uses Yarn to manage dependencies and launch the application.
 - Open the project and run `yarn install` to install all the required dependencies for the web application
 - Once you have completed installing all dependencies, run `yarn start` to bring up FitMeals in your browser
   - The application will run at http://localhost:3000 in your browser
+
+**Note:**
+As FitMeals is currently under Heroku's free plan, the website may take a longer time than usual to load when it has not been accessed in a while.
+
+## API Documentation
+Our API is hosted on Heroku at the following URL: https://csc309-team14-fitmeals-api.herokuapp.com/
+
+The full documentation for our API was created using Postman and can be found at the following link: [API docs](https://documenter.getpostman.com/view/15303556/TzCTa5pU)
 
 ## Login Credentials
 | User | Admin |
