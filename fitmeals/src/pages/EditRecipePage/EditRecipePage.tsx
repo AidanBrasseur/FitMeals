@@ -56,7 +56,7 @@ function EditRecipePage() {
         return cat.name
       })
       const instructions = r.instructions.map((i: any) => {
-        return { desc: i.instruction, image: i.image, wasInitial: true }
+        return { instruction: i.instruction, image: i.image, wasInitial: true }
       })
       if (r.time != undefined) {
         let timeunit;
@@ -192,8 +192,8 @@ function EditRecipePage() {
 
       return;
     }
-    const instructionsForm = values.instructions.map((item: { desc: string, image: any }, index: number) => {
-      return { order: index + 1, instruction: item.desc }
+    const instructionsForm = values.instructions.map((item: { instruction: string, image: any }, index: number) => {
+      return { order: index + 1, instruction: item.instruction }
     })
     console.log(values.instructions);
 
@@ -388,9 +388,9 @@ function EditRecipePage() {
                   </Form.Item>
                 </Col>
                 <Col>
-                  <Form.Item name="timeUnit" initialValue="minutes">
+                  <Form.Item name="timeUnit" >
 
-                    <Select defaultValue='minutes'>
+                    <Select >
                       <Option value="hours">Hours</Option>
                       <Option value="minutes">Minutes</Option>
                     </Select>
@@ -534,7 +534,7 @@ function EditRecipePage() {
                           >
                             <Row>
                               <Col span={18}>
-                                <Form.Item {...field} name={[field.name, 'desc']} fieldKey={[field.fieldKey, 'desc']} rules={[{ required: true, message: 'Missing' }]}>
+                                <Form.Item {...field} name={[field.name, 'instruction']} fieldKey={[field.fieldKey, 'instruction']} rules={[{ required: true, message: 'Missing' }]}>
                                   <TextArea rows={4} bordered={false} style={{ fontSize: 18 }} placeholder="Enter your instruction"></TextArea>
                                 </Form.Item>
                               </Col>
