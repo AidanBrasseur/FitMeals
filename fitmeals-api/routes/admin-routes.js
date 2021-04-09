@@ -123,7 +123,8 @@ router.patch("/approve-recipe/:recipeid", async (req, res) => {
                     }
                     else{
                         if (!recipe.macros) {
-                            return { success: false, error: "No macros provided" };
+                            res.status(404).send({ success: false, error: "No macros provided" });
+                            return;
                         }
                 
                         const macros = JSON.parse(recipe.macros)
