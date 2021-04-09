@@ -9,6 +9,7 @@ import bagelHeroImage from '../../assets/images/bagelHeroImage.jpg';
 import eggHeroImage from '../../assets/images/eggImage.jpg';
 import smoothieHeroImage from '../../assets/images/smoothieHeroImage.jpg';
 import './styles.css';
+import { Helmet } from 'react-helmet';
 
 function ResetPasswordPage() {
 
@@ -33,6 +34,9 @@ function ResetPasswordPage() {
 
     return (
         <Layout>
+            <Helmet>
+                <title>Reset Password</title>
+            </Helmet>
             <Layout.Content style={{ height: "100vh" }}>
                 <div className="resetPasswordDiv">
                     <div className="resetPasswordForm">

@@ -11,6 +11,7 @@ import { useAlert } from 'react-alert'
 import { stringify } from 'querystring';
 import axios from 'axios';
 import { HOST } from '../../config';
+import { Helmet } from 'react-helmet';
 
 import Footer from '../../components/Footer/Footer';
 import TextArea from 'antd/lib/input/TextArea';
@@ -192,6 +193,9 @@ function NewRecipePage() {
 
   return (
     <Layout>
+      <Helmet>
+        <title>New Recipe Page</title>
+      </Helmet>
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
         <Spin style={{ height: '100%', position: 'fixed', top: '25%' }} size="large" spinning={loading}>

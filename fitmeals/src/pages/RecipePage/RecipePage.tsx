@@ -13,6 +13,7 @@ import { useSessionContext } from '../../contexts/SessionContext';
 import { Comment as CommentType, Ingredient, Instruction, Macros, Recipe } from '../../types';
 import { ReactComponent as logoSVG } from '../../assets/svg/logo.svg';
 import './styles.css';
+import { Helmet } from 'react-helmet';
 interface stateType {
     recipe: string
 }
@@ -217,6 +218,9 @@ function RecipePage() {
 
     return (
         <Layout>
+            <Helmet>
+                <title>{recipe?.title}</title>
+            </Helmet>
             <Header />
             <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
                 <div className="recipePage" >

@@ -11,6 +11,7 @@ import { HOST } from '../../config';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { User } from '../../types';
 import './styles.css';
+import { Helmet } from 'react-helmet';
 
 
 function LoginPage() {
@@ -81,6 +82,9 @@ function LoginPage() {
     }
     return (
         <Layout>
+            <Helmet>
+                <title>FitMeals Login</title>
+            </Helmet>
             <Layout.Content style={{ height: '100vh' }}>
                 <Modal
                     visible={invalidVisible}

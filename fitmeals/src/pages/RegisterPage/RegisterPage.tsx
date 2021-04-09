@@ -9,6 +9,7 @@ import bagelHeroImage from '../../assets/images/bagelHeroImage.jpg';
 import eggHeroImage from '../../assets/images/eggImage.jpg';
 import smoothieHeroImage from '../../assets/images/smoothieHeroImage.jpg';
 import './styles.css';
+import { Helmet } from 'react-helmet';
 
 function RegisterPage() {
 
@@ -44,6 +45,9 @@ function RegisterPage() {
 
     return (
         <Layout>
+            <Helmet>
+                <title>FitMeals Registration</title>
+            </Helmet>
             <Layout.Content style={{ height: "100vh" }}>
                 <Modal
                     visible={invalidCharVisible}

@@ -5,13 +5,17 @@ import Feed from '../../components/Feed/Feed';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import './styles.css';
+import { Helmet } from 'react-helmet';
 
 function HomePage() {
  const [searchQuery, setSearchQuery] = useState<string | undefined>()
  const [categoryQuery, setCategoryQuery] = useState<string[] | undefined>()
   return (
     <Layout>
-     <Header setSearchQuery={setSearchQuery}/>
+      <Helmet>
+        <title>FitMeals Home</title>
+      </Helmet>
+      <Header setSearchQuery={setSearchQuery} />
       <Layout.Content className="home-layout" >
         <Categories setCategoryQuery={setCategoryQuery}></Categories>
         <Feed title={"Featured Recipes"} searchQuery={searchQuery} categoryQuery={categoryQuery}></Feed>

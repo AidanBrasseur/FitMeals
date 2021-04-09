@@ -9,6 +9,7 @@ import Header from '../../components/Header/Header';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { HOST } from '../../config';
 import { User } from '../../types';
+import { Helmet } from 'react-helmet';
 
 import './styles.css';
 import Footer from '../../components/Footer/Footer';
@@ -143,6 +144,9 @@ function AccountSettingsPage() {
 
   return (
     <Layout style={{ backgroundColor: "white" }}>
+      <Helmet>
+        <title>Account Settings</title>
+      </Helmet>
       <Header setSearchQuery={setSearchQuery} />
       <Layout.Content>
         <Modal

@@ -10,6 +10,7 @@ import { useSessionContext } from '../../contexts/SessionContext';
 import axios from 'axios';
 import { HOST } from '../../config';
 import Footer from '../../components/Footer/Footer';
+import { Helmet } from 'react-helmet';
 interface stateType {
   recipeId: string
 }
@@ -325,6 +326,9 @@ function EditRecipePage() {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Edit Recipe Page</title>
+      </Helmet>
       <Header />
       <Layout.Content className="site-layout" style={{ marginTop: 64, backgroundColor: "#032D23" }}>
 

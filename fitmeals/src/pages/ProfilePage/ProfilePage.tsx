@@ -7,6 +7,7 @@ import Feed from '../../components/Feed/Feed';
 import Header from '../../components/Header/Header';
 import { useSessionContext } from '../../contexts/SessionContext';
 import { HOST } from '../../config';
+import { Helmet } from 'react-helmet';
 
 import './styles.css';
 import Footer from '../../components/Footer/Footer';
@@ -82,6 +83,9 @@ function ProfilePage() {
 
   return (
     <Layout style={{ backgroundColor: "white" }}>
+      <Helmet>
+        <title>{username}'s Profile</title>
+      </Helmet>
       <Header setSearchQuery={setSearchQuery}/>
       <Layout.Content>
         <div className='profile'>
