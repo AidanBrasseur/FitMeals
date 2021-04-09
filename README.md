@@ -4,9 +4,10 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 
 ## Table of Contents
 1. [Features of FitMeals](#features-of-fitmeals)
-2. [Instructions](#instructions)
+2. [Instructions for Accessing FitMeals](#instructions-for-accessing-fitmeals)
 3. [Login Credentials](#login-credentials)
-4. [Third Party Libraries](#third-party-libraries)
+4. [Changes From Initial Proposal and Phase 1](#changes-from-initial-proposal-and-phase-1)
+5. [Third Party Libraries](#third-party-libraries)
 
 ## Features of FitMeals
 FitMeals is a platform for users to access and post healthy recipes. Users have the ability to create recipes, comment on recipes, rate recipes and more...
@@ -23,6 +24,7 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 - If you have forgotten your password, you can click on the "Forgot password?" button on the login page
 - You will recieve an email with a link to FitMeals reset password page, where you can submit a new password
   - Please note that you have only 10 minutes after the email is sent to reset your password before your link expires
+- As the "user" and "admin" users have fake emails, please create your own account with a valid email to view this functionality
 
 #### Creating a New Account
 - To create a new account, click the "Get Started" button on the login page
@@ -34,7 +36,7 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 - You can search for recipes on the top right hand corner of the home page. The search will find your text in any part of any recipe(title, subtitle, description, and categories) and display the recipes that match you search. 
 - You can also filter recipes by selecting the category cards on the home page. You can select multiple categories as well as de-select them.  
 
-### Viewing detailed recipes
+### Viewing Detailed Recipes
 - Clicking on a recipe preview card will take you to a detailed recipe page. This page contains the author's full name, recipe rating, pictures, ingredients, instructions, macronutrient information, and comments. 
 - You can click on any image to expand it. 
 - To see the author's profile, click on their avatar at the top of the page, see [Viewing a user's profile](#viewing-a-user's-profile)
@@ -44,9 +46,7 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
   - To rate the recipe, click on one of the 5 stars, see [Rating Recipes](#rating-recipes)
   - If the recipe is your own, you can delete it by clicking on the garbage can at the top right hand corner, see [Deleting Your Own Recipes](#deleting-your-own-recipes)
 
-
-
-### Viewing a user's profile
+### Viewing a User's Profile
 - To view a user's profile you can click on the user's icon. This icon can be found on a detailed recipe page at the top near the title, or you can click on any icon on the comments section of a detailed recipe page, which is located at the bottom of the page. 
 - Clicking on this icon will bring you to the user's profile page with their full name, username, average rating for their posted recipes, and their posted recipes listed, which you can also view by clicking on any. 
 - You can also use the search bar at the top of the page to search through their recipes similar to the home page. 
@@ -76,7 +76,7 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 - Type your comment in the text area and click the "Add Comment" button. 
 - Your comment will appear at the bottom of the comments list. 
 
-### Deleting your own recipes
+### Deleting Your Own Recipes
 - Note: You must be logged in to access this feature. 
 - Navigate to one of your recipe's detailed recipe page. 
 - You can click on the garbage can at the top right of the page, which will delete the recipe forever. 
@@ -93,16 +93,12 @@ These features are only available to admin users
 
 #### Ban Users
 - Admins have the ability to ban users by navigating to their profile and clicking the "Ban User" button
-  - As the button will require backend functionality, the button is available but has not functionality for Phase 1
-
-
 
 ### Posting Recipes
 - Navigate to the new recipe page
   - This link can be found on the home page under the categories (you must be logged in to submit a new recipe)
 - Enter information (title, description, image, ingredients, macros, instructions)
 - Click submit and the recipe will be publicly available once approved by an admin
-
 
 ### Editing Recipes
 - Admins have the option to edit existing recipes and change information as required
@@ -115,10 +111,14 @@ These features are only available to admin users
 - Each user has a profile page, where we can see their information and recipes they created
   - Information includes name, username and their average rating
 
+## Instructions for Accessing FitMeals
+### Online access
+FitMeals is currently being hosted on Heroku and can be accessed with the following URL: https://csc309-team14-fitmeals-website.herokuapp.com/
 
+**Note:**
+As FitMeals is currently under Heroku's free plan, the website may take a longer time than usual to load when it has not been accessed in a while.
 
-
-## Instructions
+### Offline access
 FitMeals is powered by React and uses Yarn to manage dependencies and launch the application.
 - Open the project and run `yarn install` to install all the required dependencies for the web application
 - Once you have completed installing all dependencies, run `yarn start` to bring up FitMeals in your browser
@@ -130,7 +130,7 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
 | Username: user | Username: user |
 | Password: user | Password: admin |
 
-### Changes From Initial Proposal and Phase 1
+## Changes From Initial Proposal and Phase 1
 Our core vision for the application throughout this process has remained consistent, but there were a few additional features and changes we decided to implement for phase 2. 
 
 -   **Forgot Password:**  
