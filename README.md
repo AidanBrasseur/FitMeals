@@ -94,6 +94,9 @@ These features are only available to admin users
 #### Ban Users
 - Admins have the ability to ban users by navigating to their profile and clicking the "Ban User" button
 
+#### Promote Users
+- Admins have the ability to promote regular users to admins by navigating to their profile and clicking the "Promote User" button
+
 ### Posting Recipes
 - Navigate to the new recipe page
   - This link can be found on the home page under the categories (you must be logged in to submit a new recipe)
