@@ -1,5 +1,5 @@
 import { UserOutlined, StarOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Upload, Image } from 'antd';
+import { Avatar, Button, Col, Form, Input, Layout, Row, Select, Typography, Upload, Image, message } from 'antd';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useLocation, Redirect, useHistory } from 'react-router-dom';
@@ -26,6 +26,36 @@ function ProfilePage() {
   const { from } = state || { from: { pathname: "/" } };;
 
   const currentHistory = useHistory();
+
+  // Ban user
+  const banUser = () => {
+    axios.post(HOST + "admin/ban", {
+      "username": username,
+    }, {
+      headers: {
+        authorization: sessionContext.user?.authToken
+      }
+    }).then(response => {
+      message.success("User successfully banned.");
+    }).catch((error) => {
+      message.error("Sorry, FitMeals was unable to process your request. Please try again.");
+    })
+  }
+  
+  // Promote user
+  const promoteUser = () => {
+    axios.post(HOST + "admin/promote", {
+      "username": username,
+    }, {
+      headers: {
+        authorization: sessionContext.user?.authToken
+      }
+    }).then(response => {
+      message.success("User successfully promoted.");
+    }).catch((error) => {
+      message.error("Sorry, FitMeals was unable to process your request. Please try again.");
+    })
+  }
 
   // Getting the user info for the profile
   const fetchUserInfo = () => {
@@ -74,11 +104,18 @@ function ProfilePage() {
                       <div style={{ color: 'white' }}>Average rating of {rating ? Math.round((Number(rating) + Number.EPSILON) * 100) / 100 : 0}</div>
                     </Row>
                   </div>
-                  { sessionContext["user"]?.isAdmin && state &&
-                    <div className="banButton">
-                      <Button size="middle">Ban User</Button>
-                    </div>                   
-                  }
+                  <div className="adminButtons">                   
+                    {sessionContext["user"]?.isAdmin && state &&
+                      <div className="promoteButton">
+                        <Button size="middle" onClick={promoteUser}>Promote User</Button>
+                      </div>
+                    }
+                    {sessionContext["user"]?.isAdmin && state &&
+                      <div className="banButton">
+                        <Button size="middle" onClick={banUser}>Ban User</Button>
+                      </div>
+                    }
+                  </div>
                 </div>
               </Col>
             </Row>
