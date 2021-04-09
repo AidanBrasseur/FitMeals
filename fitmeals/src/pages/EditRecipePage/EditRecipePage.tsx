@@ -41,8 +41,7 @@ function EditRecipePage() {
   });
   const [sessionContext, updateSessionContext] = useSessionContext();
   const [form] = Form.useForm();
-  const [approve, setApprove] = useState(false);
-  const [reject, setReject] = useState(false);
+
   const getRecipe = () => {
     axios.get(HOST + 'recipes/' + recipeId, {
       headers: {
@@ -199,18 +198,18 @@ function EditRecipePage() {
 
     for (let i = 0; i < values.instructions.length; i++) {
       if (values.instructions[i] != undefined && values.instructions[i].image != undefined) {
-        if (values.instructions[i].wasInitial){
+        if (values.instructions[i].wasInitial) {
           const url = values.instructions[i].image.url
           let blob = await fetch(url).then(r => r.blob());
           formData.append(`image_instruction${i + 1}`, blob)
         }
-        else if (values.instructions[i].image.file != undefined){
+        else if (values.instructions[i].image.file != undefined) {
           const file = values.instructions[i].image.file;
           formData.append(`image_instruction${i + 1}`, file)
         }
 
       }
-      
+
     }
     console.log(values.instructions)
     // form.getFieldValue('instructions')[index] && form.getFieldValue('instructions')[index].image ? <img className='uploadImagePreviewInstructions' src={
@@ -238,30 +237,8 @@ function EditRecipePage() {
 
       return;
     }
+
     
-    if (reject) {
-      axios.patch(HOST + 'admin/reject-recipe/' + recipe?.id, {}, {
-        headers: {
-          authorization: sessionContext["user"]?.authToken
-        }
-      }).then(response => {
-        setReject(true)
-        success("Successfully rejected recipe");
-        setLoading(false);
-
-        return;
-      }).catch((error) => {
-        console.log(error)
-        setLoading(false);
-        Modal.error({
-          content: "Something went wrong please try again"
-        })
-        return;
-
-      })
-    }
-
-    if (approve) {
       formData.append('approved', '1')
       try {
         const res = await axios.put(HOST + 'recipes/' + recipe?.id, formData, {
@@ -277,16 +254,15 @@ function EditRecipePage() {
           content: "Something went wrong please try again"
         })
         setLoading(false);
-  
+
         return;
       }
-    }
 
-  
-    if (approve) {
+
+
+
       success("Successfully updated and approved recipe");
-    }
-    
+
     setLoading(false);
     return;
 
@@ -303,24 +279,33 @@ function EditRecipePage() {
 
 
   const onApprove = () => {
-    console.log(recipe)
-    setApprove(true);
+    form.submit()
   }
 
   const onReject = () => {
-    setReject(true);
+    axios.patch(HOST + 'admin/reject-recipe/' + recipe?.id, {}, {
+      headers: {
+        authorization: sessionContext["user"]?.authToken
+      }
+    }).then(response => {
+      success("Successfully rejected recipe");
+      setLoading(false);
+
+      return;
+    }).catch((error) => {
+      console.log(error)
+      setLoading(false);
+      Modal.error({
+        content: "Something went wrong please try again"
+      })
+      return;
+
+    })
+    
   }
 
-  useEffect(() => {
-    if (approve) {
-      form.submit()
-    }
-  }, [approve])
-  useEffect(() => {
-    if (reject) {
-      form.submit()
-    }
-  }, [reject])
+
+
 
 
 
@@ -444,13 +429,13 @@ function EditRecipePage() {
                           <Col style={{ marginLeft: 10 }} span={3}>
                             <Form.Item {...field} name={[field.name, 'unit']} fieldKey={[field.fieldKey, 'unit']}>
                               <Select placeholder="Unit">
-                              <Option value="g">g</Option>
+                                <Option value="g">g</Option>
                                 <Option value="kg">kg</Option>
                                 <Option value="tbs">tbs</Option>
                                 <Option value="tsps">tsps</Option>
                                 <Option value="cups">cups</Option>
                                 <Option value="litres">litres</Option>
-                                
+
                                 <Option value="ounces">ounces</Option>
                               </Select>
                             </Form.Item>
@@ -487,28 +472,28 @@ function EditRecipePage() {
               <div className="macroInputs">
                 <Row>
                   <Col className="macroCol" >
-                  <h3 className='mac' >Calories</h3>
+                    <h3 className='mac' >Calories</h3>
 
                     <Form.Item name="macroCalories" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Total Calories"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
-                  <h3 className='mac' >Protein</h3>
+                    <h3 className='mac' >Protein</h3>
 
                     <Form.Item name="macroProtein" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Protein"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
-                  <h3 className='mac' >Carbs</h3>
+                    <h3 className='mac' >Carbs</h3>
 
                     <Form.Item name="macroCarbs" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Carbs"></InputNumber>
                     </Form.Item>
                   </Col>
                   <Col className="macroCol">
-                  <h3 className='mac' >Fats</h3>
+                    <h3 className='mac' >Fats</h3>
 
                     <Form.Item name="macroFats" rules={[{ required: true, message: 'Missing' }, { type: 'number', message: 'Please input a number' }]}>
                       <InputNumber placeholder="Number of Grams - Fats"></InputNumber>
