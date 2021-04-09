@@ -123,29 +123,29 @@ router.patch("/approve-recipe/:recipeid", async (req, res) => {
                     }
                     else{
                         if (!recipe.macros) {
-                            res.status(404).send({ success: false, error: "No macros provided" });
+                            res.status(400).send({ success: false, error: "No macros provided" });
                             return;
                         }
+                       
                 
-                        const macros = JSON.parse(recipe.macros)
-                
-                
+                        const macros = recipe.macros
+
                             if (!macros.protein || isNaN(macros.protein)) {
-                                res.status(404).send({ success: false, error: "You must provide protein and it must be a number" });
+                                res.status(400).send({ success: false, error: "You must provide protein and it must be a number" });
                                 return;
                             }
                             if (!macros.carbs || isNaN(macros.carbs)) {
-                               res.status(404).send({ success: false, error: "You must provide carbs and it must be a number" });
+                               res.status(400).send({ success: false, error: "You must provide carbs and it must be a number" });
                                return;
                             }
                             if (!macros.fats || isNaN(macros.fats)) {
-                                res.status(404).send({ success: false, error: "You must provide fats and it must be a number" });
+                                res.status(400).send({ success: false, error: "You must provide fats and it must be a number" });
                                 return;
                             }
                 
                 
                         if (!recipe.calories || isNaN(recipe.calories)) {
-                            res.status(404).send({ success: false, error: "calories must be a number" });
+                            res.status(400).send({ success: false, error: "calories must be a number" });
                             return;
                         }
                     }
@@ -153,7 +153,9 @@ router.patch("/approve-recipe/:recipeid", async (req, res) => {
                     
                 }
                 catch(error){
+                    console.log(error)
                     res.status(500).send({ success: false, error: "Internal server error" });
+                    return;
 
                 }
 
@@ -162,20 +164,25 @@ router.patch("/approve-recipe/:recipeid", async (req, res) => {
                         res.send({ success: true });
                     } else {
                         res.status(404).send({ success: false, error: "Recipe not found" });
+                        return;
                     }
                 }).catch((error) => {
                     console.log(error);
                     res.status(500).send({ success: false, error: "Internal server error" });
+                    return;
                 });
             } else {
                 res.status(401).send({ success: false, error: "Unauthorized" });
+                return;
             }
         }).catch((error) => {
             console.log(error);
-            res.status(500).send({ success: false, error: "Internal server error" });
+            res.status(500).send({ success: false, error: "Internal server error" });  
+            return;
         });
     } else {
         res.status(401).send({ success: false, error: "Unauthorized" });
+        return;
     }
 });
 

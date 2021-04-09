@@ -1,5 +1,5 @@
 import { CheckOutlined, CloseOutlined, StarOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Image, Row, Space } from 'antd';
+import { Button, Card, Col, Image, Modal, Result, Row, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './styles.css';
 import {Recipe, RecipePreviewType} from '../../types';
@@ -17,7 +17,9 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
     const [ approve, setApprove ] = useState(false);
     const [ reject, setReject ] = useState(false);
     const [sessionContext, updateSessionContext] = useSessionContext();
+    const [errorApprove, setErrorApprove] = useState(false);
     const delay = (ms : number) => new Promise(res => setTimeout(res, ms));
+    const [errorMessage, setErrorMessage] = useState("");
     
     const onApprove = () => {
         axios.patch(HOST + 'admin/approve-recipe/' + id, {}, {
@@ -27,6 +29,8 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
         }).then(response => {
             setApprove(true)
         }).catch((error) => {
+            setErrorApprove(true)
+            setErrorMessage(error.response?.data?.error)
             console.log(error)
         })
     }
@@ -69,6 +73,16 @@ function RecipePreviewAdmin({preview, removePreviewById}: AdminPreviewProps) {
         
         transition={{ duration: 0.3 }}>
         <div className="adminPreviewContainer">
+            <Modal  visible={errorApprove} onOk={() => setErrorApprove(false)} onCancel={() => setErrorApprove(false)}>
+            <Result
+    status="error"
+    title="Approval Failed"
+    subTitle={errorMessage}
+    
+  >
+    
+  </Result>
+           </Modal>
             <Card>
                 <Link to={{pathname: '/edit-recipe',
                         state: { recipeId: preview.id }}}>
