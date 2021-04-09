@@ -1,1 +1,1 @@
-export const HOST = "http://localhost:5000/"
+export const HOST = "https://csc309-team14-fitmeals-api.herokuapp.com/"
