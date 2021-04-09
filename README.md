@@ -137,9 +137,10 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
   - The application will run at http://localhost:3000 in your browser
 
 ## API Documentation
-Our API is hosted on Heroku at the following URL: https://csc309-team14-fitmeals-api.herokuapp.com/
+Our API is currently hosted on Heroku. The full documentation for our API was created using Postman and can be found at the following link: [API docs](https://documenter.getpostman.com/view/15303556/TzCTa5pU)
 
-The full documentation for our API was created using Postman and can be found at the following link: [API docs](https://documenter.getpostman.com/view/15303556/TzCTa5pU)
+**Note:**
+As the FitMeals API is currently under Heroku's free plan, responses may take a longer time than usual to be sent when it has not been accessed in a while.
 
 ## Login Credentials
 | User | Admin |
