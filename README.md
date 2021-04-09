@@ -4,10 +4,11 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 
 ## Table of Contents
 1. [Features of FitMeals](#features-of-fitmeals)
-2. [Instructions](#instructions---dev)
-3. [Login Credentials](#login-credentials)
-4. [Changes From Initial Proposal and Phase 1](#changes-from-initial-proposal-and-phase-1)
-5. [Third Party Libraries](#third-party-libraries)
+2. [API Documentation](#api-documentation)
+3. [Instructions](#instructions---dev)
+4. [Login Credentials](#login-credentials)
+5. [Changes From Initial Proposal and Phase 1](#changes-from-initial-proposal-and-phase-1)
+6. [Third Party Libraries](#third-party-libraries)
 
 ## API Documentation
 Our API is hosted on heroku at the following url https://csc309-team14-fitmeals-api.herokuapp.com/
