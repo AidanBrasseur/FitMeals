@@ -4,10 +4,9 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 
 ## Table of Contents
 1. [Features of FitMeals](#features-of-fitmeals)
-2. [Instructions for Accessing FitMeals](#instructions-for-accessing-fitmeals)
+2. [Instructions](#instructions)
 3. [Login Credentials](#login-credentials)
-4. [Changes From Initial Proposal and Phase 1](#changes-from-initial-proposal-and-phase-1)
-5. [Third Party Libraries](#third-party-libraries)
+4. [Third Party Libraries](#third-party-libraries)
 
 ## Features of FitMeals
 FitMeals is a platform for users to access and post healthy recipes. Users have the ability to create recipes, comment on recipes, rate recipes and more...
@@ -24,7 +23,6 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 - If you have forgotten your password, you can click on the "Forgot password?" button on the login page
 - You will recieve an email with a link to FitMeals reset password page, where you can submit a new password
   - Please note that you have only 10 minutes after the email is sent to reset your password before your link expires
-- As the "user" and "admin" users have fake emails, please create your own account with a valid email to view this functionality
 
 #### Creating a New Account
 - To create a new account, click the "Get Started" button on the login page
@@ -36,7 +34,7 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 - You can search for recipes on the top right hand corner of the home page. The search will find your text in any part of any recipe(title, subtitle, description, and categories) and display the recipes that match you search. 
 - You can also filter recipes by selecting the category cards on the home page. You can select multiple categories as well as de-select them.  
 
-### Viewing Detailed Recipes
+### Viewing detailed recipes
 - Clicking on a recipe preview card will take you to a detailed recipe page. This page contains the author's full name, recipe rating, pictures, ingredients, instructions, macronutrient information, and comments. 
 - You can click on any image to expand it. 
 - To see the author's profile, click on their avatar at the top of the page, see [Viewing a user's profile](#viewing-a-user's-profile)
@@ -46,7 +44,9 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
   - To rate the recipe, click on one of the 5 stars, see [Rating Recipes](#rating-recipes)
   - If the recipe is your own, you can delete it by clicking on the garbage can at the top right hand corner, see [Deleting Your Own Recipes](#deleting-your-own-recipes)
 
-### Viewing a User's Profile
+
+
+### Viewing a user's profile
 - To view a user's profile you can click on the user's icon. This icon can be found on a detailed recipe page at the top near the title, or you can click on any icon on the comments section of a detailed recipe page, which is located at the bottom of the page. 
 - Clicking on this icon will bring you to the user's profile page with their full name, username, average rating for their posted recipes, and their posted recipes listed, which you can also view by clicking on any. 
 - You can also use the search bar at the top of the page to search through their recipes similar to the home page. 
@@ -76,52 +76,52 @@ FitMeals is a platform for users to access and post healthy recipes. Users have 
 - Type your comment in the text area and click the "Add Comment" button. 
 - Your comment will appear at the bottom of the comments list. 
 
-### Deleting Your Own Recipes
+### Deleting your own recipes
 - Note: You must be logged in to access this feature. 
 - Navigate to one of your recipe's detailed recipe page. 
 - You can click on the garbage can at the top right of the page, which will delete the recipe forever. 
 
+### Viewing your own profile page
+- Note: You must be logged in to access this feature. 
+- You can hover over your the user icon on the top right corner of the home page and click on profile page. 
+- You will be able to see you username, fullname, and average rating across all of your approved recipes
+- You will be able to see all your recipes including the ones that are rejected or pending. If you click on the recipe, the detailed recipe page will tell you if the recipe is under review or rejected. If it has been approved it will just show you the normal detailed recipe page as everyone else can see. 
+
+### Editing your profile
+- Note: You must be logged in to access this feature. 
+- You can hover over your the user icon on the top right corner of the home page and click on account settings.
+- Here you can you can edit you profile image, username, fulle name, email, and you can change your password.  
+
+### Creating a Recipe
+- Note: You must be logged in to access this feature. 
+- Click on the Add New Recipe botton below the categories on the home page. This will take you to the add new recipe page. 
+- Here you can fill in all the details of your recipe. Title, subtitle, and description are required. At least one instruction, one catagory, and one ingredient are reauired as well. You can upload a main image, and images for each instruction. The main image is required, but the instruction images are optional. 
+	- You can also add macronutrients, but these are not required. Admins can will be required to verify or fill this section in. 
+
 ### Admin Functionality
-These features are only available to admin users
+These features are only available to admin users. Admins have all the functionality of normal users as well. 
 
 #### Approving/Rejecting Recipes
-- Navigate to the admin page
-  - Click on the profile icon in the top-right of the webpage, and select the "Admin Page"
+- Note: you must be logged in as an admin to access this feature. 
+- Navigate to the admin page by hovering over the user icon on the top right corner of the homepage and click on admin page.  
 - Find the recipe you wish to approve/reject and click the corresponding button
   - Green Checkmark: Approve
   - Red 'X': Reject
+- If you would like to see more details about the recipe or edit the recipe, you can click on the preview. This will take you to a detailed recipe page where you can edit any field necessary. You can then click approve or reject at the bottom of the page. Note that the macro nutrients must be filled in to approve a recipe.  
 
 #### Ban Users
-- Admins have the ability to ban users by navigating to their profile and clicking the "Ban User" button
+- Note: you must be logged in as an admin to access this feature. 
+- Admins have the ability to ban users by navigating to their profile and clicking the "Ban User" button. You can navigate to anyone's profile by clicking on their user icon. 
+- The user will still be able to login and create recipes, but no one will be able to view their recipes. There will also be a banned status on the banned user's profile page. 
 
-#### Promote Users
-- Admins have the ability to promote regular users to admins by navigating to their profile and clicking the "Promote User" button
 
-### Posting Recipes
-- Navigate to the new recipe page
-  - This link can be found on the home page under the categories (you must be logged in to submit a new recipe)
-- Enter information (title, description, image, ingredients, macros, instructions)
-- Click submit and the recipe will be publicly available once approved by an admin
+#### Deleting any Recipe as an Admin
+- Note: you must be logged in as an admin to access this feature. 
+- Admins can navigate to _any_ detailed recipe page and click on the garbage icon on the top right corner. This will delete the recipe forever. 
 
-### Editing Recipes
-- Admins have the option to edit existing recipes and change information as required
-- Navigate to the admin page
-  - Click on the profile icon in the top-right of the webpage, and select the "Admin Page" (you must be logged in as an admin to see this)
-- Find the recipe you wish to edit, click on it and you will be brought to the edit page of the recipe
-  - Once done, click the "Update and Approve" button at the bottom of the page
 
-### Profile Page
-- Each user has a profile page, where we can see their information and recipes they created
-  - Information includes name, username and their average rating
 
-## Instructions for Accessing FitMeals
-### Online access
-FitMeals is currently being hosted on Heroku and can be accessed with the following URL: https://csc309-team14-fitmeals-website.herokuapp.com/
-
-**Note:**
-As FitMeals is currently under Heroku's free plan, the website may take a longer time than usual to load when it has not been accessed in a while.
-
-### Offline access
+## Instructions
 FitMeals is powered by React and uses Yarn to manage dependencies and launch the application.
 - Open the project and run `yarn install` to install all the required dependencies for the web application
 - Once you have completed installing all dependencies, run `yarn start` to bring up FitMeals in your browser
@@ -133,7 +133,7 @@ FitMeals is powered by React and uses Yarn to manage dependencies and launch the
 | Username: user | Username: user |
 | Password: user | Password: admin |
 
-## Changes From Initial Proposal and Phase 1
+### Changes From Initial Proposal and Phase 1
 Our core vision for the application throughout this process has remained consistent, but there were a few additional features and changes we decided to implement for phase 2. 
 
 -   **Forgot Password:**  
