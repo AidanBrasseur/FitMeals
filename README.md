@@ -10,6 +10,8 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 5. [Third Party Libraries](#third-party-libraries)
 
 ## API Documentation
+Our API is hosted on heroku at the following url https://csc309-team14-fitmeals-api.herokuapp.com/
+
 The full documentation for our API was created using PostMan and can be found at the following link: [API docs](https://documenter.getpostman.com/view/15303556/TzCTa5pU)
 
 ## Features of FitMeals
