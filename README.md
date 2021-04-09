@@ -9,10 +9,13 @@ Priyanshu Arora, Aidan Brasseur, Saeyon Sivakumaran
 4. [Changes From Initial Proposal and Phase 1](#changes-from-initial-proposal-and-phase-1)
 5. [Third Party Libraries](#third-party-libraries)
 
+## API Documentation
+The full documentation for our API was created using PostMan and can be found at the following link: [API docs](https://documenter.getpostman.com/view/15303556/TzCTa5pU)
+
 ## Features of FitMeals
 FitMeals is a platform for users to access and post healthy recipes. Users have the ability to create recipes, comment on recipes, rate recipes and more...
 
-### Login and Registration Functionality
+### Login and Registration Functionality 
 
 #### Logging In to FitMeals 
 - Navigate to the login page where you can enter your credentials
