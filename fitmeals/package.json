@@ -18,7 +18,7 @@
     "@types/react-router-dom": "^5.1.7",
     "antd": "^4.12.3",
     "antd-img-crop": "^3.14.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "craco-less": "^1.17.1",
     "framer-motion": "^3.9.0",
     "react": "^17.0.1",
